@@ -527,7 +527,7 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: 80px !important;
     font-size: 14px !important;
 }
-.main-footer p, .main-footer ul, .main-footer li, .main-footer span, .main-footer div {
+.main-footer p, .main-footer ul, .main-footer li, .main-footer span, .main-footer div, .main-footer .text-muted, .main-footer a.text-muted {
     color: #ffffff !important;
 }
 .main-footer a {
@@ -543,6 +543,9 @@ h1, h2, h3, h4, h5, h6 {
     border-top: 1px solid #2d3238 !important;
     padding-top: 20px !important;
     margin-top: 40px !important;
+    color: #ffffff !important;
+}
+.main-footer-bottom div, .main-footer-bottom span, .main-footer-bottom p {
     color: #ffffff !important;
 }
 .main-footer h6 {

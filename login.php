@@ -107,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- SweetAlert2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/style.css?v=<?= time() ?>" rel="stylesheet">
     <style>
         .auth-container {
             min-height: 100vh;
@@ -263,12 +263,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="col-lg-2 col-md-6 col-6">
                     <h6 class="text-white fw-bold mb-3">Our Categories</h6>
                     <ul class="list-unstyled mb-0">
-                        <li class="mb-2"><a href="index.php" class="text-muted small">Burgers</a></li>
-                        <li class="mb-2"><a href="index.php" class="text-muted small">Hot Pizzas</a></li>
-                        <li class="mb-2"><a href="index.php" class="text-muted small">Crispy Zingers</a></li>
-                        <li class="mb-2"><a href="index.php" class="text-muted small">Hot Wings</a></li>
-                        <li class="mb-2"><a href="index.php" class="text-muted small">Alfredo Pasta</a></li>
-                        <li class="mb-2"><a href="index.php" class="text-muted small">Cold Drinks</a></li>
+                        <?php
+                        try {
+                            $footer_cats = $pdo->query("SELECT * FROM categories WHERE status = 'active' ORDER BY id ASC")->fetchAll();
+                            foreach ($footer_cats as $fc) {
+                                echo '<li class="mb-2"><a href="index.php#category-' . intval($fc['id']) . '" class="text-muted small">' . sanitize($fc['name']) . '</a></li>';
+                            }
+                        } catch (Exception $e) {
+                            echo '<li class="mb-2"><a href="index.php" class="text-muted small">Menu</a></li>';
+                        }
+                        ?>
                     </ul>
                 </div>
                 
@@ -276,9 +280,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="col-lg-3 col-md-6 col-6">
                     <h6 class="text-white fw-bold mb-3">Help & Policies</h6>
                     <ul class="list-unstyled mb-0">
-                        <li class="mb-2"><a href="#" class="text-muted small">Return & Refund Policy</a></li>
-                        <li class="mb-2"><a href="#" class="text-muted small">Terms of Service</a></li>
-                        <li class="mb-2"><a href="#" class="text-muted small">Privacy Policy</a></li>
+                        <li class="mb-2"><a href="policies.php?type=refund" class="text-muted small">Return & Refund Policy</a></li>
+                        <li class="mb-2"><a href="policies.php?type=terms" class="text-muted small">Terms of Service</a></li>
+                        <li class="mb-2"><a href="policies.php?type=privacy" class="text-muted small">Privacy Policy</a></li>
                         <li class="mb-2"><a href="#" class="text-muted small">Delivery Locations Map</a></li>
                         <li class="mb-2"><a href="#" class="text-muted small">FAQs & Support</a></li>
                     </ul>
