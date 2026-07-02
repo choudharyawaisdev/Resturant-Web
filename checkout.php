@@ -161,26 +161,72 @@ if (is_user_logged_in()) {
         </div>
     </div>
 
-    <!-- DevtaSoft Footer -->
+    <!-- DevtaSoft Professional Footer -->
     <footer class="main-footer">
-        <div class="container text-center">
-            <div class="row align-items-center">
-                <div class="col-md-4 text-md-start mb-3 mb-md-0">
-                    <span class="fs-5 fw-bold text-white"><?= sanitize(get_setting('restaurant_name', 'Cravers')) ?>.</span>
-                    <p class="small text-muted mt-1 mb-0">Delivering fresh warm food daily in Faisalabad.</p>
+        <div class="container">
+            <div class="row g-4 text-start">
+                <!-- Column 1: Brand Info -->
+                <div class="col-lg-4 col-md-6">
+                    <span class="fs-4 fw-bold text-white"><?= sanitize(get_setting('restaurant_name', 'Cravers')) ?>.</span>
+                    <p class="small text-muted mt-2">
+                        Cravers brings the taste of fresh, premium warm food right to your doorstep in Faisalabad. From masterfully crafted zingers to authentic brick-oven pizzas, satisfaction is just a click away.
+                    </p>
+                    <div class="d-flex gap-3 mt-3">
+                        <a href="#" class="text-muted"><i class="bi bi-facebook fs-5"></i></a>
+                        <a href="#" class="text-muted"><i class="bi bi-instagram fs-5"></i></a>
+                        <a href="#" class="text-muted"><i class="bi bi-twitter fs-5"></i></a>
+                    </div>
                 </div>
-                <div class="col-md-4 mb-3 mb-md-0">
-                    <a href="index.php" class="mx-2 small text-muted">Home</a> | 
-                    <a href="profile.php" class="mx-2 small text-muted">My Dashboard</a> | 
-                    <a href="login.php" class="mx-2 small text-muted">Accounts</a>
+                
+                <!-- Column 2: Popular Categories -->
+                <div class="col-lg-2 col-md-6 col-6">
+                    <h6 class="text-white fw-bold mb-3">Our Categories</h6>
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2"><a href="index.php" class="text-muted small">Burgers</a></li>
+                        <li class="mb-2"><a href="index.php" class="text-muted small">Hot Pizzas</a></li>
+                        <li class="mb-2"><a href="index.php" class="text-muted small">Crispy Zingers</a></li>
+                        <li class="mb-2"><a href="index.php" class="text-muted small">Hot Wings</a></li>
+                        <li class="mb-2"><a href="index.php" class="text-muted small">Alfredo Pasta</a></li>
+                        <li class="mb-2"><a href="index.php" class="text-muted small">Cold Drinks</a></li>
+                    </ul>
                 </div>
-                <div class="col-md-4 text-md-end">
-                    <span class="small text-muted">Support hotline: <strong><?= sanitize(get_setting('contact_number', '+92 300 123 4567')) ?></strong></span>
+                
+                <!-- Column 3: Corporate Policy Info -->
+                <div class="col-lg-3 col-md-6 col-6">
+                    <h6 class="text-white fw-bold mb-3">Help & Policies</h6>
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2"><a href="#" class="text-muted small">Return & Refund Policy</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted small">Terms of Service</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted small">Privacy Policy</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted small">Delivery Locations Map</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted small">FAQs & Support</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 4: Contact & Hotlines -->
+                <div class="col-lg-3 col-md-6">
+                    <h6 class="text-white fw-bold mb-3">Contact Support</h6>
+                    <ul class="list-unstyled mb-0 text-muted small">
+                        <li class="mb-2"><i class="bi bi-geo-alt text-orange me-2"></i> Faisalabad, Punjab, Pakistan</li>
+                        <li class="mb-2"><i class="bi bi-telephone text-orange me-2"></i> Hotline: <?= sanitize(get_setting('contact_number', '+92 300 123 4567')) ?></li>
+                        <li class="mb-2"><i class="bi bi-envelope text-orange me-2"></i> support@cravers.com</li>
+                        <li class="mt-3">
+                            <span class="badge bg-success py-2 px-3 rounded-pill"><i class="bi bi-check-circle me-1"></i> Kitchen is Open</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
+
+            <!-- Bottom Row -->
             <div class="main-footer-bottom text-center small text-muted">
-                © <?= date('Y') ?> Cravers Restaurant. All Rights Reserved. <br>
-                <span class="mt-1 d-inline-block">Developed by <strong style="color: var(--primary-orange);">DevtaSoft</strong></span>
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-md-start mb-2 mb-md-0">
+                        © <?= date('Y') ?> <?= sanitize(get_setting('restaurant_name', 'Cravers')) ?>. All Rights Reserved.
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        Developed with passion by <strong style="color: var(--primary-orange);">DevtaSoft</strong>
+                    </div>
+                </div>
             </div>
         </div>
     </footer>
