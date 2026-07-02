@@ -304,7 +304,7 @@ $wishlist_items = $wish_stmt->fetchAll();
                                 $img_url = 'assets/images/uploads/' . $item['image'];
                             }
                             ?>
-                            <div class="col-lg-3 col-md-4 col-sm-6" id="wishlist_row_<?= $item['id'] ?>">
+                            <div class="col-lg-3 col-md-6 col-6" id="wishlist_row_<?= $item['id'] ?>">
                                 <div class="card product-card position-relative">
                                     <button class="wishlist-heart-btn active" data-product-id="<?= $item['id'] ?>">
                                         <i class="bi bi-heart-fill"></i>
@@ -317,8 +317,8 @@ $wishlist_items = $wish_stmt->fetchAll();
                                         <p class="product-desc"><?= sanitize($item['description']) ?></p>
                                         <div class="product-footer">
                                             <span class="product-price">Rs. <?= number_format($item['base_price'], 0) ?></span>
-                                            <button class="btn btn-primary-orange btn-customize" data-product-id="<?= $item['id'] ?>">
-                                                Customize <i class="bi bi-sliders ms-1"></i>
+                                            <button class="btn btn-primary-orange btn-customize px-3 py-1.5" data-product-id="<?= $item['id'] ?>" style="font-size: 12px; font-weight: 600; border-radius: 20px; white-space: nowrap;">
+                                                Customize
                                             </button>
                                         </div>
                                     </div>

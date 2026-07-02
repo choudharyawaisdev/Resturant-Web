@@ -40,8 +40,8 @@ if (is_user_logged_in()) {
         <p class="product-desc"><?= sanitize($prod['description']) ?></p>
         <div class="product-footer">
             <span class="product-price">Rs. <?= number_format($prod['base_price'], 0) ?></span>
-            <button class="btn btn-primary-orange btn-customize" data-product-id="<?= $prod['id'] ?>">
-                Customize <i class="bi bi-sliders ms-1"></i>
+            <button class="btn btn-primary-orange btn-customize px-3 py-1.5" data-product-id="<?= $prod['id'] ?>" style="font-size: 12px; font-weight: 600; border-radius: 20px; white-space: nowrap;">
+                Customize
             </button>
         </div>
     </div>

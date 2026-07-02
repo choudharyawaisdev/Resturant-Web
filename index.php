@@ -153,7 +153,7 @@ $search_query = isset($_GET['search']) ? trim($_GET['search']) : '';
             <?php else: ?>
                 <div class="row g-4">
                     <?php foreach ($products as $prod): ?>
-                        <div class="col-md-3 col-sm-6">
+                        <div class="col-lg-3 col-md-6 col-6">
                             <?php include __DIR__ . '/includes/product_card.php'; ?>
                         </div>
                     <?php endforeach; ?>
@@ -179,7 +179,7 @@ $search_query = isset($_GET['search']) ? trim($_GET['search']) : '';
                     </div>
                     <div class="row g-4">
                         <?php foreach ($products as $prod): ?>
-                            <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="col-lg-3 col-md-6 col-6">
                                 <?php include __DIR__ . '/includes/product_card.php'; ?>
                             </div>
                         <?php endforeach; ?>

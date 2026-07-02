@@ -25,6 +25,9 @@ body {
 }
 
 /* Typography Helpers */
+.fw-bold {
+    font-weight: 500 !important;
+}
 h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
 }
@@ -583,5 +586,39 @@ h1, h2, h3, h4, h5, h6 {
 .wishlist-heart-btn.active {
     color: #dc3545;
     background-color: #fff;
+}
+
+
+
+/* Make headings look clean and modern with medium-semi-bold weights */
+h1, h2, h3, h4, h5, h6, .navbar-brand span {
+    font-weight: 600 !important;
+}
+
+/* Shrink form label size and adjust spacing */
+.form-label.small, label.small, .small-label {
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.6px !important;
+    text-transform: uppercase !important;
+}
+
+/* Refined smaller description font sizes */
+.product-desc {
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+}
+
+/* Refined footer typography sizes */
+.main-footer {
+    font-size: 13px !important;
+}
+.main-footer-bottom {
+    font-size: 12px !important;
+}
+
+/* General minor text size shrink for professional look */
+.checkout-items-list h6, .checkout-items-list p {
+    font-size: 13px !important;
 }
 
