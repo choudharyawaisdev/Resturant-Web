@@ -1089,4 +1089,86 @@ p {
     color: var(--primary-orange) !important;
 }
 
+/* Soft background badge helpers */
+.bg-orange-light {
+    background-color: rgba(255, 107, 0, 0.08) !important;
+}
+.bg-success-light {
+    background-color: rgba(46, 201, 70, 0.08) !important;
+}
 
+/* Thermal receipt font style and print overrides */
+.thermal-receipt-print {
+    width: 100% !important;
+    font-family: 'Courier New', Courier, monospace !important;
+    color: #000000 !important;
+    background-color: #ffffff !important;
+}
+.thermal-receipt-print .receipt-divider {
+    font-family: 'Courier New', Courier, monospace !important;
+    font-size: 12px !important;
+    letter-spacing: -1px;
+    margin: 8px 0;
+    text-align: center;
+}
+.thermal-receipt-print .row {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+}
+.thermal-receipt-print .col-6,
+.thermal-receipt-print .col-3,
+.thermal-receipt-print .col-12 {
+    padding-right: 2px !important;
+    padding-left: 2px !important;
+}
+
+@media print {
+    @page {
+        size: 80mm auto;
+        margin: 0;
+    }
+    
+    html, body {
+        width: 80mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background-color: #ffffff !important;
+        color: #000000 !important;
+        font-family: 'Courier New', Courier, monospace !important;
+        font-size: 11px !important;
+    }
+    
+    .navbar, 
+    .main-footer, 
+    .d-print-none, 
+    .status-tracker, 
+    .thank-you-card,
+    #btnConfirmLocation, 
+    .modal, 
+    .offcanvas,
+    #orderReceipt {
+        display: none !important;
+    }
+    
+    .d-print-block {
+        display: block !important;
+    }
+    
+    .container {
+        width: 80mm !important;
+        max-width: 80mm !important;
+        padding: 4mm !important;
+        margin: 0 !important;
+    }
+    
+    /* Ensure all text inside the print section uses receipt styling */
+    .thermal-receipt-print h4,
+    .thermal-receipt-print h5,
+    .thermal-receipt-print h6,
+    .thermal-receipt-print div,
+    .thermal-receipt-print span,
+    .thermal-receipt-print strong {
+        font-family: 'Courier New', Courier, monospace !important;
+        color: #000000 !important;
+    }
+}

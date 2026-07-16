@@ -160,7 +160,7 @@ $current_step = $status_steps[$order['status']] ?? 0;
             <div class="col-lg-8">
                 
                 <!-- Thank You Card -->
-                <div class="card border-0 shadow-sm p-5 rounded-4 bg-white mb-4 text-center">
+                <div class="card border-0 shadow-sm p-5 rounded-4 bg-white mb-4 text-center d-print-none">
                     <div class="mb-3">
                         <i class="bi bi-patch-check-fill text-success" style="font-size: 4rem;"></i>
                     </div>
@@ -170,7 +170,7 @@ $current_step = $status_steps[$order['status']] ?? 0;
                 </div>
 
                 <!-- Live Tracker Card -->
-                <div class="card border-0 shadow-sm p-4 rounded-4 bg-white mb-4">
+                <div class="card border-0 shadow-sm p-4 rounded-4 bg-white mb-4 d-print-none">
                     <h5 class="fw-bold mb-1"><i class="bi bi-clock-history text-orange me-2" style="color: var(--primary-orange);"></i> Live Order Status</h5>
                     <p class="text-muted small">Our kitchen and rider status are updated in real-time below.</p>
                     
@@ -218,44 +218,159 @@ $current_step = $status_steps[$order['status']] ?? 0;
                     <?php endif; ?>
                 </div>
 
-                <!-- Order Details Receipt -->
-                <div class="card border-0 shadow-sm p-4 rounded-4 bg-white">
-                    <h5 class="fw-bold mb-4 border-bottom pb-3"><i class="bi bi-receipt-cutoff text-orange me-2" style="color: var(--primary-orange);"></i> Order Details</h5>
-                    
-                    <div class="row mb-4">
-                        <div class="col-md-6 mb-3 mb-md-0">
-                            <span class="text-muted d-block small">CUSTOMER NAME</span>
-                            <strong class="text-dark"><?= sanitize($order['customer_name']) ?></strong>
+                <!-- Order Details Receipt (On Screen) -->
+                <div class="card border-0 shadow-sm p-4 rounded-4 bg-white mb-4 d-print-none" id="orderReceipt">
+                    <!-- Invoice Header -->
+                    <div class="row mb-4 pb-4 border-bottom align-items-center">
+                        <div class="col-sm-6 mb-3 mb-sm-0 d-flex align-items-center">
+                            <svg width="45" height="45" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="me-3">
+                                <circle cx="50" cy="50" r="45" fill="#FF6B00"/>
+                                <path d="M50 20C40 20 30 35 30 50C30 65 40 80 50 80C60 80 70 65 70 50C70 35 60 20 50 20ZM45 60H37V40H45V60ZM63 60H55V40H63V60Z" fill="#FFF8F0"/>
+                            </svg>
+                            <div>
+                                <h4 class="fw-bold mb-0 text-dark" style="font-family: 'Poppins', sans-serif; letter-spacing: -0.5px;">Cravers<span style="color: var(--primary-orange);">.</span></h4>
+                                <span class="text-muted small">Premium Food Delivery</span>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <span class="text-muted d-block small">CONTACT PHONE</span>
-                            <strong class="text-dark"><?= sanitize($order['phone']) ?></strong>
+                        <div class="col-sm-6 text-sm-end">
+                            <h5 class="fw-bold text-dark mb-1">INVOICE</h5>
+                            <span class="badge bg-orange-light text-orange mb-1">ORDER #<?= $order['id'] ?></span>
+                            <div class="text-muted small"><?= date('M d, Y h:i A', strtotime($order['created_at'])) ?></div>
                         </div>
                     </div>
 
+                    <!-- Client & Order Info -->
                     <div class="row mb-4">
-                        <div class="col-12">
-                            <span class="text-muted d-block small">DELIVERY ADDRESS</span>
-                            <strong class="text-dark"><?= sanitize($order['address']) ?>, <?= sanitize($order['area_name']) ?>, Faisalabad</strong>
+                        <div class="col-md-6 mb-3 mb-md-0">
+                            <h6 class="text-muted mb-2 font-weight-bold" style="font-size: 11px; letter-spacing: 0.8px; text-transform: uppercase;">Delivery Details</h6>
+                            <div class="text-dark fw-bold"><?= sanitize($order['customer_name']) ?></div>
+                            <div class="text-muted small" style="margin-top: 2px;"><?= sanitize($order['phone']) ?></div>
+                            <div class="text-muted small mt-1" style="max-width: 280px;"><?= sanitize($order['address']) ?>, <?= sanitize($order['area_name']) ?>, Faisalabad</div>
+                        </div>
+                        <div class="col-md-6 text-md-end">
+                            <h6 class="text-muted mb-2 font-weight-bold" style="font-size: 11px; letter-spacing: 0.8px; text-transform: uppercase;">Payment & Status</h6>
+                            <div class="text-dark fw-bold">Method: Cash on Delivery (COD)</div>
+                            <div class="mt-1"><span class="badge bg-success-light text-success"><?= $order['status'] ?></span></div>
                         </div>
                     </div>
 
                     <?php if (!empty($order['order_notes'])): ?>
-                        <div class="mb-4">
-                            <span class="text-muted d-block small">SPECIAL INSTRUCTIONS</span>
-                            <span class="text-dark italic small">"<?= sanitize($order['order_notes']) ?>"</span>
+                        <div class="p-3 bg-light rounded-3 mb-4 border-start border-3 border-warning">
+                            <span class="text-muted d-block small fw-bold uppercase">Customer Note:</span>
+                            <span class="text-dark small italic">"<?= sanitize($order['order_notes']) ?>"</span>
                         </div>
                     <?php endif; ?>
 
-                    <hr>
+                    <!-- Items Purchased Table -->
+                    <div class="table-responsive">
+                        <table class="table table-borderless align-middle mb-0">
+                            <thead>
+                                <tr class="border-bottom border-top" style="border-color: #f1f3f5 !important;">
+                                    <th class="text-muted py-3" style="font-size: 11px; letter-spacing: 0.8px; text-transform: uppercase;">Item Description</th>
+                                    <th class="text-muted text-center py-3" style="font-size: 11px; letter-spacing: 0.8px; text-transform: uppercase; width: 80px;">Qty</th>
+                                    <th class="text-muted text-end py-3" style="font-size: 11px; letter-spacing: 0.8px; text-transform: uppercase; width: 120px;">Price</th>
+                                    <th class="text-muted text-end py-3" style="font-size: 11px; letter-spacing: 0.8px; text-transform: uppercase; width: 120px;">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($order_items as $item): ?>
+                                    <tr class="border-bottom" style="border-color: #f8f9fa !important;">
+                                        <td class="py-3">
+                                            <div class="fw-bold text-dark"><?= sanitize($item['product_name']) ?></div>
+                                            <div class="text-muted small mt-1">
+                                                Size: <?= sanitize($item['size_name']) ?>
+                                                <?php if (!empty($item['drink_name'])): ?>
+                                                    | Drink: <?= sanitize($item['drink_name']) ?>
+                                                <?php endif; ?>
+                                                <?php if (!empty($item['addons'])): ?>
+                                                    <?php 
+                                                    $addons_arr = json_decode($item['addons'], true);
+                                                    if (is_array($addons_arr)) {
+                                                        echo ' | Addons: ' . implode(', ', array_map(function($a) { return sanitize($a['name']); }, $addons_arr));
+                                                    }
+                                                    ?>
+                                                <?php endif; ?>
+                                            </div>
+                                        </td>
+                                        <td class="text-center fw-bold text-dark py-3">x<?= $item['quantity'] ?></td>
+                                        <td class="text-end text-dark py-3">Rs. <?= number_format($item['item_price'], 2) ?></td>
+                                        <td class="text-end fw-bold text-dark py-3">Rs. <?= number_format($item['line_total'], 2) ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
 
-                    <h6 class="fw-bold mb-3">Items Purchased</h6>
+                    <!-- Totals Block -->
+                    <div class="row justify-content-end mt-4">
+                        <div class="col-md-5">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted small">Subtotal</span>
+                                <span class="text-dark fw-bold small">Rs. <?= number_format($order['subtotal'], 2) ?></span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted small">Delivery Charges</span>
+                                <span class="text-dark fw-bold small">Rs. <?= number_format($order['delivery_fee'], 2) ?></span>
+                            </div>
+                            <hr class="my-2">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="fw-bold text-dark">Grand Total Paid</span>
+                                <span class="fw-bold fs-5 text-orange" style="color: var(--primary-orange) !important;">Rs. <?= number_format($order['grand_total'], 2) ?></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Details Receipt (POS Thermal Printer optimized - Hidden on screen) -->
+                <div id="thermalReceiptPrint" class="d-none d-print-block thermal-receipt-print">
+                    <!-- Header: Centered logo and restaurant info -->
+                    <div class="text-center mb-2">
+                        <h4 class="fw-bold mb-0 text-dark" style="font-size: 18px; letter-spacing: 0.5px;">CRAVERS</h4>
+                        <div class="small">Premium Food Delivery</div>
+                        <div class="small">Faisalabad, Pakistan</div>
+                        <div class="small">Tel: <?= sanitize(get_setting('contact_number', '+92 300 123 4567')) ?></div>
+                    </div>
+
+                    <!-- Divider -->
+                    <div class="receipt-divider">-----------------------------------------</div>
+
+                    <!-- Ticket Meta Info -->
+                    <div class="row small mb-2">
+                        <div class="col-6">
+                            <strong>Ticket:</strong> #<?= $order['id'] ?><br>
+                            <strong>Customer:</strong> <?= sanitize($order['customer_name']) ?><br>
+                            <strong>Phone:</strong> <?= sanitize($order['phone']) ?>
+                        </div>
+                        <div class="col-6 text-end">
+                            <strong>Date:</strong> <?= date('d/m/Y', strtotime($order['created_at'])) ?><br>
+                            <strong>Time:</strong> <?= date('h:i A', strtotime($order['created_at'])) ?><br>
+                            <strong>Status:</strong> <?= $order['status'] ?>
+                        </div>
+                    </div>
+                    
+                    <div class="small mb-2">
+                        <strong>Address:</strong> <?= sanitize($order['address']) ?>, <?= sanitize($order['area_name']) ?>
+                    </div>
+
+                    <!-- Divider -->
+                    <div class="receipt-divider">-----------------------------------------</div>
+
+                    <!-- Table Header -->
+                    <div class="row small fw-bold" style="margin-bottom: 4px;">
+                        <div class="col-6">Units Description</div>
+                        <div class="col-3 text-end">U.Price</div>
+                        <div class="col-3 text-end">Total</div>
+                    </div>
+
+                    <!-- Divider -->
+                    <div class="receipt-divider">-----------------------------------------</div>
+
+                    <!-- Table Items -->
                     <?php foreach ($order_items as $item): ?>
-                        <div class="d-flex justify-content-between py-2 border-bottom-dashed">
-                            <div>
-                                <strong class="text-dark"><?= sanitize($item['product_name']) ?></strong> 
-                                <span class="text-orange">x<?= $item['quantity'] ?></span>
-                                <span class="text-muted small d-block">
+                        <div class="row small mb-2 align-items-start">
+                            <div class="col-6">
+                                <?= $item['quantity'] ?>x <?= sanitize($item['product_name']) ?>
+                                <div class="text-muted" style="font-size: 9px; padding-left: 8px;">
                                     Size: <?= sanitize($item['size_name']) ?>
                                     <?php if (!empty($item['drink_name'])): ?>
                                         | Drink: <?= sanitize($item['drink_name']) ?>
@@ -264,32 +379,55 @@ $current_step = $status_steps[$order['status']] ?? 0;
                                         <?php 
                                         $addons_arr = json_decode($item['addons'], true);
                                         if (is_array($addons_arr)) {
-                                            echo ' | Addons: ' . implode(', ', array_map(function($a) { return sanitize($a['name']); }, $addons_arr));
+                                            echo '<br>+ Addons: ' . implode(', ', array_map(function($a) { return sanitize($a['name']); }, $addons_arr));
                                         }
                                         ?>
                                     <?php endif; ?>
-                                </span>
+                                </div>
                             </div>
-                            <span class="text-dark fw-bold">Rs. <?= number_format($item['line_total'], 2) ?></span>
+                            <div class="col-3 text-end">
+                                <?= number_format($item['item_price'], 0) ?>
+                            </div>
+                            <div class="col-3 text-end fw-bold">
+                                <?= number_format($item['line_total'], 0) ?>
+                            </div>
                         </div>
                     <?php endforeach; ?>
 
-                    <div class="mt-4 pt-2">
-                        <div class="d-flex justify-content-between mb-2">
-                            <span class="text-muted">Subtotal</span>
-                            <span class="text-dark fw-bold">Rs. <?= number_format($order['subtotal'], 2) ?></span>
-                        </div>
-                        <div class="d-flex justify-content-between mb-2">
-                            <span class="text-muted">Delivery Charges</span>
-                            <span class="text-dark fw-bold">Rs. <?= number_format($order['delivery_fee'], 2) ?></span>
-                        </div>
-                        <hr>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <h6 class="fw-bold mb-0">Grand Total Paid</h6>
-                            <h5 class="fw-bold text-success mb-0" style="color: var(--primary-orange) !important;">Rs. <?= number_format($order['grand_total'], 2) ?></h5>
-                        </div>
+                    <!-- Double Divider -->
+                    <div class="receipt-divider">=========================================</div>
+
+                    <!-- Summary -->
+                    <div class="row small mb-1 justify-content-end">
+                        <div class="col-6 text-end">SUB TOTAL:</div>
+                        <div class="col-6 text-end fw-bold">Rs. <?= number_format($order['subtotal'], 2) ?></div>
+                    </div>
+                    <div class="row small mb-1 justify-content-end">
+                        <div class="col-6 text-end">DELIVERY:</div>
+                        <div class="col-6 text-end fw-bold">Rs. <?= number_format($order['delivery_fee'], 2) ?></div>
                     </div>
 
+                    <!-- Divider -->
+                    <div class="receipt-divider">-----------------------------------------</div>
+
+                    <!-- Grand Total -->
+                    <div class="row mb-3 justify-content-end align-items-center">
+                        <div class="col-6 text-end fw-bold" style="font-size: 13px;">Total:</div>
+                        <div class="col-6 text-end fw-bold" style="font-size: 15px;">Rs. <?= number_format($order['grand_total'], 2) ?></div>
+                    </div>
+
+                    <!-- Footer message -->
+                    <div class="text-center small mt-4">
+                        <div>Thank you!!!</div>
+                        <div class="fw-bold mt-1">CRAVERS</div>
+                    </div>
+                </div>
+
+                <!-- Download/Print Button -->
+                <div class="text-center d-print-none mb-4">
+                    <button onclick="window.print()" class="btn btn-primary-orange w-100 py-3 fw-bold fs-6">
+                        <i class="bi bi-download me-2"></i> Download / Print Invoice
+                    </button>
                 </div>
 
             </div>
