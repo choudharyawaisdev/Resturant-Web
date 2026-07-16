@@ -1171,4 +1171,20 @@ p {
         font-family: 'Courier New', Courier, monospace !important;
         color: #000000 !important;
     }
+
+    /* Hide admin dashboard frame and sibling elements */
+    .admin-sidebar,
+    .admin-content > .d-flex,
+    .admin-content hr,
+    .admin-content .mb-3,
+    .admin-content .col-lg-4,
+    #invoicePanel .d-print-none {
+        display: none !important;
+    }
+    
+    .admin-content {
+        padding: 0 !important;
+        margin: 0 !important;
+        background-color: transparent !important;
+    }
 }

@@ -99,7 +99,7 @@ if ($view_order_id <= 0) {
     <div class="row g-4">
         <!-- Left: Receipt Card -->
         <div class="col-lg-8" id="invoicePanel">
-            <div class="card border-0 shadow-sm p-4 rounded-4 bg-white">
+            <div class="card border-0 shadow-sm p-4 rounded-4 bg-white d-print-none">
                 <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4">
                     <div>
                         <h4 class="fw-bold mb-0">INVOICE ORDER #<?= $order['id'] ?></h4>
@@ -189,6 +189,110 @@ if ($view_order_id <= 0) {
                     </div>
                 </div>
 
+            </div>
+
+            <!-- Order Details Receipt (POS Thermal Printer optimized - Hidden on screen) -->
+            <div id="thermalReceiptPrint" class="d-none d-print-block thermal-receipt-print">
+                <!-- Header: Centered logo and restaurant info -->
+                <div class="text-center mb-2">
+                    <h4 class="fw-bold mb-0 text-dark" style="font-size: 18px; letter-spacing: 0.5px;">CRAVERS</h4>
+                    <div class="small">Premium Food Delivery</div>
+                    <div class="small">Faisalabad, Pakistan</div>
+                    <div class="small">Tel: <?= sanitize(get_setting('contact_number', '+92 300 123 4567')) ?></div>
+                </div>
+
+                <!-- Divider -->
+                <div class="receipt-divider">-----------------------------------------</div>
+
+                <!-- Ticket Meta Info -->
+                <div class="row small mb-2">
+                    <div class="col-6">
+                        <strong>Ticket:</strong> #<?= $order['id'] ?><br>
+                        <strong>Customer:</strong> <?= sanitize($order['customer_name']) ?><br>
+                        <strong>Phone:</strong> <?= sanitize($order['phone']) ?>
+                    </div>
+                    <div class="col-6 text-end">
+                        <strong>Date:</strong> <?= date('d/m/Y', strtotime($order['created_at'])) ?><br>
+                        <strong>Time:</strong> <?= date('h:i A', strtotime($order['created_at'])) ?><br>
+                        <strong>Status:</strong> <?= $order['status'] ?>
+                    </div>
+                </div>
+                
+                <div class="small mb-2">
+                    <strong>Address:</strong> <?= sanitize($order['address']) ?>, <?= sanitize($order['area_name']) ?>
+                </div>
+
+                <!-- Divider -->
+                <div class="receipt-divider">-----------------------------------------</div>
+
+                <!-- Table Header -->
+                <div class="row small fw-bold" style="margin-bottom: 4px;">
+                    <div class="col-6">Units Description</div>
+                    <div class="col-3 text-end">U.Price</div>
+                    <div class="col-3 text-end">Total</div>
+                </div>
+
+                <!-- Divider -->
+                <div class="receipt-divider">-----------------------------------------</div>
+
+                <!-- Table Items -->
+                <?php foreach ($items as $item): ?>
+                    <div class="row small mb-2 align-items-start">
+                        <div class="col-6">
+                            <?= $item['quantity'] ?>x <?= sanitize($item['product_name'] ?? 'Custom Product') ?>
+                            <div class="text-muted" style="font-size: 9px; padding-left: 8px;">
+                                Size: <?= sanitize($item['size_name']) ?>
+                                <?php if (!empty($item['drink_name'])): ?>
+                                    | Drink: <?= sanitize($item['drink_name']) ?>
+                                <?php endif; ?>
+                                <?php if (!empty($item['addons'])): ?>
+                                    <?php 
+                                    $addons_arr = json_decode($item['addons'], true);
+                                    if (is_array($addons_arr)) {
+                                        echo '<br>+ Addons: ' . implode(', ', array_map(function($a) { return sanitize($a['name']) . " (+Rs." . number_format($a['price'], 0) . ")"; }, $addons_arr));
+                                    }
+                                    ?>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <div class="col-3 text-end">
+                            <?= number_format($item['item_price'], 0) ?>
+                        </div>
+                        <div class="col-3 text-end fw-bold">
+                            <?= number_format($item['line_total'], 0) ?>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+
+                <!-- Double Divider -->
+                <div class="receipt-divider">=========================================</div>
+
+                <!-- Summary -->
+                <div class="row small mb-1 justify-content-end">
+                    <div class="col-6 text-end">SUB TOTAL:</div>
+                    <div class="col-6 text-end fw-bold">Rs. <?= number_format($order['subtotal'], 2) ?></div>
+                </div>
+                <div class="row small mb-1 justify-content-end">
+                    <div class="col-6 text-end">DELIVERY:</div>
+                    <div class="col-6 text-end fw-bold">Rs. <?= number_format($order['delivery_fee'], 2) ?></div>
+                </div>
+
+                <!-- Divider -->
+                <div class="receipt-divider">-----------------------------------------</div>
+
+                <!-- Grand Total -->
+                <div class="row mb-3 justify-content-end align-items-center">
+                    <div class="col-6 text-end fw-bold" style="font-size: 13px;">Total:</div>
+                    <div class="col-6 text-end fw-bold" style="font-size: 15px;">Rs. <?= number_format($order['grand_total'], 2) ?></div>
+                </div>
+
+                <!-- Footer message -->
+                <div class="text-center small mt-4">
+                    <div>Thank you!!!</div>
+                    <div class="fw-bold mt-1">CRAVERS</div>
+                    <div class="receipt-divider">-----------------------------------------</div>
+                    <div style="font-size: 8px; margin-top: 5px;">Software Developed by<br>DevtaSoft Software Company<br>03085277092</div>
+                </div>
             </div>
         </div>
 

@@ -420,6 +420,8 @@ $current_step = $status_steps[$order['status']] ?? 0;
                     <div class="text-center small mt-4">
                         <div>Thank you!!!</div>
                         <div class="fw-bold mt-1">CRAVERS</div>
+                        <div class="receipt-divider">-----------------------------------------</div>
+                        <div style="font-size: 8px; margin-top: 5px;">Software Developed by<br>DevtaSoft Software Company<br>03085277092</div>
                     </div>
                 </div>
 
