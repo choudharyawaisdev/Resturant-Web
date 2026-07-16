@@ -120,19 +120,71 @@ $search_query = isset($_GET['search']) ? trim($_GET['search']) : '';
             </div>
         <?php endif; ?>
 
-        <!-- HERO BANNER -->
-        <div class="hero-banner">
-            <div class="row align-items-center">
-                <div class="col-md-7">
-                    <span class="badge bg-white text-dark mb-3 fw-bold px-3 py-2" style="color: var(--primary-orange) !important;">50% Off First Order</span>
-                    <h1 class="display-5 fw-extrabold mb-3"><?= sanitize(get_setting('promo_text', 'Craving Something Delicious?')) ?></h1>
-                    <p class="lead mb-4"><?= sanitize(get_setting('promo_subtitle', 'Get the best burgers, piping hot pizzas, and spicy pastas in Faisalabad delivered fresh to your doorstep within 30 minutes.')) ?></p>
-                    <a href="#category-1" class="btn btn-light btn-lg px-4 py-2 fw-bold" style="color: var(--primary-orange); border-radius: 30px;">Order Now</a>
+        <!-- HERO CAROUSEL REDESIGN -->
+        <div id="heroCarousel" class="carousel slide carousel-fade hero-carousel" data-bs-ride="carousel" data-bs-interval="5000">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <!-- Slide 1: Cheese Burger (Tied to Admin settings) -->
+                <div class="carousel-item active">
+                    <div class="carousel-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1920&q=80" class="d-block w-100 carousel-img" alt="Premium Cheese Burger" loading="lazy">
+                        <div class="carousel-overlay"></div>
+                    </div>
+                    <div class="carousel-caption">
+                        <span class="badge bg-white text-dark mb-3 fw-bold px-3 py-2 text-uppercase" style="color: var(--primary-orange) !important;">50% Off First Order</span>
+                        <h1><?= sanitize(get_setting('promo_text', 'Premium Cheese Burger')) ?></h1>
+                        <p><?= sanitize(get_setting('promo_subtitle', 'Savor our masterfully crafted beef patty, layered with fresh lettuce, melted cheddar, and our signature gourmet sauce.')) ?></p>
+                        <div class="d-flex gap-3">
+                            <a href="#category-1" class="btn btn-primary-orange">Order Now</a>
+                            <a href="index.php" class="btn btn-outline-light">View Menu</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-5 d-none d-md-block text-end">
-                    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=500&q=80" alt="Delicious Food" class="img-fluid rounded-4 shadow-lg" style="max-height: 250px; object-fit: cover;">
+                <!-- Slide 2: Italian Pizza -->
+                <div class="carousel-item">
+                    <div class="carousel-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1920&q=80" class="d-block w-100 carousel-img" alt="Italian Pizza" loading="lazy">
+                        <div class="carousel-overlay"></div>
+                    </div>
+                    <div class="carousel-caption">
+                        <span class="badge bg-white text-dark mb-3 fw-bold px-3 py-2 text-uppercase" style="color: var(--primary-orange) !important;">Chef's Special</span>
+                        <h1>Authentic Italian Pizza</h1>
+                        <p>Fresh hand-stretched dough topped with rich tomato sauce, premium mozzarella cheese, and fresh garden toppings baked to perfection.</p>
+                        <div class="d-flex gap-3">
+                            <a href="#category-2" class="btn btn-primary-orange">Order Now</a>
+                            <a href="index.php" class="btn btn-outline-light">View Menu</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 3: Crispy Fried Chicken + Drinks -->
+                <div class="carousel-item">
+                    <div class="carousel-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=1920&q=80" class="d-block w-100 carousel-img" alt="Crispy Fried Chicken" loading="lazy">
+                        <div class="carousel-overlay"></div>
+                    </div>
+                    <div class="carousel-caption">
+                        <span class="badge bg-white text-dark mb-3 fw-bold px-3 py-2 text-uppercase" style="color: var(--primary-orange) !important;">Super Saver Combo</span>
+                        <h1>Crispy Fried Chicken</h1>
+                        <p>Get our golden crispy, spicy fried chicken served with seasoned fries and an ice-cold refreshing drink at an unbeatable value.</p>
+                        <div class="d-flex gap-3">
+                            <a href="#category-3" class="btn btn-primary-orange">Order Now</a>
+                            <a href="index.php" class="btn btn-outline-light">View Menu</a>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev" style="z-index: 5;">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next" style="z-index: 5;">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
 
         <!-- PRODUCTS SECTIONS -->

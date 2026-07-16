@@ -281,7 +281,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         toast: true,
                         position: 'top-end',
                         showConfirmButton: false,
-                        timer: 2000,
+                        timer: 3000,
                         timerProgressBar: true
                     });
                     Toast.fire({
@@ -439,7 +439,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     toast: true,
                     position: 'top-end',
                     showConfirmButton: false,
-                    timer: 1500,
+                    timer: 3000,
                     timerProgressBar: true
                 });
                 Toast.fire({
