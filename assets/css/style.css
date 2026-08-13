@@ -711,6 +711,84 @@ button.btn-sm {
     overflow-y: auto;
 }
 
+/* ============================================================
+   RESPONSIVE ADMIN PANEL MEDIA QUERIES
+   ============================================================ */
+
+@media (max-width: 991.98px) {
+    .admin-wrapper {
+        flex-direction: column;
+    }
+
+    .admin-sidebar {
+        position: fixed !important;
+        top: 0 !important;
+        left: -290px !important;
+        width: 270px !important;
+        height: 100vh !important;
+        z-index: 1050 !important;
+        transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15) !important;
+    }
+
+    .admin-sidebar.show {
+        left: 0 !important;
+    }
+
+    .admin-sidebar-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(15, 23, 42, 0.4);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        z-index: 1040;
+        display: none;
+    }
+
+    .admin-sidebar-backdrop.show {
+        display: block;
+    }
+
+    .admin-content {
+        padding: 20px 16px !important;
+        width: 100% !important;
+    }
+
+    .admin-top-bar {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 12px !important;
+    }
+
+    .admin-top-bar h1 {
+        font-size: 20px !important;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .admin-content {
+        padding: 15px 12px !important;
+    }
+
+    .card {
+        padding: 16px !important;
+        border-radius: 14px !important;
+    }
+
+    .table-responsive {
+        border-radius: 12px;
+        border: 1px solid #E2E8F0;
+    }
+
+    .table th, .table td {
+        font-size: 13px !important;
+        padding: 8px 10px !important;
+    }
+}
+
 /* Admin Dashboard Cards */
 .admin-card-stat {
     border: none;

@@ -30,7 +30,7 @@ $recent_orders = $recent_stmt->fetchAll();
 <!-- SUMMARY METRICS CARDS -->
 <div class="row g-4 mb-4">
     <!-- Total Orders -->
-    <div class="col-md-3">
+    <div class="col-12 col-sm-6 col-lg-3">
         <div class="card admin-card-stat bg-white text-dark p-3">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
@@ -45,7 +45,7 @@ $recent_orders = $recent_stmt->fetchAll();
     </div>
     
     <!-- Today's Orders -->
-    <div class="col-md-3">
+    <div class="col-12 col-sm-6 col-lg-3">
         <div class="card admin-card-stat bg-white text-dark p-3">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
@@ -60,7 +60,7 @@ $recent_orders = $recent_stmt->fetchAll();
     </div>
 
     <!-- Total Revenue -->
-    <div class="col-md-3">
+    <div class="col-12 col-sm-6 col-lg-3">
         <div class="card admin-card-stat bg-white text-dark p-3">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
@@ -75,7 +75,7 @@ $recent_orders = $recent_stmt->fetchAll();
     </div>
 
     <!-- Pending Orders -->
-    <div class="col-md-3">
+    <div class="col-12 col-sm-6 col-lg-3">
         <div class="card admin-card-stat bg-white text-dark p-3">
             <div class="d-flex justify-content-between align-items-center">
                 <div>

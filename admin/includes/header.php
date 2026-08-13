@@ -22,6 +22,17 @@ $current_page = basename($_SERVER['PHP_SELF']);
 </head>
 <body>
 
+    <!-- MOBILE TOP HEADER (Visible on Mobile & Tablet) -->
+    <div class="admin-mobile-header d-lg-none d-flex justify-content-between align-items-center px-3 py-2 bg-white border-bottom shadow-sm">
+        <a href="dashboard" class="d-flex align-items-center text-decoration-none">
+            <img src="../assets/images/logo.png" alt="Logo" style="height:36px; width:auto; object-fit:contain;" class="me-2">
+            <span class="badge bg-orange text-white" style="font-size: 11px;">Admin</span>
+        </a>
+        <button class="btn btn-outline-orange border-0 fs-2 p-0 px-2" id="btnToggleSidebar" type="button" aria-label="Toggle Navigation">
+            <i class="bi bi-list"></i>
+        </button>
+    </div>
+
     <div class="admin-wrapper">
         
         <!-- SIDEBAR (Clean White Theme with Orange Accent) -->
