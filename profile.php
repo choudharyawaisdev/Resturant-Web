@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // profile.php
 require_once __DIR__ . '/includes/functions.php';
 
@@ -595,3 +595,4 @@ $wishlist_items = $wish_stmt->fetchAll();
     </script>
 </body>
 </html>
+

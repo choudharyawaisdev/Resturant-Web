@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // order-success.php
 require_once __DIR__ . '/includes/functions.php';
 
@@ -571,3 +571,4 @@ $current_step = $status_steps[$order['status']] ?? 0;
     </script>
 </body>
 </html>
+
