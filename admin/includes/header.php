@@ -33,6 +33,10 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 </div>
             </a>
 
+<?php
+$current_tab = $_GET['tab'] ?? 'products';
+$is_products = str_contains($current_page, 'products');
+?>
             <ul class="admin-nav mb-auto">
                 <li class="admin-nav-item">
                     <a href="dashboard" class="admin-nav-link <?= str_contains($current_page, 'dashboard') ? 'active' : '' ?>">
@@ -47,9 +51,21 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     </a>
                 </li>
                 <li class="admin-nav-item">
-                    <a href="products" class="admin-nav-link <?= str_contains($current_page, 'products') ? 'active' : '' ?>">
+                    <a href="products?tab=products" class="admin-nav-link <?= ($is_products && $current_tab === 'products') ? 'active' : '' ?>">
                         <i class="bi bi-egg-fried"></i>
                         <span>Products</span>
+                    </a>
+                </li>
+                <li class="admin-nav-item">
+                    <a href="products?tab=addons" class="admin-nav-link <?= ($is_products && $current_tab === 'addons') ? 'active' : '' ?>">
+                        <i class="bi bi-plus-circle-fill"></i>
+                        <span>Add-ons</span>
+                    </a>
+                </li>
+                <li class="admin-nav-item">
+                    <a href="products?tab=drinks" class="admin-nav-link <?= ($is_products && $current_tab === 'drinks') ? 'active' : '' ?>">
+                        <i class="bi bi-cup-straw"></i>
+                        <span>Drinks</span>
                     </a>
                 </li>
                 <li class="admin-nav-item">
@@ -103,7 +119,9 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         <?php
                         if (str_contains($current_page, 'dashboard')) echo 'Dashboard Overview';
                         elseif (str_contains($current_page, 'categories')) echo 'Category Management';
-                        elseif (str_contains($current_page, 'products')) echo 'Product Management';
+                        elseif ($is_products && $current_tab === 'addons') echo 'Global Add-ons Management';
+                        elseif ($is_products && $current_tab === 'drinks') echo 'Global Drinks Management';
+                        elseif ($is_products) echo 'Product Catalog Management';
                         elseif (str_contains($current_page, 'orders')) echo 'Orders Processing';
                         elseif (str_contains($current_page, 'areas')) echo 'Delivery Fees & Areas';
                         elseif (str_contains($current_page, 'settings')) echo 'Restaurant Settings';
