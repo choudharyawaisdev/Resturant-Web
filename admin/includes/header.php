@@ -10,7 +10,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel - Cravers</title>
+    <title>Admin Panel - Café-Chinos</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
@@ -33,11 +33,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
         <!-- SIDEBAR -->
         <div class="admin-sidebar d-flex flex-column flex-shrink-0 p-3 text-white bg-dark">
             <a href="dashboard.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                <svg width="30" height="30" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="me-2">
-                    <circle cx="50" cy="50" r="45" fill="#FF6B00"/>
-                    <path d="M50 20C40 20 30 35 30 50C30 65 40 80 50 80C60 80 70 65 70 50C70 35 60 20 50 20ZM45 60H37V40H45V60ZM63 60H55V40H63V60Z" fill="#FFF8F0"/>
-                </svg>
-                <span class="fs-4 fw-bold">Cravers Admin</span>
+                <img src="../assets/images/logo.png" alt="Café-Chinos" style="height:45px; width:auto; object-fit:contain; filter: drop-shadow(0 1px 3px rgba(255,255,255,0.2));" class="me-2">
+                <span class="fs-5 fw-bold">Café-Chinos Admin</span>
             </a>
             <hr>
             <ul class="nav nav-pills flex-column mb-auto">

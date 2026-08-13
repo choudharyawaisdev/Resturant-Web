@@ -46,10 +46,10 @@ $search_query = isset($_GET['search']) ? trim($_GET['search']) : '';
         }
     </style>
 </head>
-<body>
+<body class="has-fixed-navbar">
 
     <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-custom">
+    <nav class="navbar navbar-expand-lg navbar-custom navbar-fixed">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="index.php">
                 <img src="assets/images/logo.png" alt="Café-Chinos" class="navbar-logo" style="height:56px; width:auto; object-fit:contain; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.25));">
@@ -283,7 +283,6 @@ $search_query = isset($_GET['search']) ? trim($_GET['search']) : '';
 
         </div>
     </div>
-
     <!-- MANDATORY LOCATION SELECTOR MODAL -->
     <div class="modal fade" id="locationModal" tabindex="-1" aria-hidden="true" data-has-location="<?= $has_location ?>">
         <div class="modal-dialog modal-dialog-centered">
@@ -329,7 +328,7 @@ $search_query = isset($_GET['search']) ? trim($_GET['search']) : '';
                         <img src="assets/images/logo.png" alt="Café-Chinos" style="height:70px; width:auto; object-fit:contain; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));">
                     </a>
                     <p class="small text-muted mt-2">
-                        Cravers brings the taste of fresh, premium warm food right to your doorstep in Chiniot. From masterfully crafted zingers to authentic brick-oven pizzas, satisfaction is just a click away.
+                        Café-Chinos brings the taste of fresh, premium warm food right to your doorstep in Chiniot. From masterfully crafted zingers to authentic brick-oven pizzas, satisfaction is just a click away.
                     </p>
                     <div class="d-flex gap-3 mt-3">
                         <a href="#" class="text-muted"><i class="bi bi-facebook fs-5"></i></a>
@@ -385,7 +384,7 @@ $search_query = isset($_GET['search']) ? trim($_GET['search']) : '';
             <div class="main-footer-bottom text-center small text-muted">
                 <div class="row align-items-center">
                     <div class="col-md-6 text-md-start mb-2 mb-md-0">
-                        © <?= date('Y') ?> <?= sanitize(get_setting('restaurant_name', 'Cravers')) ?>. All Rights Reserved.
+                        © <?= date('Y') ?> <?= sanitize(get_setting('restaurant_name', 'Café-Chinos')) ?>. All Rights Reserved.
                     </div>
                     <div class="col-md-6 text-md-end">
                         Developed with passion by <strong style="color: var(--primary-orange);">DevtaSoft</strong>
@@ -401,7 +400,7 @@ $search_query = isset($_GET['search']) ? trim($_GET['search']) : '';
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Main JS -->
     <script src="assets/js/main.js"></script>
-    
+
     <!-- Category Smooth Scroll & Active Pill Script -->
     <script>
         document.querySelectorAll('.category-pill').forEach(pill => {

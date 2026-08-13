@@ -11,13 +11,13 @@ $settings = [];
 if (file_exists($settings_path)) {
     $settings = json_decode(file_get_contents($settings_path), true);
 }
-$restaurant_name = $settings['restaurant_name'] ?? 'Cravers';
+$restaurant_name = $settings['restaurant_name'] ?? 'Café-Chinos';
 $contact_number  = $settings['contact_number'] ?? '0311 7593578';
 $address         = $settings['address'] ?? '359-V Nao Gazah Rd, Chiniot, 35400';
 $city            = $settings['city'] ?? 'Chiniot';
 $hours           = $settings['hours'] ?? 'Open 24 hours';
 $service_options = $settings['service_options'] ?? 'Cash only';
-$promo_text      = $settings['promo_text'] ?? 'Craving Something Delicious in Chiniot?';
+$promo_text      = $settings['promo_text'] ?? 'Delicious Food at Café-Chinos';
 $promo_subtitle  = $settings['promo_subtitle'] ?? 'Get the best burgers...';
 
 // PROCESS FORMS (POST)
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
     // 1. SAVE GENERAL SETTINGS
     if ($action === 'save_settings') {
-        $restaurant_name = sanitize($_POST['restaurant_name'] ?? 'Cravers');
+        $restaurant_name = sanitize($_POST['restaurant_name'] ?? 'Café-Chinos');
         $contact_number  = sanitize($_POST['contact_number'] ?? '');
         $address         = sanitize($_POST['address'] ?? '');
         $city            = sanitize($_POST['city'] ?? 'Chiniot');

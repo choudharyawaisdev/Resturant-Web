@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // login.php
 require_once __DIR__ . '/includes/functions.php';
 
@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login & Signup - Cravers</title>
+    <title>Login & Signup - Café-Chinos</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
@@ -151,11 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <nav class="navbar navbar-custom py-3">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="index.php">
-                <svg width="35" height="35" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="me-2">
-                    <circle cx="50" cy="50" r="45" fill="#FF6B00"/>
-                    <path d="M50 20C40 20 30 35 30 50C30 65 40 80 50 80C60 80 70 65 70 50C70 35 60 20 50 20ZM45 60H37V40H45V60ZM63 60H55V40H63V60Z" fill="#FFF8F0"/>
-                </svg>
-                <span class="fs-4 fw-bold text-dark">Cravers<span style="color: var(--primary-orange);">.</span></span>
+                <img src="assets/images/logo.png" alt="Café-Chinos" class="navbar-logo" style="height:56px; width:auto; object-fit:contain; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.25));">
             </a>
             <a href="index.php" class="btn btn-outline-yellow btn-sm"><i class="bi bi-arrow-left"></i> Menu Directory</a>
         </div>
@@ -248,9 +244,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="row g-4 text-start">
                 <!-- Column 1: Brand Info -->
                 <div class="col-lg-4 col-md-6">
-                    <span class="fs-4 fw-bold text-white"><?= sanitize(get_setting('restaurant_name', 'Cravers')) ?>.</span>
+                    <a href="index.php">
+                        <img src="assets/images/logo.png" alt="Café-Chinos" style="height:70px; width:auto; object-fit:contain; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));">
+                    </a>
                     <p class="small text-muted mt-2">
-                        Cravers brings the taste of fresh, premium warm food right to your doorstep in Chiniot. From masterfully crafted zingers to authentic brick-oven pizzas, satisfaction is just a click away.
+                        Café-Chinos brings the taste of fresh, premium warm food right to your doorstep in Chiniot. From masterfully crafted zingers to authentic brick-oven pizzas, satisfaction is just a click away.
                     </p>
                     <div class="d-flex gap-3 mt-3">
                         <a href="#" class="text-muted"><i class="bi bi-facebook fs-5"></i></a>
@@ -306,7 +304,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="main-footer-bottom text-center small text-muted">
                 <div class="row align-items-center">
                     <div class="col-md-6 text-md-start mb-2 mb-md-0">
-                        © <?= date('Y') ?> <?= sanitize(get_setting('restaurant_name', 'Cravers')) ?>. All Rights Reserved.
+                        © <?= date('Y') ?> <?= sanitize(get_setting('restaurant_name', 'Café-Chinos')) ?>. All Rights Reserved.
                     </div>
                     <div class="col-md-6 text-md-end">
                         Developed with passion by <strong style="color: var(--primary-orange);">DevtaSoft</strong>

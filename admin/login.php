@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login - Cravers</title>
+    <title>Admin Login - Café-Chinos</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
@@ -69,11 +69,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="login-container">
         <div class="login-card">
             <div class="text-center mb-4">
-                <svg width="50" height="50" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="mb-3">
-                    <circle cx="50" cy="50" r="45" fill="#FF6B00"/>
-                    <path d="M50 20C40 20 30 35 30 50C30 65 40 80 50 80C60 80 70 65 70 50C70 35 60 20 50 20ZM45 60H37V40H45V60ZM63 60H55V40H63V60Z" fill="#FFF8F0"/>
-                </svg>
-                <h4 class="fw-bold">Cravers Admin</h4>
+                <img src="../assets/images/logo.png" alt="Café-Chinos" class="mb-3" style="height:60px; width:auto; object-fit:contain; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));">
+                <h4 class="fw-bold">Café-Chinos Admin</h4>
                 <p class="text-muted small">Enter your credentials to manage restaurant operations.</p>
             </div>
 

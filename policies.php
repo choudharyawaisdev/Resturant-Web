@@ -1,20 +1,20 @@
-﻿<?php
+<?php
 // policies.php
 require_once __DIR__ . '/includes/functions.php';
 
 $type = isset($_GET['type']) ? sanitize($_GET['type']) : 'refund';
 
 // Set page content variables
-$page_title = 'Policies - Cravers';
+$page_title = 'Policies - Café-Chinos';
 $header_title = 'Policy Information';
 $content_html = '';
 
 if ($type === 'refund') {
-    $page_title = 'Return & Refund Policy - Cravers';
+    $page_title = 'Return & Refund Policy - Café-Chinos';
     $header_title = 'Return & Refund Policy';
     $content_html = '
         <h4 class="fw-bold mb-3" style="color: var(--primary-orange);">1. Freshness Guarantee</h4>
-        <p>At Cravers, we take absolute pride in the quality and freshness of our meals. Every order is prepared warm and cooked to order using the finest ingredients. If your order does not meet your expectations, we want to make it right.</p>
+        <p>At Café-Chinos, we take absolute pride in the quality and freshness of our meals. Every order is prepared warm and cooked to order using the finest ingredients. If your order does not meet your expectations, we want to make it right.</p>
 
         <h4 class="fw-bold mb-3 mt-4" style="color: var(--primary-orange);">2. Cancellation Policy</h4>
         <p>Orders can only be cancelled or modified before our kitchen updates the status to <strong>"Preparing"</strong>. Once the food is in preparation or out for delivery, cancellations cannot be accepted, and payment is due in full upon delivery.</p>
@@ -31,11 +31,11 @@ if ($type === 'refund') {
         <p>Refusing to accept a correctly prepared order without valid cause may result in the suspension of your guest account and your delivery address from future orders on our platform.</p>
     ';
 } elseif ($type === 'terms') {
-    $page_title = 'Terms of Service - Cravers';
+    $page_title = 'Terms of Service - Café-Chinos';
     $header_title = 'Terms & Conditions of Service';
     $content_html = '
         <h4 class="fw-bold mb-3" style="color: var(--primary-orange);">1. Acceptance of Terms</h4>
-        <p>By accessing our website or placing an food order at Cravers, you agree to comply with and be bound by these Terms of Service. If you do not agree to these terms, please do not use our services.</p>
+        <p>By accessing our website or placing an food order at Café-Chinos, you agree to comply with and be bound by these Terms of Service. If you do not agree to these terms, please do not use our services.</p>
 
         <h4 class="fw-bold mb-3 mt-4" style="color: var(--primary-orange);">2. Service Coverage Sectors</h4>
         <p>Delivery is currently restricted to active pre-configured sectors in <strong>Chiniot</strong>. If your delivery address does not fall within our active zones, we reserve the right to decline your order. Delivery charges vary by distance and sector location.</p>
@@ -44,10 +44,10 @@ if ($type === 'refund') {
         <p>When ordering as a guest or logged-in account, you agree to provide an accurate contact phone number and detailed delivery street address. We may call your number to verify the order before the kitchen starts preparation.</p>
 
         <h4 class="fw-bold mb-3 mt-4" style="color: var(--primary-orange);">4. Modifications to Prices & Menu</h4>
-        <p>Cravers reserves the right to modify prices, customization addon fees, delivery charges, and menu selections at any time without prior notice. All active orders placed prior to price adjustments will be honored at their original checkout values.</p>
+        <p>Café-Chinos reserves the right to modify prices, customization addon fees, delivery charges, and menu selections at any time without prior notice. All active orders placed prior to price adjustments will be honored at their original checkout values.</p>
     ';
 } elseif ($type === 'privacy') {
-    $page_title = 'Privacy Policy - Cravers';
+    $page_title = 'Privacy Policy - Café-Chinos';
     $header_title = 'Privacy Policy';
     $content_html = '
         <h4 class="fw-bold mb-3" style="color: var(--primary-orange);">1. Information We Collect</h4>
@@ -63,7 +63,7 @@ if ($type === 'refund') {
         <p>All passwords stored in our system are encrypted using industry-standard bcrypt hashes. We take server-side security measures to prevent unauthorized data access, leakage, or loss.</p>
 
         <h4 class="fw-bold mb-3 mt-4" style="color: var(--primary-orange);">3. Sharing of Information</h4>
-        <p>Cravers does not sell, rent, or lease your personal information to third parties. Your address and contact details are only shared internally with our kitchen dispatchers and designated riders solely for the purpose of completing your order.</p>
+        <p>Café-Chinos does not sell, rent, or lease your personal information to third parties. Your address and contact details are only shared internally with our kitchen dispatchers and designated riders solely for the purpose of completing your order.</p>
 
         <h4 class="fw-bold mb-3 mt-4" style="color: var(--primary-orange);">4. Cookies and Sessions</h4>
         <p>Our website uses session parameters and local storage to save your configured cart contents and remember your designated delivery location area between page reloads.</p>
@@ -89,11 +89,7 @@ if ($type === 'refund') {
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="index.php">
-                <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="me-2">
-                    <circle cx="50" cy="50" r="45" fill="#FF6B00"/>
-                    <path d="M50 20C40 20 30 35 30 50C30 65 40 80 50 80C60 80 70 65 70 50C70 35 60 20 50 20ZM45 60H37V40H45V60ZM63 60H55V40H63V60Z" fill="#FFF8F0"/>
-                </svg>
-                <span class="fs-4 fw-bold" style="color: var(--text-dark); letter-spacing: -0.5px;"><?= sanitize(get_setting('restaurant_name', 'Cravers')) ?><span style="color: var(--primary-orange);">.</span></span>
+                <img src="assets/images/logo.png" alt="Café-Chinos" class="navbar-logo" style="height:56px; width:auto; object-fit:contain; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.25));">
             </a>
             
             <div class="d-flex align-items-center">
@@ -126,9 +122,11 @@ if ($type === 'refund') {
             <div class="row g-4 text-start">
                 <!-- Column 1: Brand Info -->
                 <div class="col-lg-4 col-md-6">
-                    <span class="fs-4 fw-bold text-white"><?= sanitize(get_setting('restaurant_name', 'Cravers')) ?>.</span>
+                    <a href="index.php">
+                        <img src="assets/images/logo.png" alt="Café-Chinos" style="height:70px; width:auto; object-fit:contain; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));">
+                    </a>
                     <p class="small text-muted mt-2">
-                        Cravers brings the taste of fresh, premium warm food right to your doorstep in Chiniot. From masterfully crafted zingers to authentic brick-oven pizzas, satisfaction is just a click away.
+                        Café-Chinos brings the taste of fresh, premium warm food right to your doorstep in Chiniot. From masterfully crafted zingers to authentic brick-oven pizzas, satisfaction is just a click away.
                     </p>
                     <div class="d-flex gap-3 mt-3">
                         <a href="#" class="text-muted"><i class="bi bi-facebook fs-5"></i></a>
@@ -184,7 +182,7 @@ if ($type === 'refund') {
             <div class="main-footer-bottom text-center small text-muted">
                 <div class="row align-items-center">
                     <div class="col-md-6 text-md-start mb-2 mb-md-0">
-                        © <?= date('Y') ?> <?= sanitize(get_setting('restaurant_name', 'Cravers')) ?>. All Rights Reserved.
+                        © <?= date('Y') ?> <?= sanitize(get_setting('restaurant_name', 'Café-Chinos')) ?>. All Rights Reserved.
                     </div>
                     <div class="col-md-6 text-md-end">
                         Developed with passion by <strong style="color: var(--primary-orange);">DevtaSoft</strong>
