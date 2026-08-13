@@ -132,6 +132,11 @@ CREATE TABLE IF NOT EXISTS `admin_users` (
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
+-- Seed Default Admin User (username: admin, password: admin123)
+INSERT INTO `admin_users` (`id`, `username`, `password_hash`) VALUES
+(1, 'admin', '$2y$10$ZJKiHjD.hCJeQASv6CeoGe6gEnlpABWDtu9N237hMozSx4VhDFzu6')
+ON DUPLICATE KEY UPDATE `username` = VALUES(`username`);
+
 
 -- =========================================================================
 -- SEED DATA

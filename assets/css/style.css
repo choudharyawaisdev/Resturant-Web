@@ -628,36 +628,53 @@ p {
 
 /* Footer Styling */
 .main-footer {
-    background-color: #1a1d20 !important;
-    color: #ffffff !important;
-    padding: 60px 0 30px 0 !important;
+    background: linear-gradient(180deg, #111827 0%, #0B0F19 100%) !important;
+    color: #94A3B8 !important;
+    padding: 65px 0 30px 0 !important;
     margin-top: 80px !important;
     font-size: 14px !important;
+    border-top: 1px solid #1E293B !important;
 }
-.main-footer p, .main-footer ul, .main-footer li, .main-footer span, .main-footer div, .main-footer .text-muted, .main-footer a.text-muted {
-    color: #ffffff !important;
+.main-footer p, .main-footer .footer-desc {
+    color: #94A3B8 !important;
+    line-height: 1.6 !important;
 }
-.main-footer a {
-    color: #ffffff !important;
+.main-footer ul, .main-footer li {
+    color: #94A3B8 !important;
+}
+.main-footer a, .main-footer .footer-link {
+    color: #94A3B8 !important;
     text-decoration: none !important;
-    transition: all 0.2s ease !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    display: inline-flex !important;
+    align-items: center !important;
 }
-.main-footer a:hover {
+.main-footer a:hover, .main-footer .footer-link:hover {
     color: var(--primary-orange) !important;
-    padding-left: 3px !important;
+    transform: translateX(4px) !important;
 }
 .main-footer-bottom {
-    border-top: 1px solid #2d3238 !important;
+    border-top: 1px solid #1E293B !important;
     padding-top: 20px !important;
     margin-top: 40px !important;
-    color: #ffffff !important;
+    color: #64748B !important;
 }
 .main-footer-bottom div, .main-footer-bottom span, .main-footer-bottom p {
-    color: #ffffff !important;
+    color: #64748B !important;
 }
 .main-footer h6 {
-    font-size: 16px !important;
+    font-size: 15px !important;
     letter-spacing: 0.5px !important;
+    color: #FFFFFF !important;
+    text-transform: uppercase !important;
+    font-weight: 700 !important;
+}
+.main-footer .bi-chevron-right {
+    transition: transform 0.2s ease;
+}
+.main-footer a:hover .bi-chevron-right {
+    transform: translateX(2px);
+}
     color: #ffffff !important;
 }
 .main-footer .bi {
