@@ -1,0 +1,56 @@
+# ============================================================
+#  Cafe Chinos — Admin Panel .htaccess
+#  ✅ Extra security for /admin directory
+#  ✅ Block non-PHP direct file access
+#  ✅ Remove .php extension inside admin too
+#  ✅ Prevent hotlinking & info leakage
+# ============================================================
+
+Options -Indexes
+Options -MultiViews
+
+RewriteEngine On
+RewriteBase /Resturant-Web/admin/
+
+# ── Block all non-essential file types ──────────────────────
+<FilesMatch "\.(sql|json|log|md|env|htpasswd|bak|sh|ini|txt)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# ── Block access to includes subfolder directly ──────────────
+RewriteRule ^includes(/.*)?$ - [F,L]
+
+# ── Security Headers for Admin ────────────────────────────────
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options    "nosniff"
+    Header always set X-Frame-Options           "DENY"
+    Header always set X-XSS-Protection          "1; mode=block"
+    Header always set Cache-Control             "no-store, no-cache, must-revalidate, max-age=0"
+    Header always set Pragma                    "no-cache"
+    Header always set Referrer-Policy           "no-referrer"
+    Header unset Server
+    Header always unset X-Powered-By
+    # Strict Transport Security (enable if using HTTPS)
+    # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+</IfModule>
+
+# ── Remove .php extension inside admin ────────────────────────
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.+)$ $1.php [L,QSA]
+
+# ── Redirect /admin/xxx.php → /admin/xxx (canonical) ─────────
+RewriteCond %{THE_REQUEST} \s/+Resturant-Web/admin/(.+?)\.php[\s?] [NC]
+RewriteRule ^ /Resturant-Web/admin/%1 [R=301,L,NE]
+
+# ── PHP Security Settings ─────────────────────────────────────
+<IfModule mod_php.c>
+    php_flag display_errors Off
+    php_flag log_errors On
+    php_value session.cookie_httponly 1
+    php_value session.cookie_samesite Strict
+    php_value session.gc_maxlifetime 1800
+    php_value expose_php Off
+</IfModule>

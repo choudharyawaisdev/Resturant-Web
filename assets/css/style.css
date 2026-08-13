@@ -513,54 +513,157 @@ p {
     padding: 30px;
 }
 
-/* Admin Sidebar Layout */
+/* Admin Sidebar & Layout (Clean Light Theme with Orange Scheme) */
 .admin-wrapper {
     display: flex;
     min-height: 100vh;
+    background-color: #F8FAFC;
 }
 
 .admin-sidebar {
-    width: 250px;
-    background-color: #212529;
-    color: var(--white);
-    padding-top: 20px;
-    transition: all 0.3s;
+    width: 270px;
+    background-color: #FFFFFF !important;
+    border-right: 1px solid #E2E8F0;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.03);
+    padding: 24px 18px;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    position: sticky;
+    top: 0;
+    height: 100vh;
 }
 
 .admin-brand {
-    padding: 10px 20px 20px 20px;
-    font-size: 20px;
-    font-weight: 800;
-    border-bottom: 1px solid #343a40;
+    padding: 0 8px 20px 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid #F1F5F9;
+    margin-bottom: 24px;
+    text-decoration: none;
+}
+
+.admin-brand-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: #0F172A;
+    line-height: 1.2;
+}
+
+.admin-brand-badge {
+    font-size: 11px;
+    background: linear-gradient(135deg, #FF6B00 0%, #FF8500 100%);
+    color: #FFFFFF;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-weight: 600;
+    margin-top: 4px;
+    display: inline-block;
+    letter-spacing: 0.5px;
+}
+
+.admin-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.admin-nav-item {
+    margin: 0;
+}
+
+.admin-nav-link {
+    display: flex;
+    align-items: center;
+    padding: 12px 18px;
+    color: #475569;
+    font-weight: 500;
+    font-size: 14px;
+    text-decoration: none;
+    border-radius: 14px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    gap: 14px;
+}
+
+.admin-nav-link i {
+    font-size: 18px;
+    color: #94A3B8;
+    transition: all 0.25s ease;
+}
+
+/* Hover state: Soft Orange Background & Orange Text */
+.admin-nav-link:hover {
+    background-color: #FFF0E5;
+    color: var(--primary-orange);
+    transform: translateX(4px);
+}
+
+.admin-nav-link:hover i {
     color: var(--primary-orange);
 }
 
-.admin-menu {
-    list-style: none;
-    padding: 0;
-    margin: 20px 0;
+/* Active state: Vibrant Orange Gradient & White Text */
+.admin-nav-link.active {
+    background: linear-gradient(135deg, #FF6B00 0%, #FF8500 100%) !important;
+    color: #FFFFFF !important;
+    font-weight: 600;
+    box-shadow: 0 4px 16px rgba(255, 107, 0, 0.35);
 }
 
-.admin-menu li a {
+.admin-nav-link.active i {
+    color: #FFFFFF !important;
+}
+
+/* User Card at bottom of sidebar */
+.admin-user-card {
+    margin-top: auto;
+    padding-top: 18px;
+    border-top: 1px solid #F1F5F9;
+}
+
+.admin-user-box {
     display: flex;
     align-items: center;
-    padding: 12px 20px;
-    color: #ced4da;
+    padding: 10px 12px;
+    background-color: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 14px;
     text-decoration: none;
+    color: #1E293B;
     transition: all 0.2s ease;
-    gap: 10px;
 }
 
-.admin-menu li a:hover,
-.admin-menu li.active a {
-    color: var(--white);
-    background-color: var(--primary-orange);
+.admin-user-box:hover {
+    background-color: #FFF0E5;
+    border-color: rgba(255, 107, 0, 0.3);
+    color: var(--primary-orange);
+}
+
+.admin-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FF6B00 0%, #FF8500 100%);
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    margin-right: 10px;
+    flex-shrink: 0;
 }
 
 .admin-content {
     flex-grow: 1;
-    background-color: #f8f9fa;
-    padding: 30px;
+    background-color: #F8FAFC;
+    padding: 30px 40px;
+    overflow-y: auto;
 }
 
 /* Admin Dashboard Cards */

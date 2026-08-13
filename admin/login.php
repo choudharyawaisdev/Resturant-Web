@@ -1,33 +1,80 @@
 <?php
 // admin/login.php
+if (session_status() === PHP_SESSION_NONE) {
+    session_set_cookie_params(['lifetime'=>0,'path'=>'/','httponly'=>true,'samesite'=>'Strict']);
+    session_start();
+}
 require_once dirname(__DIR__) . '/includes/functions.php';
 
 // Redirect if already logged in as admin
 if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true) {
-    redirect('dashboard.php');
+    header('Location: /Resturant-Web/admin/dashboard');
+    exit();
 }
 
 $error_msg = '';
+$lockout_remaining = 0;
 
+// ── Brute-force Protection ───────────────────────────────────
+// Max 5 failed attempts → 15-minute lockout (stored in session)
+$max_attempts  = 5;
+$lockout_secs  = 900; // 15 minutes
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (!isset($_SESSION['login_attempts']))  $_SESSION['login_attempts']  = 0;
+if (!isset($_SESSION['login_lockout_until'])) $_SESSION['login_lockout_until'] = 0;
+
+$is_locked_out = (time() < $_SESSION['login_lockout_until']);
+if ($is_locked_out) {
+    $lockout_remaining = $_SESSION['login_lockout_until'] - time();
+    $error_msg = 'Too many failed attempts. Try again in ' . ceil($lockout_remaining / 60) . ' minute(s).';
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$is_locked_out) {
     $username = sanitize($_POST['username'] ?? '');
-    $password = sanitize($_POST['password'] ?? '');
+    $password = $_POST['password'] ?? '';   // raw — password_verify needs original
 
     if (empty($username) || empty($password)) {
         $error_msg = 'Please fill in all fields.';
     } else {
-        $stmt = $pdo->prepare("SELECT * FROM admin_users WHERE username = ?");
+        $stmt = $pdo->prepare("SELECT * FROM admin_users WHERE username = ? AND status = 'active'");
         $stmt->execute([$username]);
         $admin = $stmt->fetch();
 
-        if ($admin && password_verify($password, $admin['password_hash'])) {
-            $_SESSION['admin_logged_in'] = true;
-            $_SESSION['admin_id'] = $admin['id'];
-            $_SESSION['admin_username'] = $admin['username'];
-            redirect('dashboard.php');
+        if ($admin && password_verify($password, $admin['password'])) {
+            // ✅ Success — reset attempts
+            $_SESSION['login_attempts']     = 0;
+            $_SESSION['login_lockout_until']= 0;
+
+            $_SESSION['admin_logged_in']  = true;
+            $_SESSION['admin_id']         = $admin['id'];
+            $_SESSION['admin_username']   = $admin['username'];
+            $_SESSION['admin_role']       = $admin['role'];
+            $_SESSION['admin_last_activity'] = time();
+            // Session fingerprint to prevent hijacking
+            $_SESSION['admin_fingerprint'] = md5(
+                ($_SERVER['HTTP_USER_AGENT'] ?? '') .
+                ($_SERVER['REMOTE_ADDR']     ?? '')
+            );
+            // Regenerate session ID on login
+            session_regenerate_id(true);
+
+            // Update last login timestamp
+            $pdo->prepare("UPDATE admin_users SET last_login = NOW() WHERE id = ?")
+                ->execute([$admin['id']]);
+
+            header('Location: /Resturant-Web/admin/dashboard');
+            exit();
         } else {
-            $error_msg = 'Invalid username or password.';
+            // ❌ Failed attempt
+            $_SESSION['login_attempts']++;
+            if ($_SESSION['login_attempts'] >= $max_attempts) {
+                $_SESSION['login_lockout_until'] = time() + $lockout_secs;
+                $_SESSION['login_attempts']      = 0;
+                $error_msg = 'Too many failed attempts. Locked out for 15 minutes.';
+            } else {
+                $remaining = $max_attempts - $_SESSION['login_attempts'];
+                $error_msg = 'Invalid username or password. ' . $remaining . ' attempt(s) remaining.';
+            }
         }
     }
 }
@@ -74,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <p class="text-muted small">Enter your credentials to manage restaurant operations.</p>
             </div>
 
-            <form action="login.php" method="POST" id="loginForm">
+            <form action="/Resturant-Web/admin/login" method="POST" id="loginForm" autocomplete="off">
                 <div class="mb-3">
                     <label for="username" class="form-label small fw-bold text-muted">USERNAME</label>
                     <div class="input-group">

@@ -19,88 +19,104 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="../assets/css/style.css" rel="stylesheet">
-    <style>
-        .admin-sidebar {
-            min-height: 100vh;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.05);
-        }
-    </style>
 </head>
 <body>
 
     <div class="admin-wrapper">
         
-        <!-- SIDEBAR -->
-        <div class="admin-sidebar d-flex flex-column flex-shrink-0 p-3 text-white bg-dark">
-            <a href="dashboard.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                <img src="../assets/images/logo.png" alt="Café-Chinos" style="height:45px; width:auto; object-fit:contain; filter: drop-shadow(0 1px 3px rgba(255,255,255,0.2));" class="me-2">
-                <span class="fs-5 fw-bold">Café-Chinos Admin</span>
+        <!-- SIDEBAR (Clean White Theme with Orange Accent) -->
+        <aside class="admin-sidebar">
+            <a href="dashboard" class="admin-brand">
+                <img src="../assets/images/logo.png" alt="Café-Chinos" style="height:42px; width:auto; object-fit:contain;">
+                <div>
+                    <div class="admin-brand-title">Café-Chinos</div>
+                    <span class="admin-brand-badge">Admin</span>
+                </div>
             </a>
-            <hr>
-            <ul class="nav nav-pills flex-column mb-auto">
-                <li class="nav-item mb-1">
-                    <a href="dashboard.php" class="nav-link <?= $current_page == 'dashboard.php' ? 'active bg-warning text-dark fw-bold' : 'text-white' ?>">
-                        <i class="bi bi-speedometer2 me-2"></i> Dashboard
+
+            <ul class="admin-nav mb-auto">
+                <li class="admin-nav-item">
+                    <a href="dashboard" class="admin-nav-link <?= str_contains($current_page, 'dashboard') ? 'active' : '' ?>">
+                        <i class="bi bi-grid-1x2-fill"></i>
+                        <span>Dashboard</span>
                     </a>
                 </li>
-                <li class="mb-1">
-                    <a href="categories.php" class="nav-link <?= $current_page == 'categories.php' ? 'active bg-warning text-dark fw-bold' : 'text-white' ?>">
-                        <i class="bi bi-tags me-2"></i> Categories
+                <li class="admin-nav-item">
+                    <a href="categories" class="admin-nav-link <?= str_contains($current_page, 'categories') ? 'active' : '' ?>">
+                        <i class="bi bi-tags-fill"></i>
+                        <span>Categories</span>
                     </a>
                 </li>
-                <li class="mb-1">
-                    <a href="products.php" class="nav-link <?= $current_page == 'products.php' ? 'active bg-warning text-dark fw-bold' : 'text-white' ?>">
-                        <i class="bi bi-egg-fried me-2"></i> Products
+                <li class="admin-nav-item">
+                    <a href="products" class="admin-nav-link <?= str_contains($current_page, 'products') ? 'active' : '' ?>">
+                        <i class="bi bi-egg-fried"></i>
+                        <span>Products</span>
                     </a>
                 </li>
-                <li class="mb-1">
-                    <a href="orders.php" class="nav-link <?= $current_page == 'orders.php' ? 'active bg-warning text-dark fw-bold' : 'text-white' ?>">
-                        <i class="bi bi-receipt me-2"></i> Orders
+                <li class="admin-nav-item">
+                    <a href="orders" class="admin-nav-link <?= str_contains($current_page, 'orders') ? 'active' : '' ?>">
+                        <i class="bi bi-bag-check-fill"></i>
+                        <span>Orders</span>
                     </a>
                 </li>
-                <li class="mb-1">
-                    <a href="areas.php" class="nav-link <?= $current_page == 'areas.php' ? 'active bg-warning text-dark fw-bold' : 'text-white' ?>">
-                        <i class="bi bi-geo-alt me-2"></i> Areas & Delivery
+                <li class="admin-nav-item">
+                    <a href="areas" class="admin-nav-link <?= str_contains($current_page, 'areas') ? 'active' : '' ?>">
+                        <i class="bi bi-geo-alt-fill"></i>
+                        <span>Areas & Delivery</span>
                     </a>
                 </li>
-                <li class="mb-1">
-                    <a href="settings.php" class="nav-link <?= $current_page == 'settings.php' ? 'active bg-warning text-dark fw-bold' : 'text-white' ?>">
-                        <i class="bi bi-gear me-2"></i> Settings
+                <li class="admin-nav-item">
+                    <a href="settings" class="admin-nav-link <?= str_contains($current_page, 'settings') ? 'active' : '' ?>">
+                        <i class="bi bi-gear-fill"></i>
+                        <span>Settings</span>
                     </a>
                 </li>
             </ul>
-            <hr>
-            <div class="dropdown">
-                <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bi bi-person-circle fs-5 me-2"></i>
-                    <strong><?= sanitize($_SESSION['admin_username'] ?? 'Admin') ?></strong>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                    <li><a class="dropdown-item" href="settings.php"><i class="bi bi-gear-fill me-2"></i> Settings</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="logout.php"><i class="bi bi-box-arrow-right me-2 text-danger"></i> Sign out</a></li>
-                </ul>
-            </div>
-        </div>
 
-        <!-- CONTENT AREA -->
-        <div class="admin-content">
-            <!-- Header top bar -->
-            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-4 border-bottom">
-                <h1 class="h2 text-dark fw-bold">
-                    <?php
-                    switch($current_page) {
-                        case 'dashboard.php': echo 'Dashboard Overview'; break;
-                        case 'categories.php': echo 'Category Management'; break;
-                        case 'products.php': echo 'Product Management'; break;
-                        case 'orders.php': echo 'Orders Processing'; break;
-                        case 'areas.php': echo 'Delivery Fees & Areas'; break;
-                        case 'settings.php': echo 'Restaurant Settings'; break;
-                        default: echo 'Management';
-                    }
-                    ?>
-                </h1>
-                <div class="btn-toolbar mb-2 mb-md-0">
-                    <a href="../index.php" target="_blank" class="btn btn-sm btn-outline-secondary me-2"><i class="bi bi-eye-fill me-1"></i> Visit Customer Site</a>
+            <!-- USER PROFILE AT BOTTOM -->
+            <div class="admin-user-card">
+                <div class="dropdown">
+                    <a href="#" class="admin-user-box dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="admin-avatar">
+                            <?= strtoupper(substr(sanitize($_SESSION['admin_username'] ?? 'A'), 0, 1)) ?>
+                        </div>
+                        <div class="flex-grow-1 overflow-hidden me-2">
+                            <div class="fw-bold text-truncate" style="font-size: 13px; color: #1E293B;"><?= sanitize($_SESSION['admin_username'] ?? 'Admin') ?></div>
+                            <div class="text-muted" style="font-size: 11px;">Administrator</div>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 rounded-3 text-small" aria-labelledby="dropdownUser">
+                        <li><a class="dropdown-item py-2" href="settings"><i class="bi bi-gear me-2 text-muted"></i> Settings</a></li>
+                        <li><a class="dropdown-item py-2" href="../index" target="_blank"><i class="bi bi-globe me-2 text-muted"></i> Customer Site</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item py-2 text-danger fw-semibold" href="logout"><i class="bi bi-box-arrow-right me-2"></i> Sign out</a></li>
+                    </ul>
                 </div>
             </div>
+        </aside>
+
+        <!-- CONTENT AREA -->
+        <main class="admin-content">
+            <!-- Header top bar -->
+            <div class="admin-top-bar d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
+                <div>
+                    <h1 class="h3 fw-bold text-dark mb-0">
+                        <?php
+                        if (str_contains($current_page, 'dashboard')) echo 'Dashboard Overview';
+                        elseif (str_contains($current_page, 'categories')) echo 'Category Management';
+                        elseif (str_contains($current_page, 'products')) echo 'Product Management';
+                        elseif (str_contains($current_page, 'orders')) echo 'Orders Processing';
+                        elseif (str_contains($current_page, 'areas')) echo 'Delivery Fees & Areas';
+                        elseif (str_contains($current_page, 'settings')) echo 'Restaurant Settings';
+                        else echo 'Management';
+                        ?>
+                    </h1>
+                    <p class="text-muted small mb-0 mt-1">Welcome back, <strong><?= sanitize($_SESSION['admin_username'] ?? 'Admin') ?></strong>!</p>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <a href="../index" target="_blank" class="btn btn-outline-orange btn-sm rounded-pill px-3 py-2">
+                        <i class="bi bi-box-arrow-up-right me-1"></i> Visit Customer Site
+                    </a>
+                </div>
+            </div>
+

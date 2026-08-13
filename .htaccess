@@ -1,0 +1,60 @@
+# ============================================================
+#  Cafe Chinos — Root .htaccess
+#  ✅ Remove .php extension from URLs
+#  ✅ Security headers
+#  ✅ Block sensitive files
+#  ✅ Prevent directory browsing
+# ============================================================
+
+Options -Indexes
+Options -MultiViews
+
+RewriteEngine On
+RewriteBase /Resturant-Web/
+
+# ── Block direct access to sensitive files ──────────────────
+<FilesMatch "\.(sql|json|log|md|git|env|htpasswd|bak|sh|ini)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Block access to includes directory directly
+RewriteRule ^includes(/.*)?$ - [F,L]
+
+# ── Security Headers ─────────────────────────────────────────
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options    "nosniff"
+    Header always set X-Frame-Options           "SAMEORIGIN"
+    Header always set X-XSS-Protection          "1; mode=block"
+    Header always set Referrer-Policy           "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy        "geolocation=(), microphone=(), camera=()"
+    # Remove server signature
+    Header unset Server
+    Header always unset X-Powered-By
+</IfModule>
+
+# ── Remove .php extension — Clean URLs ───────────────────────
+# If request is not a real file or directory
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+# Try adding .php to the URL
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.+)$ $1.php [L,QSA]
+
+# ── Redirect /login.php → /login (canonical) ─────────────────
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.php[\s?] [NC]
+RewriteRule ^ /%1 [R=301,L,NE]
+
+# ── Force trailing slash removal ─────────────────────────────
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)/$ /$1 [R=301,L]
+
+# ── PHP Settings ─────────────────────────────────────────────
+<IfModule mod_php.c>
+    php_flag display_errors Off
+    php_flag log_errors On
+    php_value session.cookie_httponly 1
+    php_value session.cookie_samesite Strict
+    php_value expose_php Off
+</IfModule>
