@@ -102,15 +102,17 @@ $search_query = isset($_GET['search']) ? trim($_GET['search']) : '';
     </nav>
 
     <div class="container my-3">
-        <!-- CATEGORY NAVIGATION CONTAINER (PILLS) -->
+        <!-- CATEGORY NAVIGATION CONTAINER (PILLS) - Sticky below navbar -->
         <?php if (empty($search_query)): ?>
-            <div class="category-pill-container my-3">
-                <a href="#all" class="category-pill active" data-category-id="all">All</a>
-                <?php foreach ($categories as $cat): ?>
-                    <a href="#category-<?= $cat['id'] ?>" class="category-pill" data-category-id="<?= $cat['id'] ?>">
-                        <span><?= sanitize($cat['name']) ?></span>
-                    </a>
-                <?php endforeach; ?>
+            <div class="category-pill-wrapper" id="categoryPillWrapper">
+                <div class="category-pill-container">
+                    <a href="#all" class="category-pill active" data-category-id="all">All</a>
+                    <?php foreach ($categories as $cat): ?>
+                        <a href="#category-<?= $cat['id'] ?>" class="category-pill" data-category-id="<?= $cat['id'] ?>">
+                            <span><?= sanitize($cat['name']) ?></span>
+                        </a>
+                    <?php endforeach; ?>
+                </div>
             </div>
         <?php endif; ?>
 
@@ -470,6 +472,18 @@ $search_query = isset($_GET['search']) ? trim($_GET['search']) : '';
                     }
                 });
             });
+        });
+    </script>
+
+    <script>
+        // Navbar scroll shadow effect
+        window.addEventListener('scroll', function () {
+            const navbar = document.querySelector('.navbar-custom');
+            if (window.scrollY > 10) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
         });
     </script>
 </body>

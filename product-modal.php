@@ -101,17 +101,20 @@ if (!empty($product['image']) && file_exists(__DIR__ . '/assets/images/uploads/'
                 <?php if (!empty($addons)): ?>
                     <div class="mb-4">
                         <label class="fw-bold text-muted mb-2 d-block small text-uppercase" style="letter-spacing: 0.8px; font-size: 11px;">Extra Toppings</label>
-                        <select class="form-select form-select-md rounded-3 border shadow-xs py-2.5 px-3" id="addonDropdown" style="font-size: 14px; border-color: #E2E8F0 !important;">
-                            <option value="0" data-price="0.00" selected>-- Select Extra Topping --</option>
-                            <?php foreach ($addons as $addon): ?>
-                                <option value="<?= $addon['id'] ?>" data-price="<?= $addon['price'] ?>" data-name="<?= sanitize($addon['name']) ?>">
-                                    <?= sanitize($addon['name']) ?> (+Rs. <?= number_format($addon['price'], 0) ?>)
-                                </option>
+                        <div class="addon-checkbox-list rounded-3 border overflow-hidden" style="border-color: #E2E8F0 !important;">
+                            <?php foreach ($addons as $idx => $addon): ?>
+                                <div class="addon-checkbox-row d-flex align-items-center justify-content-between px-3 py-3 <?= $idx > 0 ? 'border-top' : '' ?>" style="border-color: #F1F5F9 !important; cursor: pointer;" onclick="document.getElementById('addon_<?= $addon['id'] ?>').click()">
+                                    <span class="addon-name text-dark" style="font-size: 14px; font-weight: 500;"><?= sanitize($addon['name']) ?></span>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <span class="addon-price text-muted" style="font-size: 13px;">+ Rs. <?= number_format($addon['price'], 2) ?></span>
+                                        <div class="custom-addon-checkbox">
+                                            <input type="checkbox" class="addon-check" name="addons[]" id="addon_<?= $addon['id'] ?>" value="<?= $addon['id'] ?>" data-price="<?= $addon['price'] ?>" data-name="<?= sanitize($addon['name']) ?>" onclick="event.stopPropagation()">
+                                            <span class="checkmark"></span>
+                                        </div>
+                                    </div>
+                                </div>
                             <?php endforeach; ?>
-                        </select>
-                        
-                        <!-- Selected toppings container -->
-                        <div id="selectedAddonsContainer" class="d-flex flex-wrap gap-2 mt-3"></div>
+                        </div>
                     </div>
                 <?php endif; ?>
 

@@ -90,12 +90,27 @@ p {
 
 /* Custom Navbar */
 .navbar-custom {
-    background-color: var(--white);
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     box-shadow: 0 2px 15px rgba(0,0,0,0.05);
     padding: 15px 0;
-    position: sticky;
+    position: fixed;
     top: 0;
-    z-index: 1020;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1030;
+    transition: box-shadow 0.3s ease;
+}
+
+.navbar-custom.scrolled {
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+}
+
+/* Body padding to offset fixed navbar - only on pages with fixed navbar */
+.has-fixed-navbar {
+    padding-top: 86px;
 }
 
 .navbar-brand img {
@@ -171,11 +186,26 @@ p {
 }
 
 /* Category Grid & Anchors */
+.category-pill-wrapper {
+    position: sticky;
+    top: 86px;
+    z-index: 1020;
+    background-color: rgba(255, 248, 240, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 8px 0;
+    margin: 0 -12px;
+    padding-left: 12px;
+    padding-right: 12px;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+}
+
 .category-pill-container {
     display: flex;
     overflow-x: auto;
     white-space: nowrap;
-    padding: 10px 0;
+    padding: 6px 0;
     gap: 12px;
 }
 
@@ -1251,4 +1281,89 @@ p {
         margin: 0 !important;
         background-color: transparent !important;
     }
+}
+
+/* ================================================
+   Custom Addon Checkbox Styles (Product Modal)
+   ================================================ */
+.addon-checkbox-list {
+    background-color: #fff;
+}
+
+.addon-checkbox-row {
+    background-color: #fff;
+    transition: background-color 0.15s ease;
+}
+
+.addon-checkbox-row:hover {
+    background-color: #FFF8F0;
+}
+
+.addon-checkbox-row:has(.addon-check:checked) {
+    background-color: #FFF3E0;
+}
+
+.addon-checkbox-row:has(.addon-check:checked) .addon-name {
+    color: var(--primary-orange) !important;
+    font-weight: 600 !important;
+}
+
+.addon-checkbox-row:has(.addon-check:checked) .addon-price {
+    color: var(--primary-orange) !important;
+    font-weight: 600 !important;
+}
+
+/* Custom checkbox wrapper */
+.custom-addon-checkbox {
+    position: relative;
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+}
+
+.custom-addon-checkbox input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.custom-addon-checkbox .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 22px;
+    height: 22px;
+    border: 2px solid #CBD5E1;
+    border-radius: 5px;
+    background-color: #fff;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.custom-addon-checkbox input:checked ~ .checkmark {
+    background-color: var(--primary-orange);
+    border-color: var(--primary-orange);
+}
+
+.custom-addon-checkbox .checkmark::after {
+    content: '';
+    position: absolute;
+    display: none;
+    left: 6px;
+    top: 2px;
+    width: 6px;
+    height: 11px;
+    border: solid white;
+    border-width: 0 2.5px 2.5px 0;
+    transform: rotate(45deg);
+}
+
+.custom-addon-checkbox input:checked ~ .checkmark::after {
+    display: block;
+}
+
+.custom-addon-checkbox:hover .checkmark {
+    border-color: var(--primary-orange);
+    box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.12);
 }

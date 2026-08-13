@@ -142,9 +142,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const btnPlus = modalForm.querySelector('.btn-qty-plus');
         const displayTotal = document.getElementById('modalTotalPrice');
 
-        // Toppings Dropdown elements
-        const addonDropdown = document.getElementById('addonDropdown');
-        const selectedAddonsContainer = document.getElementById('selectedAddonsContainer');
+        // Addon checkboxes are now directly in the form
 
         function calculateTotal() {
             let total = 0;
@@ -160,13 +158,11 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             total += selectedSizePrice;
 
-            // 2. Addons Price
-            if (selectedAddonsContainer) {
-                const addonInputs = selectedAddonsContainer.querySelectorAll('.addon-hidden-input');
-                addonInputs.forEach(input => {
-                    total += parseFloat(input.getAttribute('data-price')) || 0;
-                });
-            }
+        // 2. Addons Price (Checkboxes)
+            const addonChecks = modalForm.querySelectorAll('.addon-check:checked');
+            addonChecks.forEach(check => {
+                total += parseFloat(check.getAttribute('data-price')) || 0;
+            });
 
             // 3. Drink Price
             if (drinkInput) {
@@ -185,50 +181,10 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
-        // Handle Addon Selection Dropdown
-        if (addonDropdown && selectedAddonsContainer) {
-            addonDropdown.addEventListener('change', function () {
-                const selectedOpt = this.options[this.selectedIndex];
-                const addonId = selectedOpt.value;
-                const addonName = selectedOpt.getAttribute('data-name');
-                const addonPrice = selectedOpt.getAttribute('data-price');
 
-                if (addonId === '0' || !addonId) return;
-
-                // Check if already added
-                const exists = selectedAddonsContainer.querySelector(`.addon-badge[data-addon-id="${addonId}"]`);
-                if (exists) {
-                    Swal.fire({
-                        icon: 'info',
-                        title: 'Already Added',
-                        text: 'This topping is already selected.',
-                        confirmButtonColor: '#FF6B00'
-                    });
-                    this.value = '0';
-                    return;
-                }
-
-                // Append pill
-                const pill = document.createElement('span');
-                pill.className = 'badge bg-warning text-dark p-2 d-inline-flex align-items-center gap-2 border rounded-pill addon-badge';
-                pill.setAttribute('data-addon-id', addonId);
-                pill.innerHTML = `
-                    ${addonName} (+Rs. ${parseFloat(addonPrice).toFixed(0)})
-                    <button type="button" class="btn-close" style="font-size: 8px;" aria-label="Remove"></button>
-                    <input type="hidden" name="addons[]" class="addon-hidden-input" value="${addonId}" data-price="${addonPrice}">
-                `;
-
-                // Add remove listener
-                pill.querySelector('.btn-close').addEventListener('click', function () {
-                    pill.remove();
-                    calculateTotal();
-                });
-
-                selectedAddonsContainer.appendChild(pill);
-                this.value = '0'; // reset
-                calculateTotal();
-            });
-        }
+        // Bind addon checkboxes to price update
+        const addonChecks = modalForm.querySelectorAll('.addon-check');
+        addonChecks.forEach(check => check.addEventListener('change', calculateTotal));
 
         // Event Listeners for Live Pricing
         sizeInputs.forEach(input => input.addEventListener('change', calculateTotal));
