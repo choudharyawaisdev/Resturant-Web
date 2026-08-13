@@ -245,7 +245,7 @@ $current_step = $status_steps[$order['status']] ?? 0;
                             <h6 class="text-muted mb-2 font-weight-bold" style="font-size: 11px; letter-spacing: 0.8px; text-transform: uppercase;">Delivery Details</h6>
                             <div class="text-dark fw-bold"><?= sanitize($order['customer_name']) ?></div>
                             <div class="text-muted small" style="margin-top: 2px;"><?= sanitize($order['phone']) ?></div>
-                            <div class="text-muted small mt-1" style="max-width: 280px;"><?= sanitize($order['address']) ?>, <?= sanitize($order['area_name']) ?>, Faisalabad</div>
+                            <div class="text-muted small mt-1" style="max-width: 280px;"><?= sanitize($order['address']) ?>, <?= sanitize($order['area_name']) ?>, Chiniot</div>
                         </div>
                         <div class="col-md-6 text-md-end">
                             <h6 class="text-muted mb-2 font-weight-bold" style="font-size: 11px; letter-spacing: 0.8px; text-transform: uppercase;">Payment & Status</h6>
@@ -327,8 +327,8 @@ $current_step = $status_steps[$order['status']] ?? 0;
                     <div class="text-center mb-2">
                         <h4 class="fw-bold mb-0 text-dark" style="font-size: 18px; letter-spacing: 0.5px;">CRAVERS</h4>
                         <div class="small">Premium Food Delivery</div>
-                        <div class="small">Faisalabad, Pakistan</div>
-                        <div class="small">Tel: <?= sanitize(get_setting('contact_number', '+92 300 123 4567')) ?></div>
+                        <div class="small">359-V Nao Gazah Rd, Chiniot</div>
+                        <div class="small">Tel: <?= sanitize(get_setting('contact_number', '0311 7593578')) ?></div>
                     </div>
 
                     <!-- Divider -->
@@ -444,7 +444,7 @@ $current_step = $status_steps[$order['status']] ?? 0;
                 <div class="col-lg-4 col-md-6">
                     <span class="fs-4 fw-bold text-white"><?= sanitize(get_setting('restaurant_name', 'Cravers')) ?>.</span>
                     <p class="small text-muted mt-2">
-                        Cravers brings the taste of fresh, premium warm food right to your doorstep in Faisalabad. From masterfully crafted zingers to authentic brick-oven pizzas, satisfaction is just a click away.
+                        Cravers brings the taste of fresh, premium warm food right to your doorstep in Chiniot. From masterfully crafted zingers to authentic brick-oven pizzas, satisfaction is just a click away.
                     </p>
                     <div class="d-flex gap-3 mt-3">
                         <a href="#" class="text-muted"><i class="bi bi-facebook fs-5"></i></a>
@@ -486,11 +486,11 @@ $current_step = $status_steps[$order['status']] ?? 0;
                 <div class="col-lg-3 col-md-6">
                     <h6 class="text-white fw-bold mb-3">Contact Support</h6>
                     <ul class="list-unstyled mb-0 text-muted small">
-                        <li class="mb-2"><i class="bi bi-geo-alt text-orange me-2"></i> Faisalabad, Punjab, Pakistan</li>
-                        <li class="mb-2"><i class="bi bi-telephone text-orange me-2"></i> Hotline: <?= sanitize(get_setting('contact_number', '+92 300 123 4567')) ?></li>
-                        <li class="mb-2"><i class="bi bi-envelope text-orange me-2"></i> support@cravers.com</li>
+                        <li class="mb-2"><i class="bi bi-geo-alt text-orange me-2"></i> <?= sanitize(get_setting('address', '359-V Nao Gazah Rd, Chiniot, 35400')) ?></li>
+                        <li class="mb-2"><i class="bi bi-telephone text-orange me-2"></i> Hotline: <?= sanitize(get_setting('contact_number', '0311 7593578')) ?></li>
+                        <li class="mb-2"><i class="bi bi-clock text-orange me-2"></i> <?= sanitize(get_setting('hours', 'Open 24 hours')) ?> (<?= sanitize(get_setting('service_options', 'Cash only')) ?>)</li>
                         <li class="mt-3">
-                            <span class="badge bg-success py-2 px-3 rounded-pill"><i class="bi bi-check-circle me-1"></i> Kitchen is Open</span>
+                            <span class="badge bg-success py-2 px-3 rounded-pill"><i class="bi bi-check-circle me-1"></i> Kitchen is Open 24/7</span>
                         </li>
                     </ul>
                 </div>

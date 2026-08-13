@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $edit_mode = false;
         } else {
             // New Insert
-            $stmt = $pdo->prepare("INSERT INTO areas (city, area_name, delivery_fee, status) VALUES ('Faisalabad', ?, ?, ?)");
+            $stmt = $pdo->prepare("INSERT INTO areas (city, area_name, delivery_fee, status) VALUES ('Chiniot', ?, ?, ?)");
             $stmt->execute([$area_name, $delivery_fee, $status]);
             $success = "New delivery area added successfully!";
         }
@@ -112,7 +112,7 @@ $all_areas = $pdo->query("SELECT * FROM areas ORDER BY area_name ASC")->fetchAll
                 
                 <div class="mb-3">
                     <label class="form-label small fw-bold text-muted">CITY</label>
-                    <input type="text" class="form-control bg-light" value="Faisalabad" readonly>
+                    <input type="text" class="form-control bg-light" value="Chiniot" readonly>
                 </div>
                 
                 <div class="mb-3">

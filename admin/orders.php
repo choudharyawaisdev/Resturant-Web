@@ -114,7 +114,7 @@ if ($view_order_id <= 0) {
                         <span class="text-muted small d-block">DELIVER TO:</span>
                         <h6 class="fw-bold mb-1"><?= sanitize($order['customer_name']) ?></h6>
                         <span class="d-block text-muted small"><?= sanitize($order['address']) ?></span>
-                        <span class="d-block text-muted small"><?= sanitize($order['area_name']) ?>, Faisalabad</span>
+                        <span class="d-block text-muted small"><?= sanitize($order['area_name']) ?>, Chiniot</span>
                     </div>
                     <div class="col-md-6 text-md-end">
                         <span class="text-muted small d-block">CONTACT PHONE:</span>
@@ -197,8 +197,8 @@ if ($view_order_id <= 0) {
                 <div class="text-center mb-2">
                     <h4 class="fw-bold mb-0 text-dark" style="font-size: 18px; letter-spacing: 0.5px;">CRAVERS</h4>
                     <div class="small">Premium Food Delivery</div>
-                    <div class="small">Faisalabad, Pakistan</div>
-                    <div class="small">Tel: <?= sanitize(get_setting('contact_number', '+92 300 123 4567')) ?></div>
+                    <div class="small">359-V Nao Gazah Rd, Chiniot</div>
+                    <div class="small">Tel: <?= sanitize(get_setting('contact_number', '0311 7593578')) ?></div>
                 </div>
 
                 <!-- Divider -->

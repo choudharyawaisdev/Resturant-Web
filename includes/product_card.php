@@ -25,23 +25,30 @@ if (is_user_logged_in()) {
     $is_fav = is_in_wishlist($pdo, get_logged_in_user_id(), $prod['id']);
 }
 ?>
-<div class="card product-card position-relative">
-    <button class="wishlist-heart-btn <?= $is_fav ? 'active' : '' ?>" data-product-id="<?= $prod['id'] ?>">
+<div class="card product-card position-relative border-0 shadow-sm rounded-4 h-100 overflow-hidden">
+    <button class="wishlist-heart-btn <?= $is_fav ? 'active' : '' ?>" data-product-id="<?= $prod['id'] ?>" title="Add to Wishlist">
         <i class="bi <?= $is_fav ? 'bi-heart-fill' : 'bi-heart' ?>"></i>
     </button>
-    <a href="#" class="product-card-link btn-customize" data-product-id="<?= $prod['id'] ?>">
-        <div class="product-img-wrapper">
-            <img src="<?= $img_url ?>" class="card-img-top product-img" alt="<?= sanitize($prod['name']) ?>">
-            <span class="product-badge">Premium</span>
+    <a href="#" class="product-card-link btn-customize text-decoration-none" data-product-id="<?= $prod['id'] ?>">
+        <div class="product-img-wrapper position-relative overflow-hidden bg-light" style="height: 200px;">
+            <img src="<?= $img_url ?>" class="card-img-top product-img w-100 h-100" style="object-fit: cover; transition: transform 0.4s ease;" alt="<?= sanitize($prod['name']) ?>">
+            <span class="product-badge position-absolute top-0 start-0 m-3 px-3 py-1 bg-warning text-dark fw-bold rounded-pill" style="font-size: 11px; letter-spacing: 0.5px;">Gourmet</span>
         </div>
     </a>
-    <div class="product-body">
-        <h5 class="product-title"><?= sanitize($prod['name']) ?></h5>
-        <p class="product-desc"><?= sanitize($prod['description']) ?></p>
-        <div class="product-footer">
-            <span class="product-price">Rs. <?= number_format($prod['base_price'], 0) ?></span>
-            <button class="btn btn-primary-orange btn-customize px-3 py-1.5" data-product-id="<?= $prod['id'] ?>" style="font-size: 12px; font-weight: 600; border-radius: 20px; white-space: nowrap;">
-                Customize
+    <div class="product-body p-3.5 d-flex flex-column flex-grow-1">
+        <a href="#" class="product-card-link btn-customize text-decoration-none text-dark" data-product-id="<?= $prod['id'] ?>">
+            <h5 class="product-title fw-bold mb-1 text-truncate"><?= sanitize($prod['name']) ?></h5>
+        </a>
+        <p class="product-desc text-muted small mb-3 flex-grow-1" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 38px;">
+            <?= sanitize($prod['description']) ?>
+        </p>
+        <div class="product-footer d-flex align-items-center justify-content-between mt-auto pt-2 border-top">
+            <div class="d-flex flex-column">
+                <span class="text-muted small" style="font-size: 11px;">Starting at</span>
+                <span class="product-price fw-bold fs-5" style="color: var(--primary-orange);">Rs. <?= number_format($prod['base_price'], 0) ?></span>
+            </div>
+            <button class="btn btn-primary-orange btn-customize px-3 py-2 text-white fw-bold d-inline-flex align-items-center gap-1" data-product-id="<?= $prod['id'] ?>" style="font-size: 12px; border-radius: 20px;">
+                <span>Customize</span> <i class="bi bi-sliders fs-6"></i>
             </button>
         </div>
     </div>

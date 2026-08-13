@@ -30,7 +30,7 @@ $search_query = isset($_GET['search']) ? trim($_GET['search']) : '';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cravers - Faisalabad's Premium Food Delivery</title>
+    <title>Cravers - Chiniot's Premium Food Delivery</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
@@ -83,16 +83,16 @@ $search_query = isset($_GET['search']) ? trim($_GET['search']) : '';
                     <i class="bi bi-geo-alt-fill text-danger me-1"></i>
                     <span class="text-muted small me-1">Deliver to:</span>
                     <strong class="text-dark small me-2">
-                        <?= !empty($selected_area_name) ? sanitize($selected_area_name) . ', FSD' : 'Select Location' ?>
+                        <?= !empty($selected_area_name) ? sanitize($selected_area_name) . ', Chiniot' : 'Select Location' ?>
                     </strong>
                     <a href="#" id="btnChangeLocation" class="link-orange small text-decoration-none" style="color: var(--primary-orange); font-weight:600;">Change</a>
                 </div>
 
                 <!-- Search Bar -->
-                <form class="d-flex me-3" action="index.php" method="GET">
-                    <div class="input-group">
-                        <input type="text" name="search" class="form-control form-control-sm" placeholder="Search delicious food..." value="<?= sanitize($search_query) ?>" aria-label="Search" style="border-radius: 20px 0 0 20px; border-color: #eee;">
-                        <button class="btn btn-outline-secondary btn-sm" type="submit" style="border-radius: 0 20px 20px 0; border-color: #eee; background-color: var(--primary-orange); color: white; border: none;">
+                <form class="d-flex me-3" action="index.php" method="GET" style="min-width: 230px;">
+                    <div class="input-group rounded-pill border bg-white shadow-xs overflow-hidden" style="border-color: #CBD5E1 !important;">
+                        <input type="text" name="search" class="form-control form-control-sm border-0 bg-transparent px-3 py-1.5" placeholder="Search delicious food..." value="<?= sanitize($search_query) ?>" aria-label="Search" style="font-size: 13px; outline: none; box-shadow: none;">
+                        <button class="btn px-3 py-1.5 d-flex align-items-center justify-content-center" type="submit" style="background-color: var(--primary-orange); color: white; border: none; font-size: 13px;">
                             <i class="bi bi-search"></i>
                         </button>
                     </div>
@@ -111,9 +111,9 @@ $search_query = isset($_GET['search']) ? trim($_GET['search']) : '';
         <!-- CATEGORY NAVIGATION CONTAINER (PILLS) -->
         <?php if (empty($search_query)): ?>
             <div class="category-pill-container my-3">
-                <a href="#" class="category-pill active" data-target="all">All</a>
+                <a href="#all" class="category-pill active" data-category-id="all">All</a>
                 <?php foreach ($categories as $cat): ?>
-                    <a href="#category-<?= $cat['id'] ?>" class="category-pill">
+                    <a href="#category-<?= $cat['id'] ?>" class="category-pill" data-category-id="<?= $cat['id'] ?>">
                         <span><?= sanitize($cat['name']) ?></span>
                     </a>
                 <?php endforeach; ?>
@@ -301,7 +301,7 @@ $search_query = isset($_GET['search']) ? trim($_GET['search']) : '';
                     <div class="mb-3">
                         <label class="form-label text-muted small fw-bold">CITY</label>
                         <select class="form-select form-control-lg" disabled style="background-color: #f8f9fa;">
-                            <option>Faisalabad</option>
+                            <option>Chiniot</option>
                         </select>
                     </div>
                     <div class="mb-4">
@@ -331,7 +331,7 @@ $search_query = isset($_GET['search']) ? trim($_GET['search']) : '';
                 <div class="col-lg-4 col-md-6">
                     <span class="fs-4 fw-bold text-white"><?= sanitize(get_setting('restaurant_name', 'Cravers')) ?>.</span>
                     <p class="small text-muted mt-2">
-                        Cravers brings the taste of fresh, premium warm food right to your doorstep in Faisalabad. From masterfully crafted zingers to authentic brick-oven pizzas, satisfaction is just a click away.
+                        Cravers brings the taste of fresh, premium warm food right to your doorstep in Chiniot. From masterfully crafted zingers to authentic brick-oven pizzas, satisfaction is just a click away.
                     </p>
                     <div class="d-flex gap-3 mt-3">
                         <a href="#" class="text-muted"><i class="bi bi-facebook fs-5"></i></a>
@@ -373,11 +373,11 @@ $search_query = isset($_GET['search']) ? trim($_GET['search']) : '';
                 <div class="col-lg-3 col-md-6">
                     <h6 class="text-white fw-bold mb-3">Contact Support</h6>
                     <ul class="list-unstyled mb-0 text-muted small">
-                        <li class="mb-2"><i class="bi bi-geo-alt text-orange me-2"></i> Faisalabad, Punjab, Pakistan</li>
-                        <li class="mb-2"><i class="bi bi-telephone text-orange me-2"></i> Hotline: <?= sanitize(get_setting('contact_number', '+92 300 123 4567')) ?></li>
-                        <li class="mb-2"><i class="bi bi-envelope text-orange me-2"></i> support@cravers.com</li>
+                        <li class="mb-2"><i class="bi bi-geo-alt text-orange me-2"></i> <?= sanitize(get_setting('address', '359-V Nao Gazah Rd, Chiniot, 35400')) ?></li>
+                        <li class="mb-2"><i class="bi bi-telephone text-orange me-2"></i> Hotline: <?= sanitize(get_setting('contact_number', '0311 7593578')) ?></li>
+                        <li class="mb-2"><i class="bi bi-clock text-orange me-2"></i> <?= sanitize(get_setting('hours', 'Open 24 hours')) ?> (<?= sanitize(get_setting('service_options', 'Cash only')) ?>)</li>
                         <li class="mt-3">
-                            <span class="badge bg-success py-2 px-3 rounded-pill"><i class="bi bi-check-circle me-1"></i> Kitchen is Open</span>
+                            <span class="badge bg-success py-2 px-3 rounded-pill"><i class="bi bi-check-circle me-1"></i> Kitchen is Open 24/7</span>
                         </li>
                     </ul>
                 </div>
@@ -404,8 +404,29 @@ $search_query = isset($_GET['search']) ? trim($_GET['search']) : '';
     <!-- Main JS -->
     <script src="assets/js/main.js"></script>
     
-    <!-- Wishlist Toggler Script -->
+    <!-- Category Smooth Scroll & Active Pill Script -->
     <script>
+        document.querySelectorAll('.category-pill').forEach(pill => {
+            pill.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelectorAll('.category-pill').forEach(p => p.classList.remove('active'));
+                this.classList.add('active');
+
+                const targetId = this.getAttribute('href');
+                if (targetId && targetId !== '#all') {
+                    const targetEl = document.querySelector(targetId);
+                    if (targetEl) {
+                        const yOffset = -90; 
+                        const y = targetEl.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                        window.scrollTo({ top: y, behavior: 'smooth' });
+                    }
+                } else if (targetId === '#all') {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Wishlist Toggler Script
         document.querySelectorAll('.wishlist-heart-btn').forEach(btn => {
             btn.addEventListener('click', function(e) {
                 e.preventDefault();

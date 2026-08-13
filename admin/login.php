@@ -2,7 +2,13 @@
 // admin/login.php
 require_once dirname(__DIR__) . '/includes/functions.php';
 
+// Redirect if already logged in as admin
+if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true) {
+    redirect('dashboard.php');
+}
+
 $error_msg = '';
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = sanitize($_POST['username'] ?? '');

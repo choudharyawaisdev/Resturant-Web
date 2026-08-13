@@ -368,23 +368,27 @@ p {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #fcfcfc;
-    padding: 15px 24px;
-    border-top: 1px solid #eee;
+    background: linear-gradient(180deg, #FFFFFF 0%, #FFFDF9 100%);
+    padding: 18px 24px;
+    border-top: 1px solid rgba(255, 107, 0, 0.12);
     border-bottom-left-radius: var(--border-radius-lg);
     border-bottom-right-radius: var(--border-radius-lg);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.03);
 }
 
 .modal-price-label {
-    font-size: 14px;
+    font-size: 11px;
+    letter-spacing: 0.5px;
     color: var(--text-muted);
     margin-bottom: 0;
+    text-transform: uppercase;
 }
 
 .modal-price-val {
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 800;
     color: var(--primary-orange);
+    letter-spacing: -0.5px;
 }
 
 /* Custom Offcanvas Cart */
@@ -542,6 +546,50 @@ p {
 
 .swal2-cancel {
     border-radius: var(--border-radius-md) !important;
+}
+
+/* Category Navigation Scroll Pills */
+.category-pill-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    overflow-x: auto;
+    padding: 10px 4px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.category-pill-container::-webkit-scrollbar {
+    display: none;
+}
+.category-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 24px;
+    border-radius: 30px;
+    background-color: #FFFFFF;
+    color: #475569;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    border: 1.5px solid #E2E8F0;
+    white-space: nowrap;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+.category-pill:hover {
+    background-color: #FFF8F0;
+    color: var(--primary-orange);
+    border-color: rgba(255, 107, 0, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 107, 0, 0.12);
+}
+.category-pill.active {
+    background: linear-gradient(135deg, #FF6B00 0%, #FF8800 100%) !important;
+    color: #FFFFFF !important;
+    border-color: var(--primary-orange) !important;
+    font-weight: 700;
+    box-shadow: 0 4px 14px rgba(255, 107, 0, 0.35) !important;
 }
 
 /* Custom Orange Size Selector active styling */

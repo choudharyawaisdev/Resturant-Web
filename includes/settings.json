@@ -1,6 +1,11 @@
 {
     "restaurant_name": "Cravers",
-    "contact_number": "+92 300 123 4567",
-    "promo_text": "Craving Something Delicious?",
-    "promo_subtitle": "Get the best burgers, piping hot pizzas, and spicy pastas in Faisalabad delivered fresh to your doorstep within 30 minutes."
+    "contact_number": "0311 7593578",
+    "address": "359-V Nao Gazah Rd, Chiniot, 35400",
+    "city": "Chiniot",
+    "hours": "Open 24 hours",
+    "service_options": "Cash only",
+    "promo_text": "Craving Something Delicious in Chiniot?",
+    "promo_subtitle": "Get the best burgers, piping hot pizzas, and spicy pastas in Chiniot delivered fresh to your doorstep within 30 minutes."
 }
+

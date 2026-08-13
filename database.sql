@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `product_drinks` (
 -- 8. Areas Table
 CREATE TABLE IF NOT EXISTS `areas` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
-  `city` VARCHAR(100) NOT NULL DEFAULT 'Faisalabad',
+  `city` VARCHAR(100) NOT NULL DEFAULT 'Chiniot',
   `area_name` VARCHAR(150) NOT NULL,
   `delivery_fee` DECIMAL(10,2) NOT NULL DEFAULT 0.00,
   `status` ENUM('active', 'inactive') DEFAULT 'active'
@@ -137,28 +137,16 @@ CREATE TABLE IF NOT EXISTS `admin_users` (
 -- SEED DATA
 -- =========================================================================
 
--- Seed Faisalabad Areas
+-- Seed Chiniot Areas (8 Areas with Delivery Fee)
 INSERT INTO `areas` (`city`, `area_name`, `delivery_fee`, `status`) VALUES
-('Faisalabad', 'Madina Town', 100.00, 'active'),
-('Faisalabad', 'Susan Road', 120.00, 'active'),
-('Faisalabad', 'Peoples Colony', 100.00, 'active'),
-('Faisalabad', 'D Ground', 90.00, 'active'),
-('Faisalabad', 'Jinnah Colony', 150.00, 'active'),
-('Faisalabad', 'Samanabad', 180.00, 'active'),
-('Faisalabad', 'Gulistan Colony', 160.00, 'active'),
-('Faisalabad', 'Millat Town', 200.00, 'active'),
-('Faisalabad', 'Muslim Town', 130.00, 'active'),
-('Faisalabad', 'Ghulam Muhammad Abad (GMA)', 220.00, 'active'),
-('Faisalabad', 'Kohinoor Town', 110.00, 'active'),
-('Faisalabad', 'Batala Colony', 120.00, 'active'),
-('Faisalabad', 'Amin Town', 170.00, 'active'),
-('Faisalabad', 'Abdullahpur', 140.00, 'active'),
-('Faisalabad', 'Eden Valley', 190.00, 'active'),
-('Faisalabad', 'Wapda City', 250.00, 'active'),
-('Faisalabad', 'Canal Road Area', 160.00, 'active'),
-('Faisalabad', 'Jaranwala Road', 180.00, 'active'),
-('Faisalabad', 'Sargodha Road', 220.00, 'active'),
-('Faisalabad', 'Sitara Valley', 240.00, 'active');
+('Chiniot', 'Nao Gazah Road', 40.00, 'active'),
+('Chiniot', 'Kutchery Road & Civil Lines', 50.00, 'active'),
+('Chiniot', 'Rail Bazar & Circular Road', 60.00, 'active'),
+('Chiniot', 'Jhang Road Area', 70.00, 'active'),
+('Chiniot', 'Faisalabad Road Sector', 80.00, 'active'),
+('Chiniot', 'Sargodha Road Colony', 90.00, 'active'),
+('Chiniot', 'Bhowana Road Sector', 100.00, 'active'),
+('Chiniot', 'Chenab Bridge Area', 120.00, 'active');
 
 -- Seed Categories
 INSERT INTO `categories` (`id`, `name`, `image`, `display_order`, `status`) VALUES

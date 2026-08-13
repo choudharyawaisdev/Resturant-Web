@@ -12,8 +12,12 @@ if (file_exists($settings_path)) {
     $settings = json_decode(file_get_contents($settings_path), true);
 }
 $restaurant_name = $settings['restaurant_name'] ?? 'Cravers';
-$contact_number  = $settings['contact_number'] ?? '+92 300 123 4567';
-$promo_text      = $settings['promo_text'] ?? 'Craving Something Delicious?';
+$contact_number  = $settings['contact_number'] ?? '0311 7593578';
+$address         = $settings['address'] ?? '359-V Nao Gazah Rd, Chiniot, 35400';
+$city            = $settings['city'] ?? 'Chiniot';
+$hours           = $settings['hours'] ?? 'Open 24 hours';
+$service_options = $settings['service_options'] ?? 'Cash only';
+$promo_text      = $settings['promo_text'] ?? 'Craving Something Delicious in Chiniot?';
 $promo_subtitle  = $settings['promo_subtitle'] ?? 'Get the best burgers...';
 
 // PROCESS FORMS (POST)
@@ -24,6 +28,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     if ($action === 'save_settings') {
         $restaurant_name = sanitize($_POST['restaurant_name'] ?? 'Cravers');
         $contact_number  = sanitize($_POST['contact_number'] ?? '');
+        $address         = sanitize($_POST['address'] ?? '');
+        $city            = sanitize($_POST['city'] ?? 'Chiniot');
+        $hours           = sanitize($_POST['hours'] ?? '');
+        $service_options = sanitize($_POST['service_options'] ?? '');
         $promo_text      = sanitize($_POST['promo_text'] ?? '');
         $promo_subtitle  = sanitize($_POST['promo_subtitle'] ?? '');
 
@@ -33,6 +41,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $new_settings = [
                 'restaurant_name' => $restaurant_name,
                 'contact_number'  => $contact_number,
+                'address'         => $address,
+                'city'            => $city,
+                'hours'           => $hours,
+                'service_options' => $service_options,
                 'promo_text'      => $promo_text,
                 'promo_subtitle'  => $promo_subtitle
             ];
@@ -109,6 +121,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 <div class="mb-3">
                     <label for="contact_number" class="form-label small fw-bold text-muted">HOTLINE / PHONE NUMBER</label>
                     <input type="text" name="contact_number" id="contact_number" class="form-control" value="<?= sanitize($contact_number) ?>">
+                </div>
+
+                <div class="mb-3">
+                    <label for="address" class="form-label small fw-bold text-muted">PHYSICAL STORE ADDRESS</label>
+                    <input type="text" name="address" id="address" class="form-control" value="<?= sanitize($address) ?>">
+                </div>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label for="city" class="form-label small fw-bold text-muted">CITY</label>
+                        <input type="text" name="city" id="city" class="form-control" value="<?= sanitize($city) ?>">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="hours" class="form-label small fw-bold text-muted">OPERATING HOURS</label>
+                        <input type="text" name="hours" id="hours" class="form-control" value="<?= sanitize($hours) ?>">
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="service_options" class="form-label small fw-bold text-muted">SERVICE / PAYMENT OPTIONS</label>
+                    <input type="text" name="service_options" id="service_options" class="form-control" value="<?= sanitize($service_options) ?>">
                 </div>
 
                 <div class="mb-3">

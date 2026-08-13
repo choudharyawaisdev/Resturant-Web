@@ -21,7 +21,7 @@ if (!$user) {
     redirect('login.php');
 }
 
-// Fetch Faisalabad areas for settings dropdown
+// Fetch Chiniot areas for settings dropdown
 $areas = $pdo->query("SELECT * FROM areas WHERE status = 'active' ORDER BY area_name ASC")->fetchAll();
 
 // --- POST HANDLING: UPDATE PROFILE OR UPDATE PASSWORD ---
@@ -152,9 +152,13 @@ $wishlist_items = $wish_stmt->fetchAll();
                 <span class="fs-4 fw-bold" style="color: var(--text-dark); letter-spacing: -0.5px;"><?= sanitize(get_setting('restaurant_name', 'Cravers')) ?><span style="color: var(--primary-orange);">.</span></span>
             </a>
             
-            <div class="d-flex align-items-center">
-                <a href="index.php" class="btn btn-outline-orange me-2 btn-sm"><i class="bi bi-shop"></i> Order Food</a>
-                <a href="logout.php" class="btn btn-outline-danger btn-sm"><i class="bi bi-box-arrow-right"></i> Sign out</a>
+            <div class="d-flex align-items-center gap-2">
+                <a href="index.php" class="btn btn-primary-orange px-3.5 py-2 rounded-pill fw-bold text-white shadow-xs d-inline-flex align-items-center" style="font-size: 13px;">
+                    <i class="bi bi-bag-fill me-1.5"></i> Order Food
+                </a>
+                <a href="logout.php" class="btn text-danger border border-danger-subtle px-3.5 py-2 rounded-pill fw-bold d-inline-flex align-items-center transition-all" style="font-size: 13px; background-color: #FEF2F2;">
+                    <i class="bi bi-box-arrow-right me-1.5"></i> Sign out
+                </a>
             </div>
         </div>
     </nav>
@@ -162,26 +166,37 @@ $wishlist_items = $wish_stmt->fetchAll();
     <div class="container my-5">
         
         <!-- Welcome banner with stats -->
-        <div class="card border-0 shadow-sm p-4 rounded-4 bg-white mb-4">
-            <div class="row align-items-center">
-                <div class="col-md-6 mb-3 mb-md-0">
-                    <span class="text-muted small fw-bold">WELCOME BACK,</span>
-                    <h2 class="fw-bold mb-0 text-dark"><?= sanitize($user['name']) ?></h2>
-                    <span class="text-muted small"><?= sanitize($user['email']) ?></span>
+        <div class="card border-0 shadow-sm p-4 rounded-4 mb-4" style="background: linear-gradient(135deg, #FFFFFF 0%, #FFF9F5 100%); border: 1px solid rgba(255, 107, 0, 0.1) !important;">
+            <div class="row align-items-center g-4">
+                <div class="col-md-5 d-flex align-items-center">
+                    <div class="avatar-circle me-3 d-flex align-items-center justify-content-center fw-bold text-white rounded-circle shadow-sm" style="width: 56px; height: 56px; background: linear-gradient(135deg, #FF6B00 0%, #FF8800 100%); font-size: 22px;">
+                        <?= strtoupper(substr($user['name'], 0, 1)) ?>
+                    </div>
+                    <div>
+                        <span class="text-muted small fw-bold uppercase" style="letter-spacing: 0.8px; font-size: 11px;">GUEST CUSTOMER</span>
+                        <h3 class="fw-bold mb-0 text-dark" style="letter-spacing: -0.5px;"><?= sanitize($user['name']) ?></h3>
+                        <span class="text-muted small"><i class="bi bi-envelope me-1"></i><?= sanitize($user['email']) ?></span>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="row text-center g-2">
-                        <div class="col-4 border-end">
-                            <span class="text-muted small d-block mb-1">TOTAL ORDERS</span>
-                            <h4 class="fw-bold mb-0 text-dark"><?= $stats['total_orders'] ?></h4>
-                        </div>
-                        <div class="col-4 border-end">
-                            <span class="text-muted small d-block mb-1">ALL-TIME SPENT</span>
-                            <h4 class="fw-bold mb-0 text-success">Rs. <?= number_format($stats['total_spent'], 0) ?></h4>
+                <div class="col-md-7">
+                    <div class="row text-center g-3">
+                        <div class="col-4">
+                            <div class="p-3 rounded-4" style="background-color: #FFF4EB; border: 1px solid #FFE4D1;">
+                                <span class="text-muted small d-block mb-1 fw-bold" style="font-size: 10px; letter-spacing: 0.5px;">TOTAL ORDERS</span>
+                                <h4 class="fw-extrabold mb-0" style="color: var(--primary-orange);"><?= $stats['total_orders'] ?></h4>
+                            </div>
                         </div>
                         <div class="col-4">
-                            <span class="text-muted small d-block mb-1">WISHLIST</span>
-                            <h4 class="fw-bold mb-0 text-danger"><?= $stats['total_wishlist'] ?></h4>
+                            <div class="p-3 rounded-4" style="background-color: #ECFDF5; border: 1px solid #A7F3D0;">
+                                <span class="text-muted small d-block mb-1 fw-bold" style="font-size: 10px; letter-spacing: 0.5px;">TOTAL SPENT</span>
+                                <h4 class="fw-extrabold mb-0 text-success" style="font-size: 18px;">Rs. <?= number_format($stats['total_spent'], 0) ?></h4>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="p-3 rounded-4" style="background-color: #FEF2F2; border: 1px solid #FECACA;">
+                                <span class="text-muted small d-block mb-1 fw-bold" style="font-size: 10px; letter-spacing: 0.5px;">WISHLIST</span>
+                                <h4 class="fw-extrabold mb-0 text-danger"><?= $stats['total_wishlist'] ?></h4>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -190,33 +205,33 @@ $wishlist_items = $wish_stmt->fetchAll();
 
         <!-- ALERTS -->
         <?php if (!empty($success)): ?>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm rounded-3" role="alert">
                 <i class="bi bi-check-circle-fill me-2"></i> <?= sanitize($success) ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         <?php endif; ?>
         <?php if (!empty($error)): ?>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <div class="alert alert-danger alert-dismissible fade show border-0 shadow-sm rounded-3" role="alert">
                 <i class="bi bi-exclamation-triangle-fill me-2"></i> <?= sanitize($error) ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         <?php endif; ?>
 
         <!-- Split Layout Tabs -->
-        <ul class="nav nav-pills mb-4 bg-white p-2 rounded-4 shadow-sm border-0 gap-2">
+        <ul class="nav nav-pills mb-4 bg-white p-2 rounded-4 shadow-sm border gap-2">
             <li class="nav-item">
-                <a class="nav-link text-dark <?= $active_tab === 'orders' ? 'active bg-warning fw-bold' : '' ?>" href="profile.php?tab=orders">
-                    <i class="bi bi-receipt me-1"></i> My Orders Log
+                <a class="nav-link px-4 py-2.5 rounded-3 fw-bold transition-all <?= $active_tab === 'orders' ? 'active text-white' : 'text-dark bg-transparent' ?>" style="<?= $active_tab === 'orders' ? 'background-color: var(--primary-orange) !important; box-shadow: 0 4px 12px rgba(255,107,0,0.25);' : '' ?>" href="profile.php?tab=orders">
+                    <i class="bi bi-receipt me-2"></i>Orders Log
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-dark <?= $active_tab === 'wishlist' ? 'active bg-warning fw-bold' : '' ?>" href="profile.php?tab=wishlist">
-                    <i class="bi bi-heart-fill text-danger me-1"></i> My Wishlist
+                <a class="nav-link px-4 py-2.5 rounded-3 fw-bold transition-all <?= $active_tab === 'wishlist' ? 'active text-white' : 'text-dark bg-transparent' ?>" style="<?= $active_tab === 'wishlist' ? 'background-color: var(--primary-orange) !important; box-shadow: 0 4px 12px rgba(255,107,0,0.25);' : '' ?>" href="profile.php?tab=wishlist">
+                    <i class="bi bi-heart-fill me-2"></i>Saved Wishlist
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-dark <?= $active_tab === 'settings' ? 'active bg-warning fw-bold' : '' ?>" href="profile.php?tab=settings">
-                    <i class="bi bi-person-gear me-1"></i> Profile Settings
+                <a class="nav-link px-4 py-2.5 rounded-3 fw-bold transition-all <?= $active_tab === 'settings' ? 'active text-white' : 'text-dark bg-transparent' ?>" style="<?= $active_tab === 'settings' ? 'background-color: var(--primary-orange) !important; box-shadow: 0 4px 12px rgba(255,107,0,0.25);' : '' ?>" href="profile.php?tab=settings">
+                    <i class="bi bi-person-gear me-2"></i>Account Settings
                 </a>
             </li>
         </ul>
@@ -224,67 +239,85 @@ $wishlist_items = $wish_stmt->fetchAll();
         <!-- TAB 1: PAST ORDERS LOG -->
         <?php if ($active_tab === 'orders'): ?>
             <div class="card border-0 shadow-sm p-4 rounded-4 bg-white">
-                <h5 class="fw-bold mb-4"><i class="bi bi-receipt text-orange me-2"></i> Orders History</h5>
+                <div class="d-flex align-items-center justify-content-between mb-4 border-bottom pb-3">
+                    <h5 class="fw-bold mb-0 text-dark" style="letter-spacing: -0.3px;"><i class="bi bi-receipt text-orange me-2" style="color: var(--primary-orange);"></i> Orders History</h5>
+                    <span class="badge bg-light text-dark border px-3 py-1.5 rounded-pill small"><?= count($orders) ?> Total Orders</span>
+                </div>
                 
-                <div class="table-responsive">
-                    <table class="table align-middle table-hover">
-                        <thead class="table-light">
-                            <tr>
-                                <th scope="col">Order ID</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Delivery Area</th>
-                                <th scope="col">Grand Total</th>
-                                <th scope="col">Status</th>
-                                <th scope="col" class="text-end">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php if (empty($orders)): ?>
+                <?php if (empty($orders)): ?>
+                    <div class="text-center py-5">
+                        <div class="mb-3 d-inline-flex align-items-center justify-content-center rounded-circle shadow-xs" style="width: 70px; height: 70px; background-color: #FFF4EB; color: var(--primary-orange);">
+                            <i class="bi bi-bag-x fs-2"></i>
+                        </div>
+                        <h5 class="fw-bold text-dark mb-1">No Orders Placed Yet</h5>
+                        <p class="text-muted small mb-4" style="max-width: 380px; margin: 0 auto; line-height: 1.6;">Your order log is currently empty. Explore our delicious menu and treat yourself today!</p>
+                        <a href="index.php" class="btn btn-primary-orange px-4 py-2.5 rounded-3 fw-bold shadow-sm text-white text-decoration-none">
+                            Explore Menu <i class="bi bi-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                <?php else: ?>
+                    <div class="table-responsive">
+                        <table class="table align-middle table-hover mb-0">
+                            <thead style="background-color: #F8FAFC; border-bottom: 2px solid #E2E8F0;">
                                 <tr>
-                                    <td colspan="6" class="text-center text-muted py-4">No orders placed yet. <a href="index.php">Start shopping!</a></td>
+                                    <th scope="col" class="py-3 px-3 small text-muted text-uppercase fw-bold" style="letter-spacing: 0.5px; font-size: 11px;">Order ID</th>
+                                    <th scope="col" class="py-3 px-3 small text-muted text-uppercase fw-bold" style="letter-spacing: 0.5px; font-size: 11px;">Date & Time</th>
+                                    <th scope="col" class="py-3 px-3 small text-muted text-uppercase fw-bold" style="letter-spacing: 0.5px; font-size: 11px;">Delivery Area</th>
+                                    <th scope="col" class="py-3 px-3 small text-muted text-uppercase fw-bold" style="letter-spacing: 0.5px; font-size: 11px;">Grand Total</th>
+                                    <th scope="col" class="py-3 px-3 small text-muted text-uppercase fw-bold" style="letter-spacing: 0.5px; font-size: 11px;">Status</th>
+                                    <th scope="col" class="py-3 px-3 small text-muted text-uppercase fw-bold text-end" style="letter-spacing: 0.5px; font-size: 11px;">Actions</th>
                                 </tr>
-                            <?php else: ?>
+                            </thead>
+                            <tbody>
                                 <?php foreach ($orders as $ord): ?>
                                     <tr>
-                                        <td><strong>#<?= $ord['id'] ?></strong></td>
-                                        <td class="small text-muted"><?= date('d M, Y h:i A', strtotime($ord['created_at'])) ?></td>
-                                        <td><?= sanitize($ord['area_name']) ?></td>
-                                        <td class="fw-bold">Rs. <?= number_format($ord['grand_total'], 2) ?></td>
-                                        <td>
+                                        <td class="px-3 py-3"><strong>#<?= $ord['id'] ?></strong></td>
+                                        <td class="px-3 py-3 small text-muted"><?= date('d M, Y h:i A', strtotime($ord['created_at'])) ?></td>
+                                        <td class="px-3 py-3 fw-medium text-dark"><?= sanitize($ord['area_name']) ?></td>
+                                        <td class="px-3 py-3 fw-extrabold text-dark">Rs. <?= number_format($ord['grand_total'], 2) ?></td>
+                                        <td class="px-3 py-3">
                                             <?php
                                             $badge_class = 'bg-secondary';
-                                            if ($ord['status'] === 'Pending') $badge_class = 'bg-danger';
-                                            elseif ($ord['status'] === 'Preparing') $badge_class = 'bg-warning text-dark';
-                                            elseif ($ord['status'] === 'Out for Delivery') $badge_class = 'bg-info text-dark';
-                                            elseif ($ord['status'] === 'Delivered') $badge_class = 'bg-success';
-                                            elseif ($ord['status'] === 'Cancelled') $badge_class = 'bg-dark';
+                                            if ($ord['status'] === 'Pending') $badge_class = 'bg-danger-subtle text-danger border border-danger-subtle';
+                                            elseif ($ord['status'] === 'Preparing') $badge_class = 'bg-warning-subtle text-warning-emphasis border border-warning-subtle';
+                                            elseif ($ord['status'] === 'Out for Delivery') $badge_class = 'bg-info-subtle text-info-emphasis border border-info-subtle';
+                                            elseif ($ord['status'] === 'Delivered') $badge_class = 'bg-success-subtle text-success border border-success-subtle';
+                                            elseif ($ord['status'] === 'Cancelled') $badge_class = 'bg-secondary-subtle text-secondary';
                                             ?>
-                                            <span class="badge <?= $badge_class ?>"><?= $ord['status'] ?></span>
+                                            <span class="badge px-3 py-1.5 rounded-pill fw-bold small <?= $badge_class ?>"><?= $ord['status'] ?></span>
                                         </td>
-                                        <td class="text-end">
-                                            <a href="order-success.php?id=<?= $ord['id'] ?>" class="btn btn-sm btn-outline-dark">
-                                                <i class="bi bi-eye-fill"></i> Track Receipt
+                                        <td class="px-3 py-3 text-end">
+                                            <a href="order-success.php?id=<?= $ord['id'] ?>" class="btn btn-sm btn-outline-dark rounded-3 px-3 py-1.5 fw-bold" style="font-size: 12px;">
+                                                <i class="bi bi-eye me-1"></i> Receipt
                                             </a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
-                </div>
+                            </tbody>
+                        </table>
+                    </div>
+                <?php endif; ?>
             </div>
         <?php endif; ?>
 
         <!-- TAB 2: MY WISHLIST ITEMS -->
         <?php if ($active_tab === 'wishlist'): ?>
             <div class="card border-0 shadow-sm p-4 rounded-4 bg-white">
-                <h5 class="fw-bold mb-4"><i class="bi bi-heart-fill text-danger me-2"></i> My Wishlist Menu</h5>
+                <div class="d-flex align-items-center justify-content-between mb-4 border-bottom pb-3">
+                    <h5 class="fw-bold mb-0 text-dark" style="letter-spacing: -0.3px;"><i class="bi bi-heart-fill text-danger me-2"></i> Saved Wishlist</h5>
+                    <span class="badge bg-light text-dark border px-3 py-1.5 rounded-pill small"><?= count($wishlist_items) ?> Favorites</span>
+                </div>
                 
                 <?php if (empty($wishlist_items)): ?>
                     <div class="text-center py-5">
-                        <i class="bi bi-heart fs-1 text-muted"></i>
-                        <p class="mt-3 text-muted">Your wishlist is empty. Favorite foods to save them here!</p>
-                        <a href="index.php" class="btn btn-primary-orange">Explore Menu</a>
+                        <div class="mb-3 d-inline-flex align-items-center justify-content-center rounded-circle shadow-xs" style="width: 70px; height: 70px; background-color: #FEF2F2; color: #DC2626;">
+                            <i class="bi bi-heart fs-2"></i>
+                        </div>
+                        <h5 class="fw-bold text-dark mb-1">Your Wishlist is Empty</h5>
+                        <p class="text-muted small mb-4" style="max-width: 380px; margin: 0 auto; line-height: 1.6;">Save your favorite meals, burgers, and drinks here for instant 1-click ordering!</p>
+                        <a href="index.php" class="btn btn-primary-orange px-4 py-2.5 rounded-3 fw-bold shadow-sm text-white text-decoration-none">
+                            Explore Menu <i class="bi bi-arrow-right ms-1"></i>
+                        </a>
                     </div>
                 <?php else: ?>
                     <div class="row g-4">
@@ -336,28 +369,30 @@ $wishlist_items = $wish_stmt->fetchAll();
                 <!-- Left: Profile Settings Form -->
                 <div class="col-lg-7">
                     <div class="card border-0 shadow-sm p-4 rounded-4 bg-white">
-                        <h5 class="fw-bold mb-4"><i class="bi bi-person-gear text-orange me-2"></i> Update Profile details</h5>
+                        <div class="border-bottom pb-3 mb-4">
+                            <h5 class="fw-bold mb-0 text-dark" style="letter-spacing: -0.3px;"><i class="bi bi-person-gear me-2" style="color: var(--primary-orange);"></i> Update Profile Details</h5>
+                        </div>
                         
                         <form action="profile.php?tab=settings" method="POST">
                             <input type="hidden" name="action" value="update_profile">
                             
                             <div class="row g-3">
                                 <div class="col-md-6">
-                                    <label for="prof_name" class="form-label small fw-bold text-muted">FULL NAME</label>
-                                    <input type="text" name="name" id="prof_name" class="form-control" value="<?= sanitize($user['name']) ?>" required>
+                                    <label for="prof_name" class="form-label small fw-bold text-muted" style="letter-spacing: 0.5px; font-size: 11px;">FULL NAME</label>
+                                    <input type="text" name="name" id="prof_name" class="form-control rounded-3 py-2.5" value="<?= sanitize($user['name']) ?>" required style="border-color: #CBD5E1;">
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="prof_email" class="form-label small fw-bold text-muted">EMAIL ADDRESS</label>
-                                    <input type="email" name="email" id="prof_email" class="form-control" value="<?= sanitize($user['email']) ?>" required>
+                                    <label for="prof_email" class="form-label small fw-bold text-muted" style="letter-spacing: 0.5px; font-size: 11px;">EMAIL ADDRESS</label>
+                                    <input type="email" name="email" id="prof_email" class="form-control rounded-3 py-2.5" value="<?= sanitize($user['email']) ?>" required style="border-color: #CBD5E1;">
                                 </div>
 
                                 <div class="col-md-6">
-                                    <label for="prof_phone" class="form-label small fw-bold text-muted">PHONE NUMBER</label>
-                                    <input type="tel" name="phone" id="prof_phone" class="form-control" value="<?= sanitize($user['phone'] ?? '') ?>">
+                                    <label for="prof_phone" class="form-label small fw-bold text-muted" style="letter-spacing: 0.5px; font-size: 11px;">PHONE NUMBER</label>
+                                    <input type="tel" name="phone" id="prof_phone" class="form-control rounded-3 py-2.5" value="<?= sanitize($user['phone'] ?? '') ?>" style="border-color: #CBD5E1;">
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="prof_area" class="form-label small fw-bold text-muted">DELIVERY AREA SECTOR</label>
-                                    <select name="area_id" id="prof_area" class="form-select">
+                                    <label for="prof_area" class="form-label small fw-bold text-muted" style="letter-spacing: 0.5px; font-size: 11px;">DELIVERY AREA SECTOR</label>
+                                    <select name="area_id" id="prof_area" class="form-select rounded-3 py-2.5" style="border-color: #CBD5E1;">
                                         <option value="">-- Choose Area --</option>
                                         <?php foreach ($areas as $ar): ?>
                                             <option value="<?= $ar['id'] ?>" <?= $user['area_id'] == $ar['id'] ? 'selected' : '' ?>><?= sanitize($ar['area_name']) ?></option>
@@ -366,12 +401,12 @@ $wishlist_items = $wish_stmt->fetchAll();
                                 </div>
 
                                 <div class="col-12">
-                                    <label for="prof_address" class="form-label small fw-bold text-muted">DETAILED STREET ADDRESS</label>
-                                    <textarea name="address" id="prof_address" rows="3" class="form-control"><?= sanitize($user['address'] ?? '') ?></textarea>
+                                    <label for="prof_address" class="form-label small fw-bold text-muted" style="letter-spacing: 0.5px; font-size: 11px;">DETAILED STREET ADDRESS</label>
+                                    <textarea name="address" id="prof_address" rows="3" class="form-control rounded-3" style="border-color: #CBD5E1;"><?= sanitize($user['address'] ?? '') ?></textarea>
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary-orange w-100 py-3 mt-4 fw-bold">
+                            <button type="submit" class="btn btn-primary-orange w-100 py-3 mt-4 fw-bold rounded-3 shadow-sm text-white">
                                 Save Profile Changes
                             </button>
                         </form>
@@ -381,29 +416,31 @@ $wishlist_items = $wish_stmt->fetchAll();
                 <!-- Right: Password Change Form -->
                 <div class="col-lg-5">
                     <div class="card border-0 shadow-sm p-4 rounded-4 bg-white">
-                        <h5 class="fw-bold mb-4"><i class="bi bi-shield-lock text-orange me-2"></i> Update Security Credentials</h5>
+                        <div class="border-bottom pb-3 mb-4">
+                            <h5 class="fw-bold mb-0 text-dark" style="letter-spacing: -0.3px;"><i class="bi bi-shield-lock me-2" style="color: var(--primary-orange);"></i> Update Security Credentials</h5>
+                        </div>
                         
                         <form action="profile.php?tab=settings" method="POST">
                             <input type="hidden" name="action" value="change_password">
                             
                             <div class="mb-3">
-                                <label for="curr_pass" class="form-label small fw-bold text-muted">CURRENT PASSWORD</label>
-                                <input type="password" name="curr_pass" id="curr_pass" class="form-control" required>
+                                <label for="curr_pass" class="form-label small fw-bold text-muted" style="letter-spacing: 0.5px; font-size: 11px;">CURRENT PASSWORD</label>
+                                <input type="password" name="curr_pass" id="curr_pass" class="form-control rounded-3 py-2.5" required style="border-color: #CBD5E1;">
                             </div>
 
-                            <hr>
+                            <hr class="my-3 border-light">
 
                             <div class="mb-3">
-                                <label for="new_pass" class="form-label small fw-bold text-muted">NEW PASSWORD</label>
-                                <input type="password" name="new_pass" id="new_pass" class="form-control" required>
+                                <label for="new_pass" class="form-label small fw-bold text-muted" style="letter-spacing: 0.5px; font-size: 11px;">NEW PASSWORD</label>
+                                <input type="password" name="new_pass" id="new_pass" class="form-control rounded-3 py-2.5" required style="border-color: #CBD5E1;">
                             </div>
 
                             <div class="mb-4">
-                                <label for="conf_pass" class="form-label small fw-bold text-muted">CONFIRM NEW PASSWORD</label>
-                                <input type="password" name="conf_pass" id="conf_pass" class="form-control" required>
+                                <label for="conf_pass" class="form-label small fw-bold text-muted" style="letter-spacing: 0.5px; font-size: 11px;">CONFIRM NEW PASSWORD</label>
+                                <input type="password" name="conf_pass" id="conf_pass" class="form-control rounded-3 py-2.5" required style="border-color: #CBD5E1;">
                             </div>
 
-                            <button type="submit" class="btn btn-dark w-100 py-3 fw-bold">
+                            <button type="submit" class="btn btn-primary-orange w-100 py-3 fw-bold rounded-3 shadow-sm text-white">
                                 Update Password Key
                             </button>
                         </form>
@@ -429,7 +466,7 @@ $wishlist_items = $wish_stmt->fetchAll();
                 <div class="col-lg-4 col-md-6">
                     <span class="fs-4 fw-bold text-white"><?= sanitize(get_setting('restaurant_name', 'Cravers')) ?>.</span>
                     <p class="small text-muted mt-2">
-                        Cravers brings the taste of fresh, premium warm food right to your doorstep in Faisalabad. From masterfully crafted zingers to authentic brick-oven pizzas, satisfaction is just a click away.
+                        Cravers brings the taste of fresh, premium warm food right to your doorstep in Chiniot. From masterfully crafted zingers to authentic brick-oven pizzas, satisfaction is just a click away.
                     </p>
                     <div class="d-flex gap-3 mt-3">
                         <a href="#" class="text-muted"><i class="bi bi-facebook fs-5"></i></a>
@@ -471,11 +508,11 @@ $wishlist_items = $wish_stmt->fetchAll();
                 <div class="col-lg-3 col-md-6">
                     <h6 class="text-white fw-bold mb-3">Contact Support</h6>
                     <ul class="list-unstyled mb-0 text-muted small">
-                        <li class="mb-2"><i class="bi bi-geo-alt text-orange me-2"></i> Faisalabad, Punjab, Pakistan</li>
-                        <li class="mb-2"><i class="bi bi-telephone text-orange me-2"></i> Hotline: <?= sanitize(get_setting('contact_number', '+92 300 123 4567')) ?></li>
-                        <li class="mb-2"><i class="bi bi-envelope text-orange me-2"></i> support@cravers.com</li>
+                        <li class="mb-2"><i class="bi bi-geo-alt text-orange me-2"></i> <?= sanitize(get_setting('address', '359-V Nao Gazah Rd, Chiniot, 35400')) ?></li>
+                        <li class="mb-2"><i class="bi bi-telephone text-orange me-2"></i> Hotline: <?= sanitize(get_setting('contact_number', '0311 7593578')) ?></li>
+                        <li class="mb-2"><i class="bi bi-clock text-orange me-2"></i> <?= sanitize(get_setting('hours', 'Open 24 hours')) ?> (<?= sanitize(get_setting('service_options', 'Cash only')) ?>)</li>
                         <li class="mt-3">
-                            <span class="badge bg-success py-2 px-3 rounded-pill"><i class="bi bi-check-circle me-1"></i> Kitchen is Open</span>
+                            <span class="badge bg-success py-2 px-3 rounded-pill"><i class="bi bi-check-circle me-1"></i> Kitchen is Open 24/7</span>
                         </li>
                     </ul>
                 </div>
