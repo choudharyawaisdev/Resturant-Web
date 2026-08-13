@@ -128,15 +128,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $all_cats = $pdo->query("SELECT * FROM categories ORDER BY display_order ASC")->fetchAll();
 ?>
 
-<!-- ALERTS -->
+<!-- ALERTS (SweetAlert + Bootstrap) -->
 <?php if (!empty($success)): ?>
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '<?= sanitize($success) ?>',
+                confirmButtonColor: '#FF6B00',
+                timer: 3000
+            });
+        });
+    </script>
+    <div class="alert alert-success alert-dismissible fade show rounded-3" role="alert">
         <i class="bi bi-check-circle-fill me-2"></i> <?= sanitize($success) ?>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 <?php endif; ?>
+
 <?php if (!empty($error)): ?>
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            Swal.fire({
+                icon: 'error',
+                title: 'Operation Failed',
+                text: '<?= sanitize($error) ?>',
+                confirmButtonColor: '#FF6B00'
+            });
+        });
+    </script>
+    <div class="alert alert-danger alert-dismissible fade show rounded-3" role="alert">
         <i class="bi bi-exclamation-triangle-fill me-2"></i> <?= sanitize($error) ?>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
@@ -151,7 +173,7 @@ $all_cats = $pdo->query("SELECT * FROM categories ORDER BY display_order ASC")->
                 <?= $edit_mode ? 'Edit Category' : 'Create Category' ?>
             </h5>
             
-            <form action="categories.php" method="POST" enctype="multipart/form-data">
+            <form action="" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="edit_id" value="<?= $edit_id ?>">
                 
                 <div class="mb-3">
@@ -271,7 +293,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = `categories.php?action=delete&id=${id}`;
+                    window.location.href = `categories?action=delete&id=${id}`;
                 }
             });
         });

@@ -72,16 +72,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         } else {
             // Retrieve current user
             $admin_id = $_SESSION['admin_id'];
-            $stmt = $pdo->prepare("SELECT password_hash FROM admin_users WHERE id = ?");
+            $stmt = $pdo->prepare("SELECT password FROM admin_users WHERE id = ?");
             $stmt->execute([$admin_id]);
             $current_hash = $stmt->fetchColumn();
 
             if ($current_hash && password_verify($curr_pass, $current_hash)) {
                 // Hash new password and update
                 $new_hash = password_hash($new_pass, PASSWORD_DEFAULT);
-                $update_stmt = $pdo->prepare("UPDATE admin_users SET password_hash = ? WHERE id = ?");
+                $update_stmt = $pdo->prepare("UPDATE admin_users SET password = ? WHERE id = ?");
                 $update_stmt->execute([$new_hash, $admin_id]);
-                $success = 'Admin security password changed successfully!';
+                $success = 'Admin password updated successfully!';
             } else {
                 $error = 'Incorrect current password.';
             }
@@ -90,15 +90,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 }
 ?>
 
-<!-- ALERTS -->
+<!-- ALERTS (SweetAlert + Bootstrap) -->
 <?php if (!empty($success)): ?>
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '<?= sanitize($success) ?>',
+                confirmButtonColor: '#FF6B00',
+                timer: 3000
+            });
+        });
+    </script>
+    <div class="alert alert-success alert-dismissible fade show rounded-3" role="alert">
         <i class="bi bi-check-circle-fill me-2"></i> <?= sanitize($success) ?>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 <?php endif; ?>
+
 <?php if (!empty($error)): ?>
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            Swal.fire({
+                icon: 'error',
+                title: 'Operation Failed',
+                text: '<?= sanitize($error) ?>',
+                confirmButtonColor: '#FF6B00'
+            });
+        });
+    </script>
+    <div class="alert alert-danger alert-dismissible fade show rounded-3" role="alert">
         <i class="bi bi-exclamation-triangle-fill me-2"></i> <?= sanitize($error) ?>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
@@ -110,7 +132,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         <div class="card border-0 shadow-sm p-4 rounded-4 bg-white">
             <h5 class="fw-bold mb-4"><i class="bi bi-shop text-orange me-2"></i> General Brand Details</h5>
             
-            <form action="settings.php" method="POST">
+            <form action="" method="POST">
                 <input type="hidden" name="action" value="save_settings">
                 
                 <div class="mb-3">
@@ -166,7 +188,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         <div class="card border-0 shadow-sm p-4 rounded-4 bg-white">
             <h5 class="fw-bold mb-4"><i class="bi bi-shield-lock text-orange me-2"></i> Update Security Credentials</h5>
             
-            <form action="settings.php" method="POST">
+            <form action="" method="POST">
                 <input type="hidden" name="action" value="change_password">
                 
                 <div class="mb-3">

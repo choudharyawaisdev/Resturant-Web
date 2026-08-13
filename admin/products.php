@@ -297,25 +297,47 @@ $all_products = $pdo->query("
 <!-- Tab toggling navigation -->
 <ul class="nav nav-tabs mb-4">
     <li class="nav-item">
-        <a class="nav-link <?= $active_tab === 'products' ? 'active fw-bold' : '' ?>" href="products.php?tab=products"><i class="bi bi-egg-fried text-orange me-1"></i> Products Menu</a>
+        <a class="nav-link <?= $active_tab === 'products' ? 'active fw-bold' : '' ?>" href="products?tab=products"><i class="bi bi-egg-fried text-orange me-1"></i> Products Menu</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link <?= $active_tab === 'addons' ? 'active fw-bold' : '' ?>" href="products.php?tab=addons"><i class="bi bi-plus-circle text-orange me-1"></i> Global Add-ons</a>
+        <a class="nav-link <?= $active_tab === 'addons' ? 'active fw-bold' : '' ?>" href="products?tab=addons"><i class="bi bi-plus-circle text-orange me-1"></i> Global Add-ons</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link <?= $active_tab === 'drinks' ? 'active fw-bold' : '' ?>" href="products.php?tab=drinks"><i class="bi bi-cup-straw text-orange me-1"></i> Global Drinks</a>
+        <a class="nav-link <?= $active_tab === 'drinks' ? 'active fw-bold' : '' ?>" href="products?tab=drinks"><i class="bi bi-cup-straw text-orange me-1"></i> Global Drinks</a>
     </li>
 </ul>
 
-<!-- ALERTS -->
+<!-- ALERTS (SweetAlert + Bootstrap) -->
 <?php if (!empty($success)): ?>
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '<?= sanitize($success) ?>',
+                confirmButtonColor: '#FF6B00',
+                timer: 3000
+            });
+        });
+    </script>
+    <div class="alert alert-success alert-dismissible fade show rounded-3" role="alert">
         <i class="bi bi-check-circle-fill me-2"></i> <?= sanitize($success) ?>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 <?php endif; ?>
+
 <?php if (!empty($error)): ?>
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            Swal.fire({
+                icon: 'error',
+                title: 'Operation Failed',
+                text: '<?= sanitize($error) ?>',
+                confirmButtonColor: '#FF6B00'
+            });
+        });
+    </script>
+    <div class="alert alert-danger alert-dismissible fade show rounded-3" role="alert">
         <i class="bi bi-exclamation-triangle-fill me-2"></i> <?= sanitize($error) ?>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
@@ -331,7 +353,7 @@ $all_products = $pdo->query("
                     <i class="bi <?= $edit_prod_mode ? 'bi-pencil-square' : 'bi-plus-circle' ?> text-orange me-2"></i>
                     <?= $edit_prod_mode ? 'Edit Product' : 'Create Product' ?>
                 </h5>
-                <form action="products.php?tab=products" method="POST" enctype="multipart/form-data">
+                <form action="" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="form_type" value="product">
                     <input type="hidden" name="product_id" value="<?= $prod_edit_id ?>">
 
@@ -540,7 +562,7 @@ $all_products = $pdo->query("
                     <?= $edit_addon_mode ? 'Edit Add-on' : 'Create Add-on' ?>
                 </h5>
                 
-                <form action="products.php?tab=addons" method="POST">
+                <form action="" method="POST">
                     <input type="hidden" name="form_type" value="addon">
                     <input type="hidden" name="addon_id" value="<?= $addon_edit_id ?>">
                     
@@ -633,7 +655,7 @@ $all_products = $pdo->query("
                     <?= $edit_drink_mode ? 'Edit Drink' : 'Create Drink' ?>
                 </h5>
                 
-                <form action="products.php?tab=drinks" method="POST">
+                <form action="" method="POST">
                     <input type="hidden" name="form_type" value="drink">
                     <input type="hidden" name="drink_id" value="<?= $drink_edit_id ?>">
                     
@@ -776,7 +798,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = `products.php?tab=products&action=delete_product&id=${id}`;
+                    window.location.href = `products?tab=products&action=delete_product&id=${id}`;
                 }
             });
         });
@@ -796,7 +818,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = `products.php?tab=addons&action=delete_addon&id=${id}`;
+                    window.location.href = `products?tab=addons&action=delete_addon&id=${id}`;
                 }
             });
         });
@@ -816,7 +838,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = `products.php?tab=drinks&action=delete_drink&id=${id}`;
+                    window.location.href = `products?tab=drinks&action=delete_drink&id=${id}`;
                 }
             });
         });

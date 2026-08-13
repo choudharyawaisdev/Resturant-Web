@@ -334,36 +334,47 @@ p {
     color: var(--primary-orange);
 }
 
-/* Custom Buttons */
-.btn-primary-orange {
-    background-color: var(--primary-orange);
-    color: var(--white);
-    border: none;
+/* Custom Buttons — Universal Orange Theme */
+.btn-primary-orange,
+.btn-primary,
+.btn-warning {
+    background-color: var(--primary-orange) !important;
+    color: var(--white) !important;
+    border: none !important;
     border-radius: var(--border-radius-md);
-    padding: 10px 20px;
+    padding: 10px 22px;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 14px rgba(255, 107, 0, 0.25);
+}
+
+.btn-primary-orange:hover,
+.btn-primary:hover,
+.btn-warning:hover {
+    background-color: var(--primary-hover) !important;
+    color: var(--white) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 107, 0, 0.4);
+}
+
+.btn-outline-orange,
+.btn-outline-warning,
+.btn-outline-primary {
+    border: 1.5px solid var(--primary-orange) !important;
+    background-color: transparent !important;
+    color: var(--primary-orange) !important;
+    border-radius: var(--border-radius-md);
+    padding: 8px 20px;
     font-weight: 600;
     transition: all 0.3s ease;
 }
 
-.btn-primary-orange:hover {
-    background-color: var(--primary-hover);
-    color: var(--white);
-    transform: translateY(-1px);
-}
-
-.btn-outline-yellow {
-    border: 2px solid var(--secondary-yellow);
-    background-color: transparent;
-    color: var(--text-dark);
-    border-radius: var(--border-radius-md);
-    padding: 8px 18px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-.btn-outline-yellow:hover {
-    background-color: var(--secondary-yellow);
-    color: var(--text-dark);
+.btn-outline-orange:hover,
+.btn-outline-warning:hover,
+.btn-outline-primary:hover {
+    background-color: var(--primary-orange) !important;
+    color: var(--white) !important;
+    box-shadow: 0 4px 14px rgba(255, 107, 0, 0.3);
 }
 
 /* Stepper Quantity Input */

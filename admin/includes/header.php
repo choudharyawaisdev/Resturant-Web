@@ -27,10 +27,9 @@ $current_page = basename($_SERVER['PHP_SELF']);
         <!-- SIDEBAR (Clean White Theme with Orange Accent) -->
         <aside class="admin-sidebar">
             <a href="dashboard" class="admin-brand">
-                <img src="../assets/images/logo.png" alt="Café-Chinos" style="height:42px; width:auto; object-fit:contain;">
+                <img src="../assets/images/logo.png" alt="Logo" style="height:46px; width:auto; object-fit:contain;">
                 <div>
-                    <div class="admin-brand-title">Café-Chinos</div>
-                    <span class="admin-brand-badge">Admin</span>
+                    <span class="admin-brand-badge">Admin Panel</span>
                 </div>
             </a>
 

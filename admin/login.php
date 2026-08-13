@@ -117,7 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$is_locked_out) {
         <div class="login-card">
             <div class="text-center mb-4">
                 <img src="../assets/images/logo.png" alt="Café-Chinos" class="mb-3" style="height:60px; width:auto; object-fit:contain; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));">
-                <h4 class="fw-bold">Café-Chinos Admin</h4>
+                <h4 class="fw-bold">Admin Portal</h4>
                 <p class="text-muted small">Enter your credentials to manage restaurant operations.</p>
             </div>
 

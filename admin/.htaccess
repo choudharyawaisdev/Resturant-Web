@@ -31,8 +31,6 @@ RewriteRule ^includes(/.*)?$ - [F,L]
     Header always set Referrer-Policy           "no-referrer"
     Header unset Server
     Header always unset X-Powered-By
-    # Strict Transport Security (enable if using HTTPS)
-    # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
 </IfModule>
 
 # ── Remove .php extension inside admin ────────────────────────
@@ -41,7 +39,8 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME}.php -f
 RewriteRule ^(.+)$ $1.php [L,QSA]
 
-# ── Redirect /admin/xxx.php → /admin/xxx (canonical) ─────────
+# ── Redirect /admin/xxx.php → /admin/xxx (GET ONLY, NEVER POST) ─
+RewriteCond %{REQUEST_METHOD} !POST
 RewriteCond %{THE_REQUEST} \s/+Resturant-Web/admin/(.+?)\.php[\s?] [NC]
 RewriteRule ^ /Resturant-Web/admin/%1 [R=301,L,NE]
 

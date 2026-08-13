@@ -84,15 +84,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $all_areas = $pdo->query("SELECT * FROM areas ORDER BY area_name ASC")->fetchAll();
 ?>
 
-<!-- ALERTS -->
+<!-- ALERTS (SweetAlert + Bootstrap) -->
 <?php if (!empty($success)): ?>
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '<?= sanitize($success) ?>',
+                confirmButtonColor: '#FF6B00',
+                timer: 3000
+            });
+        });
+    </script>
+    <div class="alert alert-success alert-dismissible fade show rounded-3" role="alert">
         <i class="bi bi-check-circle-fill me-2"></i> <?= sanitize($success) ?>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 <?php endif; ?>
+
 <?php if (!empty($error)): ?>
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            Swal.fire({
+                icon: 'error',
+                title: 'Operation Failed',
+                text: '<?= sanitize($error) ?>',
+                confirmButtonColor: '#FF6B00'
+            });
+        });
+    </script>
+    <div class="alert alert-danger alert-dismissible fade show rounded-3" role="alert">
         <i class="bi bi-exclamation-triangle-fill me-2"></i> <?= sanitize($error) ?>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
@@ -107,7 +129,7 @@ $all_areas = $pdo->query("SELECT * FROM areas ORDER BY area_name ASC")->fetchAll
                 <?= $edit_mode ? 'Edit Area Details' : 'Create Delivery Area' ?>
             </h5>
             
-            <form action="areas.php" method="POST">
+            <form action="" method="POST">
                 <input type="hidden" name="edit_id" value="<?= $edit_id ?>">
                 
                 <div class="mb-3">
