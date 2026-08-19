@@ -13,8 +13,8 @@ RewriteRule ^ - [L]
 RewriteCond %{REQUEST_FILENAME}.php -f
 RewriteRule ^(.+)$ $1.php [L,QSA]
 
-# Custom 404 Error Page Document
-ErrorDocument 404 /Resturant-Web/404.php
+# Custom 404 Error Page Document (For root domain and subfolders)
+ErrorDocument 404 /404.php
 
 # Fallback for unknown routes to 404 page
 RewriteCond %{REQUEST_FILENAME} !-f

@@ -4,6 +4,12 @@ http_response_code(404);
 require_once __DIR__ . '/includes/functions.php';
 
 $page_title = '404 - Page Not Found | Café-Chinos';
+
+// Auto-detect base path for both local (subdirectory) and live server (root)
+$base_url = '';
+if (isset($_SERVER['HTTP_HOST']) && (strpos($_SERVER['HTTP_HOST'], 'localhost') !== false || strpos($_SERVER['HTTP_HOST'], '127.0.0.1') !== false)) {
+    $base_url = '/Resturant-Web';
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,15 +22,14 @@ $page_title = '404 - Page Not Found | Café-Chinos';
     <!-- Google Fonts: Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
     <!-- Custom CSS with Cache Buster -->
-    <link href="/Resturant-Web/assets/css/style.css?v=<?= time() ?>" rel="stylesheet">
+    <link href="<?= $base_url ?>/assets/css/style.css?v=<?= time() ?>" rel="stylesheet">
 
     <style>
         .error-hero {
@@ -80,12 +85,9 @@ $page_title = '404 - Page Not Found | Café-Chinos';
         }
 
         @keyframes pulseSoft {
-
-            0%,
-            100% {
+            0%, 100% {
                 transform: scale(1);
             }
-
             50% {
                 transform: scale(1.06);
             }
@@ -167,13 +169,13 @@ $page_title = '404 - Page Not Found | Café-Chinos';
     <!-- Top Sticky Header -->
     <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="/Resturant-Web/index">
-                <img src="/Resturant-Web/assets/images/logo.png" alt="Café-Chinos" class="navbar-logo"
+            <a class="navbar-brand d-flex align-items-center" href="<?= $base_url ?>/index">
+                <img src="<?= $base_url ?>/assets/images/logo.png" alt="Café-Chinos" class="navbar-logo"
                     style="height:54px; width:auto; object-fit:contain; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.25));">
             </a>
 
             <div class="d-flex align-items-center gap-2">
-                <a href="/Resturant-Web/index" class="btn btn-outline-orange btn-sm rounded-pill px-3 py-2 fw-semibold">
+                <a href="<?= $base_url ?>/index" class="btn btn-outline-orange btn-sm rounded-pill px-3 py-2 fw-semibold">
                     <i class="bi bi-arrow-left me-1"></i> Back to Menu
                 </a>
             </div>
@@ -201,11 +203,11 @@ $page_title = '404 - Page Not Found | Café-Chinos';
             </p>
 
             <div class="d-flex flex-wrap justify-content-center gap-3">
-                <a href="/Resturant-Web/index" class="btn-action-primary">
+                <a href="<?= $base_url ?>/index" class="btn-action-primary">
                     <i class="bi bi-house-door-fill"></i>
                     <span>Go to Home Menu</span>
                 </a>
-                <a href="/Resturant-Web/policies?type=refund" class="btn-action-secondary">
+                <a href="<?= $base_url ?>/policies?type=refund" class="btn-action-secondary">
                     <i class="bi bi-question-circle"></i>
                     <span>Help & Support</span>
                 </a>
@@ -216,8 +218,7 @@ $page_title = '404 - Page Not Found | Café-Chinos';
                 <span>Need immediate assistance? Call our Chiniot helpline: </span>
                 <a href="tel:<?= sanitize(get_setting('contact_number', '03117593578')) ?>"
                     class="fw-bold text-decoration-none" style="color: var(--primary-orange);">
-                    <i
-                        class="bi bi-telephone-fill me-1"></i><?= sanitize(get_setting('contact_number', '0311 7593578')) ?>
+                    <i class="bi bi-telephone-fill me-1"></i><?= sanitize(get_setting('contact_number', '0311 7593578')) ?>
                 </a>
             </div>
         </div>
@@ -229,8 +230,8 @@ $page_title = '404 - Page Not Found | Café-Chinos';
             <div class="row g-4 text-start">
                 <!-- Column 1: Brand Info -->
                 <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-                    <a href="/Resturant-Web/index">
-                        <img src="/Resturant-Web/assets/images/logo.png" alt="Café-Chinos"
+                    <a href="<?= $base_url ?>/index">
+                        <img src="<?= $base_url ?>/assets/images/logo.png" alt="Café-Chinos"
                             style="height:65px; width:auto; object-fit:contain; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));">
                     </a>
                     <p class="small text-muted mt-2">
@@ -251,13 +252,13 @@ $page_title = '404 - Page Not Found | Café-Chinos';
                 <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                     <h6 class="footer-heading">Quick Menu</h6>
                     <ul class="footer-links">
-                        <li><a href="/Resturant-Web/index#category-1"><i class="bi bi-chevron-right"></i> Hot Deals</a>
+                        <li><a href="<?= $base_url ?>/index#category-1"><i class="bi bi-chevron-right"></i> Hot Deals</a>
                         </li>
-                        <li><a href="/Resturant-Web/index#category-2"><i class="bi bi-chevron-right"></i> Pizzas &
+                        <li><a href="<?= $base_url ?>/index#category-2"><i class="bi bi-chevron-right"></i> Pizzas &
                                 Crusts</a></li>
-                        <li><a href="/Resturant-Web/index#category-3"><i class="bi bi-chevron-right"></i> Crispy
+                        <li><a href="<?= $base_url ?>/index#category-3"><i class="bi bi-chevron-right"></i> Crispy
                                 Burgers</a></li>
-                        <li><a href="/Resturant-Web/index#category-4"><i class="bi bi-chevron-right"></i> Wings &
+                        <li><a href="<?= $base_url ?>/index#category-4"><i class="bi bi-chevron-right"></i> Wings &
                                 Starters</a></li>
                     </ul>
                 </div>
@@ -266,13 +267,13 @@ $page_title = '404 - Page Not Found | Café-Chinos';
                 <div class="col-lg-2 col-md-6 col-sm-6 col-12">
                     <h6 class="footer-heading">Help & Policies</h6>
                     <ul class="footer-links">
-                        <li><a href="/Resturant-Web/policies?type=refund"><i class="bi bi-chevron-right"></i> Refund
+                        <li><a href="<?= $base_url ?>/policies?type=refund"><i class="bi bi-chevron-right"></i> Refund
                                 Policy</a></li>
-                        <li><a href="/Resturant-Web/policies?type=terms"><i class="bi bi-chevron-right"></i> Terms of
+                        <li><a href="<?= $base_url ?>/policies?type=terms"><i class="bi bi-chevron-right"></i> Terms of
                                 Service</a></li>
-                        <li><a href="/Resturant-Web/policies?type=privacy"><i class="bi bi-chevron-right"></i> Privacy
+                        <li><a href="<?= $base_url ?>/policies?type=privacy"><i class="bi bi-chevron-right"></i> Privacy
                                 Policy</a></li>
-                        <li><a href="/Resturant-Web/checkout"><i class="bi bi-chevron-right"></i> Cart Checkout</a></li>
+                        <li><a href="<?= $base_url ?>/checkout"><i class="bi bi-chevron-right"></i> Cart Checkout</a></li>
                     </ul>
                 </div>
 
