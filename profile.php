@@ -4,7 +4,7 @@ require_once __DIR__ . '/includes/functions.php';
 
 // Guard check
 if (!is_user_logged_in()) {
-    redirect('login.php');
+    redirect('login');
 }
 
 $user_id = get_logged_in_user_id();
@@ -18,7 +18,7 @@ $stmt->execute([$user_id]);
 $user = $stmt->fetch();
 
 if (!$user) {
-    redirect('login.php');
+    redirect('login');
 }
 
 // Fetch Chiniot areas for settings dropdown
@@ -144,15 +144,15 @@ $wishlist_items = $wish_stmt->fetchAll();
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="index.php">
+            <a class="navbar-brand d-flex align-items-center" href="index">
                 <img src="assets/images/logo.png" alt="Café-Chinos" class="navbar-logo" style="height:56px; width:auto; object-fit:contain; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.25));">
             </a>
             
             <div class="d-flex align-items-center gap-2">
-                <a href="index.php" class="btn btn-primary-orange px-3.5 py-2 rounded-pill fw-bold text-white shadow-xs d-inline-flex align-items-center" style="font-size: 13px;">
+                <a href="index" class="btn btn-primary-orange px-3.5 py-2 rounded-pill fw-bold text-white shadow-xs d-inline-flex align-items-center" style="font-size: 13px;">
                     <i class="bi bi-bag-fill me-1.5"></i> Order Food
                 </a>
-                <a href="logout.php" class="btn text-danger border border-danger-subtle px-3.5 py-2 rounded-pill fw-bold d-inline-flex align-items-center transition-all" style="font-size: 13px; background-color: #FEF2F2;">
+                <a href="logout" class="btn text-danger border border-danger-subtle px-3.5 py-2 rounded-pill fw-bold d-inline-flex align-items-center transition-all" style="font-size: 13px; background-color: #FEF2F2;">
                     <i class="bi bi-box-arrow-right me-1.5"></i> Sign out
                 </a>
             </div>
@@ -216,17 +216,17 @@ $wishlist_items = $wish_stmt->fetchAll();
         <!-- Split Layout Tabs -->
         <ul class="nav nav-pills mb-4 bg-white p-2 rounded-4 shadow-sm border gap-2">
             <li class="nav-item">
-                <a class="nav-link px-4 py-2.5 rounded-3 fw-bold transition-all <?= $active_tab === 'orders' ? 'active text-white' : 'text-dark bg-transparent' ?>" style="<?= $active_tab === 'orders' ? 'background-color: var(--primary-orange) !important; box-shadow: 0 4px 12px rgba(255,107,0,0.25);' : '' ?>" href="profile.php?tab=orders">
+                <a class="nav-link px-4 py-2.5 rounded-3 fw-bold transition-all <?= $active_tab === 'orders' ? 'active text-white' : 'text-dark bg-transparent' ?>" style="<?= $active_tab === 'orders' ? 'background-color: var(--primary-orange) !important; box-shadow: 0 4px 12px rgba(255,107,0,0.25);' : '' ?>" href="profile?tab=orders">
                     <i class="bi bi-receipt me-2"></i>Orders Log
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link px-4 py-2.5 rounded-3 fw-bold transition-all <?= $active_tab === 'wishlist' ? 'active text-white' : 'text-dark bg-transparent' ?>" style="<?= $active_tab === 'wishlist' ? 'background-color: var(--primary-orange) !important; box-shadow: 0 4px 12px rgba(255,107,0,0.25);' : '' ?>" href="profile.php?tab=wishlist">
+                <a class="nav-link px-4 py-2.5 rounded-3 fw-bold transition-all <?= $active_tab === 'wishlist' ? 'active text-white' : 'text-dark bg-transparent' ?>" style="<?= $active_tab === 'wishlist' ? 'background-color: var(--primary-orange) !important; box-shadow: 0 4px 12px rgba(255,107,0,0.25);' : '' ?>" href="profile?tab=wishlist">
                     <i class="bi bi-heart-fill me-2"></i>Saved Wishlist
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link px-4 py-2.5 rounded-3 fw-bold transition-all <?= $active_tab === 'settings' ? 'active text-white' : 'text-dark bg-transparent' ?>" style="<?= $active_tab === 'settings' ? 'background-color: var(--primary-orange) !important; box-shadow: 0 4px 12px rgba(255,107,0,0.25);' : '' ?>" href="profile.php?tab=settings">
+                <a class="nav-link px-4 py-2.5 rounded-3 fw-bold transition-all <?= $active_tab === 'settings' ? 'active text-white' : 'text-dark bg-transparent' ?>" style="<?= $active_tab === 'settings' ? 'background-color: var(--primary-orange) !important; box-shadow: 0 4px 12px rgba(255,107,0,0.25);' : '' ?>" href="profile?tab=settings">
                     <i class="bi bi-person-gear me-2"></i>Account Settings
                 </a>
             </li>
@@ -247,7 +247,7 @@ $wishlist_items = $wish_stmt->fetchAll();
                         </div>
                         <h5 class="fw-bold text-dark mb-1">No Orders Placed Yet</h5>
                         <p class="text-muted small mb-4" style="max-width: 380px; margin: 0 auto; line-height: 1.6;">Your order log is currently empty. Explore our delicious menu and treat yourself today!</p>
-                        <a href="index.php" class="btn btn-primary-orange px-4 py-2.5 rounded-3 fw-bold shadow-sm text-white text-decoration-none">
+                        <a href="index" class="btn btn-primary-orange px-4 py-2.5 rounded-3 fw-bold shadow-sm text-white text-decoration-none">
                             Explore Menu <i class="bi bi-arrow-right ms-1"></i>
                         </a>
                     </div>
@@ -283,7 +283,7 @@ $wishlist_items = $wish_stmt->fetchAll();
                                             <span class="badge px-3 py-1.5 rounded-pill fw-bold small <?= $badge_class ?>"><?= $ord['status'] ?></span>
                                         </td>
                                         <td class="px-3 py-3 text-end">
-                                            <a href="order-success.php?id=<?= $ord['id'] ?>" class="btn btn-sm btn-outline-dark rounded-3 px-3 py-1.5 fw-bold" style="font-size: 12px;">
+                                            <a href="order-success?id=<?= $ord['id'] ?>" class="btn btn-sm btn-outline-dark rounded-3 px-3 py-1.5 fw-bold" style="font-size: 12px;">
                                                 <i class="bi bi-eye me-1"></i> Receipt
                                             </a>
                                         </td>
@@ -311,7 +311,7 @@ $wishlist_items = $wish_stmt->fetchAll();
                         </div>
                         <h5 class="fw-bold text-dark mb-1">Your Wishlist is Empty</h5>
                         <p class="text-muted small mb-4" style="max-width: 380px; margin: 0 auto; line-height: 1.6;">Save your favorite meals, burgers, and drinks here for instant 1-click ordering!</p>
-                        <a href="index.php" class="btn btn-primary-orange px-4 py-2.5 rounded-3 fw-bold shadow-sm text-white text-decoration-none">
+                        <a href="index" class="btn btn-primary-orange px-4 py-2.5 rounded-3 fw-bold shadow-sm text-white text-decoration-none">
                             Explore Menu <i class="bi bi-arrow-right ms-1"></i>
                         </a>
                     </div>
@@ -369,7 +369,7 @@ $wishlist_items = $wish_stmt->fetchAll();
                             <h5 class="fw-bold mb-0 text-dark" style="letter-spacing: -0.3px;"><i class="bi bi-person-gear me-2" style="color: var(--primary-orange);"></i> Update Profile Details</h5>
                         </div>
                         
-                        <form action="profile.php?tab=settings" method="POST">
+                        <form action="profile?tab=settings" method="POST">
                             <input type="hidden" name="action" value="update_profile">
                             
                             <div class="row g-3">
@@ -416,7 +416,7 @@ $wishlist_items = $wish_stmt->fetchAll();
                             <h5 class="fw-bold mb-0 text-dark" style="letter-spacing: -0.3px;"><i class="bi bi-shield-lock me-2" style="color: var(--primary-orange);"></i> Update Security Credentials</h5>
                         </div>
                         
-                        <form action="profile.php?tab=settings" method="POST">
+                        <form action="profile?tab=settings" method="POST">
                             <input type="hidden" name="action" value="change_password">
                             
                             <div class="mb-3">
@@ -460,7 +460,7 @@ $wishlist_items = $wish_stmt->fetchAll();
             <div class="row g-4 text-start">
                 <!-- Column 1: Brand Info -->
                 <div class="col-lg-4 col-md-6">
-                    <a href="index.php">
+                    <a href="index">
                         <img src="assets/images/logo.png" alt="Café-Chinos" style="height:70px; width:auto; object-fit:contain; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));">
                     </a>
                     <p class="small text-muted mt-2">
@@ -481,10 +481,10 @@ $wishlist_items = $wish_stmt->fetchAll();
                         try {
                             $footer_cats = $pdo->query("SELECT * FROM categories WHERE status = 'active' ORDER BY id ASC")->fetchAll();
                             foreach ($footer_cats as $fc) {
-                                echo '<li class="mb-2.5"><a href="index.php#category-' . intval($fc['id']) . '" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px;"></i> ' . sanitize($fc['name']) . '</a></li>';
+                                echo '<li class="mb-2.5"><a href="index#category-' . intval($fc['id']) . '" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px;"></i> ' . sanitize($fc['name']) . '</a></li>';
                             }
                         } catch (Exception $e) {
-                            echo '<li class="mb-2.5"><a href="index.php" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px;"></i> Menu</a></li>';
+                            echo '<li class="mb-2.5"><a href="index" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px;"></i> Menu</a></li>';
                         }
                         ?>
                     </ul>
@@ -494,9 +494,9 @@ $wishlist_items = $wish_stmt->fetchAll();
                 <div class="col-lg-3 col-md-6 col-6">
                     <h6 class="text-white fw-bold mb-3">Help & Policies</h6>
                     <ul class="list-unstyled mb-0">
-                        <li class="mb-2"><a href="policies.php?type=refund" class="text-muted small">Return & Refund Policy</a></li>
-                        <li class="mb-2"><a href="policies.php?type=terms" class="text-muted small">Terms of Service</a></li>
-                        <li class="mb-2"><a href="policies.php?type=privacy" class="text-muted small">Privacy Policy</a></li>
+                        <li class="mb-2"><a href="policies?type=refund" class="text-muted small">Return & Refund Policy</a></li>
+                        <li class="mb-2"><a href="policies?type=terms" class="text-muted small">Terms of Service</a></li>
+                        <li class="mb-2"><a href="policies?type=privacy" class="text-muted small">Privacy Policy</a></li>
                         <li class="mb-2"><a href="#" class="text-muted small">Delivery Locations Map</a></li>
                         <li class="mb-2"><a href="#" class="text-muted small">FAQs & Support</a></li>
                     </ul>
@@ -549,7 +549,7 @@ $wishlist_items = $wish_stmt->fetchAll();
                 const params = new URLSearchParams();
                 params.append('product_id', productId);
 
-                fetch('api/wishlist.php', {
+                fetch('api/wishlist', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: params.toString()

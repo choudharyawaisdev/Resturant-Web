@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
 
                 // Send to backend via fetch
-                fetch('api/add_to_cart.php?action=set_location', {
+                fetch('api/add_to_cart?action=set_location', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: `area_id=${areaId}`
@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
         `;
         productDetailModal.show();
 
-        fetch(`product-modal.php?id=${productId}`)
+        fetch(`product-modal?id=${productId}`)
             .then(res => {
                 if (!res.ok) throw new Error('Network error');
                 return res.text();
@@ -235,7 +235,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const formData = new FormData(modalForm);
             const params = new URLSearchParams(formData).toString();
 
-            fetch('api/add_to_cart.php?action=add', {
+            fetch('api/add_to_cart?action=add', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: params
@@ -276,7 +276,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const sidebarContainer = document.getElementById('cartItemsContainer');
         if (!sidebarContainer) return;
 
-        fetch('api/add_to_cart.php?action=get_cart')
+        fetch('api/add_to_cart?action=get_cart')
             .then(res => res.json())
             .then(data => {
                 updateCartBadge(data.cart_count);
@@ -382,7 +382,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function updateCartQuantity(key, newQty) {
-        fetch('api/add_to_cart.php?action=update', {
+        fetch('api/add_to_cart?action=update', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: `cart_key=${key}&quantity=${newQty}`
@@ -396,7 +396,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function removeCartItem(key) {
-        fetch('api/add_to_cart.php?action=remove', {
+        fetch('api/add_to_cart?action=remove', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: `cart_key=${key}`

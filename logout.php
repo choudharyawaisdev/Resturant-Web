@@ -10,5 +10,5 @@ unset($_SESSION['user_name']);
 unset($_SESSION['user_email']);
 
 // Redirect to home
-redirect('index.php');
+redirect('index');
 ?>

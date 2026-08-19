@@ -4,7 +4,7 @@ require_once __DIR__ . '/includes/functions.php';
 
 // If no delivery area is selected, redirect to menu
 if (!isset($_SESSION['delivery_area_id'])) {
-    redirect('index.php');
+    redirect('index');
 }
 
 // Hydrate cart details
@@ -12,7 +12,7 @@ $cart_details = get_cart_details($pdo);
 
 // If cart is empty, redirect to menu
 if (empty($cart_details['items'])) {
-    redirect('index.php');
+    redirect('index');
 }
 
 // Fetch areas to get selected area name
@@ -48,7 +48,7 @@ if (is_user_logged_in()) {
     <!-- Navbar -->
     <nav class="navbar navbar-custom py-3">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="index.php">
+            <a class="navbar-brand d-flex align-items-center" href="index">
                 <img src="assets/images/logo.png" alt="Café-Chinos" class="navbar-logo" style="height:56px; width:auto; object-fit:contain; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.25));">
             </a>
             <span class="text-muted"><i class="bi bi-shield-lock-fill me-1 text-success"></i> Secure Checkout</span>
@@ -163,7 +163,7 @@ if (is_user_logged_in()) {
             <div class="row g-4 text-start">
                 <!-- Column 1: Brand Info -->
                 <div class="col-lg-4 col-md-6">
-                    <a href="index.php">
+                    <a href="index">
                         <img src="assets/images/logo.png" alt="Café-Chinos" style="height:70px; width:auto; object-fit:contain; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));">
                     </a>
                     <p class="small text-muted mt-2">
@@ -184,10 +184,10 @@ if (is_user_logged_in()) {
                         try {
                             $footer_cats = $pdo->query("SELECT * FROM categories WHERE status = 'active' ORDER BY id ASC")->fetchAll();
                             foreach ($footer_cats as $fc) {
-                                echo '<li class="mb-2.5"><a href="index.php#category-' . intval($fc['id']) . '" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px;"></i> ' . sanitize($fc['name']) . '</a></li>';
+                                echo '<li class="mb-2.5"><a href="index#category-' . intval($fc['id']) . '" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px;"></i> ' . sanitize($fc['name']) . '</a></li>';
                             }
                         } catch (Exception $e) {
-                            echo '<li class="mb-2.5"><a href="index.php" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px;"></i> Menu</a></li>';
+                            echo '<li class="mb-2.5"><a href="index" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px;"></i> Menu</a></li>';
                         }
                         ?>
                     </ul>
@@ -197,9 +197,9 @@ if (is_user_logged_in()) {
                 <div class="col-lg-3 col-md-6 col-6">
                     <h6 class="text-white fw-bold mb-3">Help & Policies</h6>
                     <ul class="list-unstyled mb-0">
-                        <li class="mb-2"><a href="policies.php?type=refund" class="text-muted small">Return & Refund Policy</a></li>
-                        <li class="mb-2"><a href="policies.php?type=terms" class="text-muted small">Terms of Service</a></li>
-                        <li class="mb-2"><a href="policies.php?type=privacy" class="text-muted small">Privacy Policy</a></li>
+                        <li class="mb-2"><a href="policies?type=refund" class="text-muted small">Return & Refund Policy</a></li>
+                        <li class="mb-2"><a href="policies?type=terms" class="text-muted small">Terms of Service</a></li>
+                        <li class="mb-2"><a href="policies?type=privacy" class="text-muted small">Privacy Policy</a></li>
                         <li class="mb-2"><a href="#" class="text-muted small">Delivery Locations Map</a></li>
                         <li class="mb-2"><a href="#" class="text-muted small">FAQs & Support</a></li>
                     </ul>
@@ -276,7 +276,7 @@ if (is_user_logged_in()) {
             params.append('order_notes', orderNotes);
 
             // AJAX request to place_order
-            fetch('api/place_order.php', {
+            fetch('api/place_order', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: params.toString()
@@ -290,7 +290,7 @@ if (is_user_logged_in()) {
                         text: 'Your order #' + data.order_id + ' has been placed.',
                         confirmButtonColor: '#FF6B00'
                     }).then(() => {
-                        window.location.href = 'order-success.php?id=' + data.order_id;
+                        window.location.href = 'order-success?id=' + data.order_id;
                     });
                 } else {
                     Swal.fire({

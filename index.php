@@ -80,7 +80,7 @@ $search_query = isset($_GET['search']) ? trim($_GET['search']) : '';
                 </div>
 
                 <!-- Search Bar -->
-                <form class="d-flex me-lg-3 my-2 my-lg-0 w-100-mobile" action="index.php" method="GET" style="min-width: 220px;">
+                <form class="d-flex me-lg-3 my-2 my-lg-0 w-100-mobile" action="index" method="GET" style="min-width: 220px;">
                     <div class="input-group rounded-pill border bg-white shadow-xs overflow-hidden w-100" style="border-color: #CBD5E1 !important;">
                         <input type="text" name="search" class="form-control form-control-sm border-0 bg-transparent px-3 py-2" placeholder="Search delicious food..." value="<?= sanitize($search_query) ?>" aria-label="Search" style="font-size: 13px; outline: none; box-shadow: none;">
                         <button class="btn px-3 py-2 d-flex align-items-center justify-content-center" type="submit" style="background-color: var(--primary-orange); color: white; border: none; font-size: 14px;">
@@ -344,10 +344,10 @@ $search_query = isset($_GET['search']) ? trim($_GET['search']) : '';
                         try {
                             $footer_cats = $pdo->query("SELECT * FROM categories WHERE status = 'active' ORDER BY id ASC")->fetchAll();
                             foreach ($footer_cats as $fc) {
-                                echo '<li class="mb-2.5"><a href="index.php#category-' . intval($fc['id']) . '" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px;"></i> ' . sanitize($fc['name']) . '</a></li>';
+                                echo '<li class="mb-2.5"><a href="index#category-' . intval($fc['id']) . '" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px;"></i> ' . sanitize($fc['name']) . '</a></li>';
                             }
                         } catch (Exception $e) {
-                            echo '<li class="mb-2.5"><a href="index.php" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px;"></i> Menu</a></li>';
+                            echo '<li class="mb-2.5"><a href="index" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px;"></i> Menu</a></li>';
                         }
                         ?>
                     </ul>
@@ -400,6 +400,24 @@ $search_query = isset($_GET['search']) ? trim($_GET['search']) : '';
     <!-- Main JS -->
     <script src="assets/js/main.js"></script>
 
+    <?php if (!empty($_SESSION['flash_success'])): ?>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'success',
+                title: 'Welcome! 🎉',
+                text: '<?= addslashes(strip_tags($_SESSION['flash_success'])) ?>',
+                confirmButtonColor: '#FF6B00',
+                timer: 2500,
+                timerProgressBar: true,
+                showConfirmButton: false,
+                background: '#fff',
+                customClass: { popup: 'rounded-4' }
+            });
+        });
+    </script>
+    <?php unset($_SESSION['flash_success']); endif; ?>
+
     <!-- Category Smooth Scroll & Active Pill Script -->
     <script>
         document.querySelectorAll('.category-pill').forEach(pill => {
@@ -433,7 +451,7 @@ $search_query = isset($_GET['search']) ? trim($_GET['search']) : '';
                 const params = new URLSearchParams();
                 params.append('product_id', productId);
 
-                fetch('api/wishlist.php', {
+                fetch('api/wishlist', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: params.toString()

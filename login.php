@@ -4,7 +4,7 @@ require_once __DIR__ . '/includes/functions.php';
 
 // Redirect if already logged in
 if (is_user_logged_in()) {
-    redirect('index.php');
+    redirect('index');
 }
 
 $error_msg = '';
@@ -37,7 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($user['area_id'] > 0) {
                     $_SESSION['delivery_area_id'] = $user['area_id'];
                 }
-                $success_msg = 'Logged in successfully!';
+                $_SESSION['flash_success'] = 'Welcome back, ' . $user['name'] . '! You are now logged in.';
+                redirect('index');
             } else {
                 $error_msg = 'Invalid email or password.';
             }
@@ -76,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 try {
                     $stmt->execute([$name, $email, $phone, $address, $area_id > 0 ? $area_id : null, $hash]);
                     
-                    // Log in the user
+                    // Log in the new user immediately
                     $new_id = $pdo->lastInsertId();
                     $_SESSION['user_logged_in'] = true;
                     $_SESSION['user_id'] = $new_id;
@@ -85,7 +86,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     if ($area_id > 0) {
                         $_SESSION['delivery_area_id'] = $area_id;
                     }
-                    $success_msg = 'Account created and logged in!';
+                    $_SESSION['flash_success'] = 'Account created! Welcome, ' . $name . '!';
+                    redirect('index');
                 } catch (Exception $e) {
                     $error_msg = 'Error creating account: ' . $e->getMessage();
                 }
@@ -153,7 +155,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a class="navbar-brand d-flex align-items-center" href="index.php">
                 <img src="assets/images/logo.png" alt="Café-Chinos" class="navbar-logo" style="height:56px; width:auto; object-fit:contain; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.25));">
             </a>
-            <a href="index.php" class="btn btn-outline-yellow btn-sm"><i class="bi bi-arrow-left"></i> Menu Directory</a>
+            <a href="index" class="btn btn-outline-yellow btn-sm"><i class="bi bi-arrow-left"></i> Menu Directory</a>
         </div>
     </nav>
 
@@ -166,7 +168,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <!-- LOGIN FORM -->
-            <form action="login.php" method="POST" id="formLogin" style="display: <?= $active_form === 'login' ? 'block' : 'none' ?>;">
+            <form action="login" method="POST" id="formLogin" style="display: <?= $active_form === 'login' ? 'block' : 'none' ?>;">
                 <input type="hidden" name="action" value="login">
                 
                 <div class="mb-3">
@@ -185,7 +187,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
 
             <!-- REGISTER FORM -->
-            <form action="login.php" method="POST" id="formRegister" style="display: <?= $active_form === 'register' ? 'block' : 'none' ?>;">
+            <form action="login" method="POST" id="formRegister" style="display: <?= $active_form === 'register' ? 'block' : 'none' ?>;">
                 <input type="hidden" name="action" value="register">
 
                 <div class="mb-3">
@@ -265,10 +267,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         try {
                             $footer_cats = $pdo->query("SELECT * FROM categories WHERE status = 'active' ORDER BY id ASC")->fetchAll();
                             foreach ($footer_cats as $fc) {
-                                echo '<li class="mb-2.5"><a href="index.php#category-' . intval($fc['id']) . '" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px;"></i> ' . sanitize($fc['name']) . '</a></li>';
+                                echo '<li class="mb-2.5"><a href="index#category-' . intval($fc['id']) . '" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px;"></i> ' . sanitize($fc['name']) . '</a></li>';
                             }
                         } catch (Exception $e) {
-                            echo '<li class="mb-2.5"><a href="index.php" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px;"></i> Menu</a></li>';
+                            echo '<li class="mb-2.5"><a href="index" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px;"></i> Menu</a></li>';
                         }
                         ?>
                     </ul>
@@ -278,9 +280,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="col-lg-3 col-md-6 col-6">
                     <h6 class="text-white fw-bold mb-3">Help & Policies</h6>
                     <ul class="list-unstyled mb-0">
-                        <li class="mb-2"><a href="policies.php?type=refund" class="text-muted small">Return & Refund Policy</a></li>
-                        <li class="mb-2"><a href="policies.php?type=terms" class="text-muted small">Terms of Service</a></li>
-                        <li class="mb-2"><a href="policies.php?type=privacy" class="text-muted small">Privacy Policy</a></li>
+                        <li class="mb-2"><a href="policies?type=refund" class="text-muted small">Return & Refund Policy</a></li>
+                        <li class="mb-2"><a href="policies?type=terms" class="text-muted small">Terms of Service</a></li>
+                        <li class="mb-2"><a href="policies?type=privacy" class="text-muted small">Privacy Policy</a></li>
                         <li class="mb-2"><a href="#" class="text-muted small">Delivery Locations Map</a></li>
                         <li class="mb-2"><a href="#" class="text-muted small">FAQs & Support</a></li>
                     </ul>
@@ -342,25 +344,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <?php if (!empty($error_msg)): ?>
         <script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Authentication Failed',
-                text: '<?= sanitize($error_msg) ?>',
-                confirmButtonColor: '#FF6B00'
-            });
-        </script>
-    <?php endif; ?>
-
-    <?php if (!empty($success_msg)): ?>
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Welcome Back!',
-                text: '<?= sanitize($success_msg) ?>',
-                timer: 1500,
-                showConfirmButton: false
-            }).then(() => {
-                window.location.href = 'index.php';
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops!',
+                    text: '<?= addslashes(strip_tags($error_msg)) ?>',
+                    confirmButtonColor: '#FF6B00',
+                    confirmButtonText: 'Try Again',
+                    background: '#fff',
+                    customClass: { popup: 'rounded-4' }
+                });
             });
         </script>
     <?php endif; ?>
