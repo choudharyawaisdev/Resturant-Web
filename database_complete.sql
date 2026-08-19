@@ -1,4 +1,4 @@
-﻿-- ============================================================
+-- ============================================================
 --  Cafe Chinos -- COMPLETE DATABASE SCHEMA + SEED
 --  Run this to fully reset and rebuild restaurant_db
 -- ============================================================
@@ -156,23 +156,8 @@ CREATE TABLE wishlists (
     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- ============================================================
--- SEED DATA
--- ============================================================
-
--- AREAS (8 Chiniot areas)
-INSERT INTO areas (area_name, city, delivery_charge, status) VALUES
-('Nao Gazah Road',              'Chiniot', 40.00,  'active'),
-('Kutchery Road & Civil Lines', 'Chiniot', 50.00,  'active'),
-('Rail Bazar & Circular Road',  'Chiniot', 60.00,  'active'),
-('Jhang Road Area',             'Chiniot', 70.00,  'active'),
-('Faisalabad Road Sector',      'Chiniot', 80.00,  'active'),
-('Sargodha Road Colony',        'Chiniot', 90.00,  'active'),
-('Bhowana Road Sector',         'Chiniot', 100.00, 'active'),
-('Chenab Bridge Area',          'Chiniot', 120.00, 'active');
-
--- DEFAULT ADMIN
+-- DEFAULT ADMIN (username: admin / password: password)
 INSERT INTO admin_users (username, password, email, role) VALUES
 ('admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin@cafechinos.com', 'superadmin');
--- Default password is: password
+
 
