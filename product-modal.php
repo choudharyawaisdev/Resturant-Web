@@ -179,10 +179,14 @@ if (!empty($product['image']) && file_exists(__DIR__ . '/assets/images/uploads/'
                 <!-- 4. Quantity Stepper (Horizontal Inline Row) -->
                 <div class="d-flex align-items-center justify-content-between pt-3 border-top mt-4">
                     <label class="fw-bold text-muted mb-0 small text-uppercase" style="letter-spacing: 0.8px; font-size: 11px;">Quantity</label>
-                    <div class="quantity-stepper d-inline-flex align-items-center shadow-xs">
-                        <button type="button" class="btn-qty-minus">-</button>
-                        <input type="text" name="quantity" value="1" readonly>
-                        <button type="button" class="btn-qty-plus">+</button>
+                    <div class="quantity-stepper d-inline-flex align-items-center justify-content-between" style="background-color: #F1F5F9; border: 1.5px solid #E2E8F0; border-radius: 50px; padding: 4px 6px; box-shadow: inset 0 1px 2px rgba(0,0,0,0.04); min-width: 125px; gap: 6px;">
+                        <button type="button" class="btn-qty-minus d-inline-flex align-items-center justify-content-center" aria-label="Decrease quantity" style="width: 32px; height: 32px; border-radius: 50%; border: none; background: #FFFFFF; color: #475569; box-shadow: 0 1px 3px rgba(0,0,0,0.12); cursor: pointer; font-size: 14px; transition: all 0.2s ease;">
+                            <i class="bi bi-dash-lg"></i>
+                        </button>
+                        <input type="text" name="quantity" value="1" readonly style="width: 36px; border: none; background: transparent; text-align: center; font-weight: 700; font-size: 16px; color: #0F172A; outline: none; padding: 0; margin: 0; pointer-events: none;">
+                        <button type="button" class="btn-qty-plus d-inline-flex align-items-center justify-content-center" aria-label="Increase quantity" style="width: 32px; height: 32px; border-radius: 50%; border: none; background: linear-gradient(135deg, #FF6B00 0%, #FF8A00 100%); color: #FFFFFF; box-shadow: 0 2px 6px rgba(255, 107, 0, 0.35); cursor: pointer; font-size: 14px; transition: all 0.2s ease;">
+                            <i class="bi bi-plus-lg"></i>
+                        </button>
                     </div>
                 </div>
 

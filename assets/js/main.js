@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', function () {
         `;
         productDetailModal.show();
 
-        fetch(`product-modal?id=${productId}`)
+        fetch(`product-modal?id=${productId}&_t=${Date.now()}`)
             .then(res => {
                 if (!res.ok) throw new Error('Network error');
                 return res.text();
