@@ -40,10 +40,7 @@ $search_query = isset($_GET['search']) ? trim($_GET['search']) : '';
     <!-- Custom CSS -->
     <link href="assets/css/style.css?v=<?= time() ?>" rel="stylesheet">
     <style>
-        .product-card-link {
-            text-decoration: none;
-            color: inherit;
-        }
+        .product-card-link { text-decoration: none; color: inherit; }
     </style>
 </head>
 <body class="has-fixed-navbar">
@@ -52,10 +49,10 @@ $search_query = isset($_GET['search']) ? trim($_GET['search']) : '';
     <nav class="navbar navbar-expand-lg navbar-custom navbar-fixed">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="index.php">
-                <img src="assets/images/logo.png" alt="Café-Chinos" class="navbar-logo" style="height:56px; width:auto; object-fit:contain; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.25));">
+                <img src="assets/images/logo.png" alt="Café-Chinos" class="navbar-logo" style="height:50px; width:auto; object-fit:contain; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.25));">
             </a>
             
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler border-0 shadow-none p-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             
@@ -67,42 +64,43 @@ $search_query = isset($_GET['search']) ? trim($_GET['search']) : '';
                         </li>
                     <?php else: ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="login.php"><i class="bi bi-person-circle me-1"></i> Login/Register</a>
+                            <a class="nav-link fw-semibold" href="login.php"><i class="bi bi-person-circle me-1"></i> Login / Register</a>
                         </li>
                     <?php endif; ?>
                 </ul>
                 
                 <!-- Delivery Location Display -->
-                <div class="d-flex align-items-center me-3">
+                <div class="mobile-location-box d-flex align-items-center me-lg-3 my-2 my-lg-0 p-2 p-lg-0 rounded-3">
                     <i class="bi bi-geo-alt-fill text-danger me-1"></i>
                     <span class="text-muted small me-1">Deliver to:</span>
-                    <strong class="text-dark small me-2">
+                    <strong class="text-dark small me-2 text-truncate" style="max-width: 180px;">
                         <?= !empty($selected_area_name) ? sanitize($selected_area_name) . ', Chiniot' : 'Select Location' ?>
                     </strong>
-                    <a href="#" id="btnChangeLocation" class="link-orange small text-decoration-none" style="color: var(--primary-orange); font-weight:600;">Change</a>
+                    <a href="#" id="btnChangeLocation" class="link-orange small text-decoration-none ms-auto ms-lg-0" style="color: var(--primary-orange); font-weight:600;">Change</a>
                 </div>
 
                 <!-- Search Bar -->
-                <form class="d-flex me-3" action="index.php" method="GET" style="min-width: 230px;">
-                    <div class="input-group rounded-pill border bg-white shadow-xs overflow-hidden" style="border-color: #CBD5E1 !important;">
-                        <input type="text" name="search" class="form-control form-control-sm border-0 bg-transparent px-3 py-1.5" placeholder="Search delicious food..." value="<?= sanitize($search_query) ?>" aria-label="Search" style="font-size: 13px; outline: none; box-shadow: none;">
-                        <button class="btn px-3 py-1.5 d-flex align-items-center justify-content-center" type="submit" style="background-color: var(--primary-orange); color: white; border: none; font-size: 13px;">
+                <form class="d-flex me-lg-3 my-2 my-lg-0 w-100-mobile" action="index.php" method="GET" style="min-width: 220px;">
+                    <div class="input-group rounded-pill border bg-white shadow-xs overflow-hidden w-100" style="border-color: #CBD5E1 !important;">
+                        <input type="text" name="search" class="form-control form-control-sm border-0 bg-transparent px-3 py-2" placeholder="Search delicious food..." value="<?= sanitize($search_query) ?>" aria-label="Search" style="font-size: 13px; outline: none; box-shadow: none;">
+                        <button class="btn px-3 py-2 d-flex align-items-center justify-content-center" type="submit" style="background-color: var(--primary-orange); color: white; border: none; font-size: 14px;">
                             <i class="bi bi-search"></i>
                         </button>
                     </div>
                 </form>
 
                 <!-- Cart Button with Badge -->
-                <button class="cart-icon-btn d-flex align-items-center ms-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" aria-controls="cartOffcanvas">
+                <button class="cart-icon-btn d-flex align-items-center ms-lg-2 my-2 my-lg-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" aria-controls="cartOffcanvas">
                     <i class="bi bi-bag-heart-fill"></i>
                     <span class="cart-badge" style="display: <?= get_cart_count() > 0 ? 'flex' : 'none' ?>;"><?= get_cart_count() ?></span>
+                    <span class="ms-2 d-lg-none fw-bold text-orange" style="font-size: 14px; color: var(--primary-orange);">View Shopping Cart</span>
                 </button>
             </div>
         </div>
     </nav>
 
     <div class="container my-3">
-        <!-- CATEGORY NAVIGATION CONTAINER (PILLS) - Sticky below navbar -->
+        <!-- CATEGORY NAVIGATION CONTAINER (PILLS) -->
         <?php if (empty($search_query)): ?>
             <div class="category-pill-wrapper" id="categoryPillWrapper">
                 <div class="category-pill-container">
@@ -283,6 +281,7 @@ $search_query = isset($_GET['search']) ? trim($_GET['search']) : '';
 
         </div>
     </div>
+
     <!-- MANDATORY LOCATION SELECTOR MODAL -->
     <div class="modal fade" id="locationModal" tabindex="-1" aria-hidden="true" data-has-location="<?= $has_location ?>">
         <div class="modal-dialog modal-dialog-centered">

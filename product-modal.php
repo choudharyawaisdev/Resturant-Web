@@ -60,11 +60,10 @@ if (!empty($product['image']) && file_exists(__DIR__ . '/assets/images/uploads/'
 <form id="customizationForm" data-base-price="<?= $product['base_price'] ?>">
     <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
     
-    <div class="modal-header border-0 pb-0 pe-4 pt-4">
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-    </div>
+    <!-- Working Prominent Close Button X -->
+    <button type="button" class="btn-close position-absolute top-0 end-0 m-3 p-2 border rounded-circle bg-white shadow-sm" data-bs-dismiss="modal" aria-label="Close" onclick="closeProductModal()" style="z-index: 1050; opacity: 0.95; cursor: pointer;"></button>
 
-    <div class="modal-body px-4 pt-1 pb-4">
+    <div class="modal-body px-4 pt-4 pb-4">
         <div class="row g-4">
             <!-- Left Side: Product Image & Badges -->
             <div class="col-md-5">
@@ -76,70 +75,114 @@ if (!empty($product['image']) && file_exists(__DIR__ . '/assets/images/uploads/'
 
             <!-- Right Side: Description and Customizations -->
             <div class="col-md-7">
-                <h3 class="fw-bold mb-1 text-dark" style="letter-spacing: -0.5px;"><?= sanitize($product['name']) ?></h3>
+                <h3 class="fw-bold mb-1 text-dark pe-4" style="letter-spacing: -0.5px;"><?= sanitize($product['name']) ?></h3>
                 <p class="text-muted small mb-4" style="line-height: 1.5;"><?= sanitize($product['description']) ?></p>
 
-                <!-- 1. Size Selection -->
+                <!-- 1. Portion / Size Selection (Open Collapsible Radio Box) -->
                 <?php if (!empty($sizes)): ?>
                     <div class="mb-4">
-                        <label class="fw-bold text-muted mb-2.5 d-block small text-uppercase" style="letter-spacing: 0.8px; font-size: 11px;">Select Portion / Size</label>
-                        <div class="row g-2.5">
-                            <?php foreach ($sizes as $idx => $size): ?>
-                                <div class="col-6">
-                                    <input type="radio" class="btn-check" name="size_id" id="size_<?= $size['id'] ?>" value="<?= $size['id'] ?>" data-price="<?= $size['price'] ?>" <?= $idx === 0 ? 'checked' : '' ?>>
-                                    <label class="btn btn-outline-orange w-100 py-3 rounded-3 text-start px-3 d-flex flex-column justify-content-center" for="size_<?= $size['id'] ?>">
-                                        <span class="d-block fw-bold text-dark" style="font-size: 13px;"><?= sanitize($size['size_name']) ?></span>
-                                        <span class="d-block small mt-0.5" style="color: var(--primary-orange); font-weight: 700;">+Rs. <?= number_format($size['price'], 0) ?></span>
-                                    </label>
-                                </div>
-                            <?php endforeach; ?>
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <label class="fw-bold text-muted mb-0 small text-uppercase" style="letter-spacing: 0.8px; font-size: 11px;">
+                                Select Portion / Size (<?= count($sizes) ?>)
+                            </label>
+                            <button class="btn btn-sm p-1 rounded-circle bg-light border-0 text-muted shadow-xs d-inline-flex align-items-center justify-content-center" type="button" data-bs-toggle="collapse" data-bs-target="#sizeCollapseList" aria-expanded="true" aria-controls="sizeCollapseList" style="width: 28px; height: 28px; cursor: pointer;" title="Toggle Sizes">
+                                <i class="bi bi-chevron-down toggle-chevron" id="sizeToggleIcon" style="font-size: 12px; transition: transform 0.2s ease;"></i>
+                            </button>
+                        </div>
+                        <div class="collapse show" id="sizeCollapseList">
+                            <div class="size-radio-list rounded-3 border" style="border-color: #E2E8F0 !important; max-height: 200px; overflow-y: auto; scrollbar-width: thin;">
+                                <?php foreach ($sizes as $idx => $size): ?>
+                                    <div class="custom-row-item d-flex align-items-center justify-content-between px-3.5 py-3 <?= $idx > 0 ? 'border-top' : '' ?>" style="border-color: #F1F5F9 !important; cursor: pointer; padding-left: 16px !important; padding-right: 18px !important;" onclick="selectSizeRow('size_<?= $size['id'] ?>')">
+                                        <span class="item-name text-dark" style="font-size: 14px; font-weight: 500;"><?= sanitize($size['size_name']) ?></span>
+                                        <div class="d-flex align-items-center gap-3 ms-3">
+                                            <span class="item-price text-muted" style="font-size: 13px;">+ Rs. <?= number_format($size['price'], 0) ?></span>
+                                            <div class="form-check m-0 p-0">
+                                                <input class="form-check-input size-radio m-0" type="radio" name="size_id" id="size_<?= $size['id'] ?>" value="<?= $size['id'] ?>" data-price="<?= $size['price'] ?>" <?= $idx === 0 ? 'checked' : '' ?> onclick="event.stopPropagation()">
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
                         </div>
                     </div>
                 <?php endif; ?>
 
-                <!-- 2. Addons Selection -->
+                <!-- 2. Extra Toppings Selection (Open Collapsible Checkbox Box) -->
                 <?php if (!empty($addons)): ?>
                     <div class="mb-4">
-                        <label class="fw-bold text-muted mb-2 d-block small text-uppercase" style="letter-spacing: 0.8px; font-size: 11px;">Extra Toppings</label>
-                        <div class="addon-checkbox-list rounded-3 border overflow-hidden" style="border-color: #E2E8F0 !important;">
-                            <?php foreach ($addons as $idx => $addon): ?>
-                                <div class="addon-checkbox-row d-flex align-items-center justify-content-between px-3 py-3 <?= $idx > 0 ? 'border-top' : '' ?>" style="border-color: #F1F5F9 !important; cursor: pointer;" onclick="document.getElementById('addon_<?= $addon['id'] ?>').click()">
-                                    <span class="addon-name text-dark" style="font-size: 14px; font-weight: 500;"><?= sanitize($addon['name']) ?></span>
-                                    <div class="d-flex align-items-center gap-3">
-                                        <span class="addon-price text-muted" style="font-size: 13px;">+ Rs. <?= number_format($addon['price'], 2) ?></span>
-                                        <div class="custom-addon-checkbox">
-                                            <input type="checkbox" class="addon-check" name="addons[]" id="addon_<?= $addon['id'] ?>" value="<?= $addon['id'] ?>" data-price="<?= $addon['price'] ?>" data-name="<?= sanitize($addon['name']) ?>" onclick="event.stopPropagation()">
-                                            <span class="checkmark"></span>
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <label class="fw-bold text-muted mb-0 small text-uppercase" style="letter-spacing: 0.8px; font-size: 11px;">
+                                Extra Toppings (<?= count($addons) ?>)
+                            </label>
+                            <button class="btn btn-sm p-1 rounded-circle bg-light border-0 text-muted shadow-xs d-inline-flex align-items-center justify-content-center" type="button" data-bs-toggle="collapse" data-bs-target="#addonsCollapseList" aria-expanded="true" aria-controls="addonsCollapseList" style="width: 28px; height: 28px; cursor: pointer;" title="Toggle Toppings">
+                                <i class="bi bi-chevron-down toggle-chevron" id="addonToggleIcon" style="font-size: 12px; transition: transform 0.2s ease;"></i>
+                            </button>
+                        </div>
+                        <div class="collapse show" id="addonsCollapseList">
+                            <div class="addon-checkbox-list rounded-3 border" style="border-color: #E2E8F0 !important; max-height: 210px; overflow-y: auto; scrollbar-width: thin;">
+                                <?php foreach ($addons as $idx => $addon): ?>
+                                    <div class="addon-checkbox-row d-flex align-items-center justify-content-between px-3.5 py-3 <?= $idx > 0 ? 'border-top' : '' ?>" style="border-color: #F1F5F9 !important; cursor: pointer; padding-left: 16px !important; padding-right: 18px !important;" onclick="toggleAddonRow(event, 'addon_<?= $addon['id'] ?>')">
+                                        <span class="addon-name text-dark" style="font-size: 14px; font-weight: 500;"><?= sanitize($addon['name']) ?></span>
+                                        <div class="d-flex align-items-center gap-3 ms-3">
+                                            <span class="addon-price text-muted" style="font-size: 13px;">+ Rs. <?= number_format($addon['price'], 2) ?></span>
+                                            <div class="custom-addon-checkbox ms-1 me-1">
+                                                <input type="checkbox" class="addon-check" name="addons[]" id="addon_<?= $addon['id'] ?>" value="<?= $addon['id'] ?>" data-price="<?= $addon['price'] ?>" data-name="<?= sanitize($addon['name']) ?>" onclick="event.stopPropagation()">
+                                                <span class="checkmark"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
+
+                <!-- 3. Choice of Drink Selection (Open Collapsible Radio Box) -->
+                <?php if (!empty($drinks)): ?>
+                    <div class="mb-4">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <label class="fw-bold text-muted mb-0 small text-uppercase" style="letter-spacing: 0.8px; font-size: 11px;">
+                                Choice of Drink (<?= count($drinks) ?>)
+                            </label>
+                            <button class="btn btn-sm p-1 rounded-circle bg-light border-0 text-muted shadow-xs d-inline-flex align-items-center justify-content-center" type="button" data-bs-toggle="collapse" data-bs-target="#drinksCollapseList" aria-expanded="true" aria-controls="drinksCollapseList" style="width: 28px; height: 28px; cursor: pointer;" title="Toggle Drinks">
+                                <i class="bi bi-chevron-down toggle-chevron" id="drinkToggleIcon" style="font-size: 12px; transition: transform 0.2s ease;"></i>
+                            </button>
+                        </div>
+                        <div class="collapse show" id="drinksCollapseList">
+                            <div class="drink-radio-list rounded-3 border" style="border-color: #E2E8F0 !important; max-height: 200px; overflow-y: auto; scrollbar-width: thin;">
+                                <!-- No Drink Option -->
+                                <div class="custom-row-item d-flex align-items-center justify-content-between px-3.5 py-3" style="border-color: #F1F5F9 !important; cursor: pointer; padding-left: 16px !important; padding-right: 18px !important;" onclick="selectDrinkRow('drink_0')">
+                                    <span class="item-name text-dark" style="font-size: 14px; font-weight: 500;">-- No Drink --</span>
+                                    <div class="d-flex align-items-center gap-3 ms-3">
+                                        <span class="item-price text-muted" style="font-size: 13px;">+ Rs. 0.00</span>
+                                        <div class="form-check m-0 p-0">
+                                            <input class="form-check-input drink-radio m-0" type="radio" name="drink_id" id="drink_0" value="0" data-price="0.00" checked onclick="event.stopPropagation()">
                                         </div>
                                     </div>
                                 </div>
-                            <?php endforeach; ?>
+                                <?php foreach ($drinks as $idx => $drink): ?>
+                                    <div class="custom-row-item d-flex align-items-center justify-content-between px-3.5 py-3 border-top" style="border-color: #F1F5F9 !important; cursor: pointer; padding-left: 16px !important; padding-right: 18px !important;" onclick="selectDrinkRow('drink_<?= $drink['id'] ?>')">
+                                        <span class="item-name text-dark" style="font-size: 14px; font-weight: 500;"><?= sanitize($drink['name']) ?></span>
+                                        <div class="d-flex align-items-center gap-3 ms-3">
+                                            <span class="item-price text-muted" style="font-size: 13px;">+ Rs. <?= number_format($drink['price'], 0) ?></span>
+                                            <div class="form-check m-0 p-0">
+                                                <input class="form-check-input drink-radio m-0" type="radio" name="drink_id" id="drink_<?= $drink['id'] ?>" value="<?= $drink['id'] ?>" data-price="<?= $drink['price'] ?>" onclick="event.stopPropagation()">
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
                         </div>
                     </div>
                 <?php endif; ?>
 
-                <!-- 3. Drinks Selection -->
-                <?php if (!empty($drinks)): ?>
-                    <div class="mb-4">
-                        <label class="fw-bold text-muted mb-2 d-block small text-uppercase" style="letter-spacing: 0.8px; font-size: 11px;">Choice of Drink</label>
-                        <select class="form-select form-select-md rounded-3 border shadow-xs py-2.5 px-3" name="drink_id" style="font-size: 14px; border-color: #E2E8F0 !important;">
-                            <option value="0" data-price="0.00" selected>-- No Drink --</option>
-                            <?php foreach ($drinks as $drink): ?>
-                                <option value="<?= $drink['id'] ?>" data-price="<?= $drink['price'] ?>">
-                                    <?= sanitize($drink['name']) ?> (+Rs. <?= number_format($drink['price'], 0) ?>)
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                <?php endif; ?>
-
-                <!-- 4. Quantity Stepper -->
+                <!-- 4. Quantity Stepper (Horizontal Inline Row) -->
                 <div class="d-flex align-items-center justify-content-between pt-3 border-top mt-4">
                     <label class="fw-bold text-muted mb-0 small text-uppercase" style="letter-spacing: 0.8px; font-size: 11px;">Quantity</label>
-                    <div class="quantity-stepper shadow-xs" style="border: 1px solid #E2E8F0; border-radius: 30px; background-color: #F8FAFC; padding: 4px;">
-                        <button type="button" class="btn-qty-minus" style="width: 32px; height: 32px; border-radius: 50%; background: #fff; border: 1px solid #CBD5E1; font-weight: 700; color: #334155; line-height: 1;">-</button>
-                        <input type="text" name="quantity" value="1" readonly style="width: 44px; text-align: center; border: none; background: transparent; font-weight: 800; font-size: 15px; color: #0F172A;">
-                        <button type="button" class="btn-qty-plus" style="width: 32px; height: 32px; border-radius: 50%; background: var(--primary-orange); border: none; font-weight: 700; color: #fff; line-height: 1;">+</button>
+                    <div class="quantity-stepper d-inline-flex align-items-center shadow-xs">
+                        <button type="button" class="btn-qty-minus">-</button>
+                        <input type="text" name="quantity" value="1" readonly>
+                        <button type="button" class="btn-qty-plus">+</button>
                     </div>
                 </div>
 
@@ -158,3 +201,55 @@ if (!empty($product['image']) && file_exists(__DIR__ . '/assets/images/uploads/'
         </button>
     </div>
 </form>
+
+<script>
+function closeProductModal() {
+    const modalEl = document.getElementById('productDetailModal');
+    if (modalEl) {
+        const bsModal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+        bsModal.hide();
+    }
+}
+
+function selectSizeRow(radioId) {
+    const radio = document.getElementById(radioId);
+    if (radio) {
+        radio.checked = true;
+        radio.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+}
+
+function selectDrinkRow(radioId) {
+    const radio = document.getElementById(radioId);
+    if (radio) {
+        radio.checked = true;
+        radio.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+}
+
+function toggleAddonRow(e, inputId) {
+    if (e.target.tagName !== 'INPUT' && !e.target.classList.contains('checkmark')) {
+        const input = document.getElementById(inputId);
+        if (input) {
+            input.checked = !input.checked;
+            input.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+    }
+}
+
+// Chevron rotate animations on collapse
+['sizeCollapseList', 'addonsCollapseList', 'drinksCollapseList'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+        const icon = el.parentElement.querySelector('.toggle-chevron');
+        if (icon) {
+            el.addEventListener('hidden.bs.collapse', function () {
+                icon.style.transform = 'rotate(180deg)';
+            });
+            el.addEventListener('shown.bs.collapse', function () {
+                icon.style.transform = 'rotate(0deg)';
+            });
+        }
+    }
+});
+</script>

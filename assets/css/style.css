@@ -227,22 +227,58 @@ p {
 
     .navbar-collapse {
         background-color: #FFFFFF !important;
-        padding: 20px !important;
+        padding: 16px !important;
         border-radius: 16px !important;
         margin-top: 12px !important;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12) !important;
         border: 1px solid #E2E8F0 !important;
+    }
+
+    .navbar-collapse .mobile-location-box {
+        background-color: #F8FAFC !important;
+        border: 1px solid #E2E8F0 !important;
+        padding: 10px 14px !important;
+        margin-bottom: 12px !important;
     }
 
     .navbar-collapse form {
         width: 100% !important;
-        margin-right: 0 !important;
-        margin-bottom: 12px !important;
+        margin: 8px 0 12px 0 !important;
     }
 
-    .navbar-collapse .d-flex {
+    .navbar-collapse .input-group {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        flex-wrap: nowrap !important;
         width: 100% !important;
-        margin-bottom: 12px !important;
+        border-radius: 30px !important;
+        background-color: #FFFFFF !important;
+        border: 1.5px solid #CBD5E1 !important;
+        overflow: hidden !important;
+    }
+
+    .navbar-collapse .input-group input {
+        flex: 1 1 auto !important;
+        min-width: 0 !important;
+    }
+
+    .navbar-collapse .input-group button {
+        flex-shrink: 0 !important;
+        width: 46px !important;
+        border-radius: 0 !important;
+        margin: 0 !important;
+    }
+
+    .navbar-collapse .cart-icon-btn {
+        width: 100% !important;
+        justify-content: center !important;
+        padding: 12px !important;
+        background-color: #FFF0E5 !important;
+        border-radius: 12px !important;
+        color: var(--primary-orange) !important;
+        margin-top: 4px !important;
+        border: 1px solid rgba(255, 107, 0, 0.2) !important;
     }
 
     .hero-carousel {
@@ -433,45 +469,58 @@ button.btn-sm {
     font-weight: 600 !important;
     box-shadow: none !important;
 }
-    color: var(--white) !important;
-    box-shadow: 0 4px 14px rgba(255, 107, 0, 0.3);
-}
 
-/* Stepper Quantity Input */
+/* Stepper Quantity Input - Horizontal Row Fix */
 .quantity-stepper {
-    display: inline-flex;
-    align-items: center;
-    border: 1px solid #dee2e6;
-    border-radius: 30px;
-    background-color: #f8f9fa;
-    padding: 3px;
+    display: inline-flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: 1.5px solid #CBD5E1 !important;
+    border-radius: 30px !important;
+    background-color: #F8FAFC !important;
+    padding: 4px 8px !important;
+    min-width: 135px !important;
+    flex-shrink: 0 !important;
 }
 
 .quantity-stepper button {
-    border: none;
-    background: none;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    color: var(--text-dark);
-    font-weight: 700;
-    font-size: 16px;
-    transition: background-color 0.2s;
+    border: none !important;
+    width: 34px !important;
+    height: 34px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 50% !important;
+    font-weight: 700 !important;
+    font-size: 16px !important;
+    line-height: 1 !important;
+    cursor: pointer !important;
+    flex-shrink: 0 !important;
 }
 
-.quantity-stepper button:hover {
-    background-color: #e9ecef;
+.quantity-stepper .btn-qty-minus {
+    background-color: #FFFFFF !important;
+    border: 1px solid #CBD5E1 !important;
+    color: #334155 !important;
+}
+
+.quantity-stepper .btn-qty-plus {
+    background-color: var(--primary-orange) !important;
+    color: #FFFFFF !important;
 }
 
 .quantity-stepper input {
-    width: 40px;
-    border: none;
-    background: none;
-    text-align: center;
-    font-weight: 700;
+    width: 44px !important;
+    border: none !important;
+    background: transparent !important;
+    text-align: center !important;
+    font-weight: 800 !important;
+    font-size: 16px !important;
+    color: #0F172A !important;
+    outline: none !important;
+    padding: 0 !important;
+}
     font-size: 14px;
     outline: none;
 }
@@ -1699,4 +1748,42 @@ label.small {
 .custom-addon-checkbox:hover .checkmark {
     border-color: var(--primary-orange);
     box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.12);
+}
+
+/* Custom Row Item Styling (Size & Drink List Boxes) */
+.custom-row-item {
+    background-color: #fff;
+    transition: background-color 0.15s ease;
+}
+
+.custom-row-item:hover {
+    background-color: #FFF8F0;
+}
+
+.custom-row-item:has(input[type="radio"]:checked) {
+    background-color: #FFF3E0;
+}
+
+.custom-row-item:has(input[type="radio"]:checked) .item-name {
+    color: var(--primary-orange) !important;
+    font-weight: 600 !important;
+}
+
+.custom-row-item:has(input[type="radio"]:checked) .item-price {
+    color: var(--primary-orange) !important;
+    font-weight: 600 !important;
+}
+
+.form-check-input.size-radio,
+.form-check-input.drink-radio {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: var(--primary-orange);
+}
+
+.form-check-input.size-radio:checked,
+.form-check-input.drink-radio:checked {
+    background-color: var(--primary-orange);
+    border-color: var(--primary-orange);
 }

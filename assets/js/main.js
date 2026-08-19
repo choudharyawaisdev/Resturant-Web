@@ -135,6 +135,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!modalForm) return;
 
         const basePrice = parseFloat(modalForm.getAttribute('data-base-price')) || 0;
+        const sizeSelect = modalForm.querySelector('select[name="size_id"]');
         const sizeInputs = modalForm.querySelectorAll('input[name="size_id"]');
         const drinkInput = modalForm.querySelector('select[name="drink_id"]');
         const qtyInput = modalForm.querySelector('input[name="quantity"]');
@@ -142,14 +143,15 @@ document.addEventListener('DOMContentLoaded', function () {
         const btnPlus = modalForm.querySelector('.btn-qty-plus');
         const displayTotal = document.getElementById('modalTotalPrice');
 
-        // Addon checkboxes are now directly in the form
-
         function calculateTotal() {
             let total = 0;
 
-            // 1. Get Size Price (or Fallback to Base Price if no size is configured/selected)
+            // 1. Get Size Price (or Fallback to Base Price)
             let selectedSizePrice = basePrice;
-            if (sizeInputs.length > 0) {
+            if (sizeSelect) {
+                const selectedOpt = sizeSelect.options[sizeSelect.selectedIndex];
+                selectedSizePrice = parseFloat(selectedOpt.getAttribute('data-price')) || 0;
+            } else if (sizeInputs.length > 0) {
                 sizeInputs.forEach(radio => {
                     if (radio.checked) {
                         selectedSizePrice = parseFloat(radio.getAttribute('data-price')) || 0;
@@ -158,18 +160,27 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             total += selectedSizePrice;
 
-        // 2. Addons Price (Checkboxes)
+            // 2. Addons Price (Checkboxes)
             const addonChecks = modalForm.querySelectorAll('.addon-check:checked');
             addonChecks.forEach(check => {
                 total += parseFloat(check.getAttribute('data-price')) || 0;
             });
 
-            // 3. Drink Price
-            if (drinkInput) {
-                const selectedDrink = drinkInput.options[drinkInput.selectedIndex];
-                const drinkPrice = parseFloat(selectedDrink.getAttribute('data-price')) || 0;
-                total += drinkPrice;
+            // 3. Drink Price (Select Dropdown OR Radio List Box)
+            const drinkSelect = modalForm.querySelector('select[name="drink_id"]');
+            const drinkRadios = modalForm.querySelectorAll('input[name="drink_id"]');
+            let selectedDrinkPrice = 0;
+            if (drinkSelect) {
+                const selectedDrink = drinkSelect.options[drinkSelect.selectedIndex];
+                selectedDrinkPrice = parseFloat(selectedDrink.getAttribute('data-price')) || 0;
+            } else if (drinkRadios.length > 0) {
+                drinkRadios.forEach(radio => {
+                    if (radio.checked) {
+                        selectedDrinkPrice = parseFloat(radio.getAttribute('data-price')) || 0;
+                    }
+                });
             }
+            total += selectedDrinkPrice;
 
             // 4. Quantity Stepper
             const quantity = parseInt(qtyInput.value) || 1;
@@ -181,14 +192,17 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
-
         // Bind addon checkboxes to price update
         const addonChecks = modalForm.querySelectorAll('.addon-check');
         addonChecks.forEach(check => check.addEventListener('change', calculateTotal));
 
         // Event Listeners for Live Pricing
+        if (sizeSelect) sizeSelect.addEventListener('change', calculateTotal);
         sizeInputs.forEach(input => input.addEventListener('change', calculateTotal));
-        if (drinkInput) drinkInput.addEventListener('change', calculateTotal);
+        const drinkSelect = modalForm.querySelector('select[name="drink_id"]');
+        const drinkRadios = modalForm.querySelectorAll('input[name="drink_id"]');
+        if (drinkSelect) drinkSelect.addEventListener('change', calculateTotal);
+        drinkRadios.forEach(radio => radio.addEventListener('change', calculateTotal));
 
         if (btnMinus && btnPlus && qtyInput) {
             btnMinus.addEventListener('click', function () {
