@@ -440,15 +440,15 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function updateCartBadge(count) {
-        const badgeEl = document.querySelector('.cart-badge');
-        if (badgeEl) {
+        const badgeEls = document.querySelectorAll('.cart-badge');
+        badgeEls.forEach(badgeEl => {
             badgeEl.innerText = count;
             if (count === 0) {
                 badgeEl.style.display = 'none';
             } else {
                 badgeEl.style.display = 'flex';
             }
-        }
+        });
     }
 
     // Initial sidebar load

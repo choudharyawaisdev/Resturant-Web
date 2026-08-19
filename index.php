@@ -52,9 +52,16 @@ $search_query = isset($_GET['search']) ? trim($_GET['search']) : '';
                 <img src="assets/images/logo.png" alt="Café-Chinos" class="navbar-logo" style="height:50px; width:auto; object-fit:contain; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.25));">
             </a>
             
-            <button class="navbar-toggler border-0 shadow-none p-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            <!-- Mobile Header Actions (Cart + Hamburger) -->
+            <div class="d-flex align-items-center gap-2 d-lg-none">
+                <button class="cart-icon-btn mobile-header-cart-btn position-relative p-2 d-flex align-items-center justify-content-center" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" aria-controls="cartOffcanvas" aria-label="Shopping Cart">
+                    <i class="bi bi-bag-heart-fill fs-4" style="color: var(--primary-orange);"></i>
+                    <span class="cart-badge" style="display: <?= get_cart_count() > 0 ? 'flex' : 'none' ?>;"><?= get_cart_count() ?></span>
+                </button>
+                <button class="navbar-toggler border-0 shadow-none p-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
             
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
@@ -89,11 +96,16 @@ $search_query = isset($_GET['search']) ? trim($_GET['search']) : '';
                     </div>
                 </form>
 
-                <!-- Cart Button with Badge -->
-                <button class="cart-icon-btn d-flex align-items-center ms-lg-2 my-2 my-lg-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" aria-controls="cartOffcanvas">
+                <!-- Desktop Cart Button with Badge -->
+                <button class="cart-icon-btn d-none d-lg-flex align-items-center ms-lg-2 my-2 my-lg-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" aria-controls="cartOffcanvas">
                     <i class="bi bi-bag-heart-fill"></i>
                     <span class="cart-badge" style="display: <?= get_cart_count() > 0 ? 'flex' : 'none' ?>;"><?= get_cart_count() ?></span>
-                    <span class="ms-2 d-lg-none fw-bold text-orange" style="font-size: 14px; color: var(--primary-orange);">View Shopping Cart</span>
+                </button>
+
+                <!-- Mobile menu Cart button -->
+                <button class="cart-icon-btn d-flex d-lg-none align-items-center my-2 w-100 justify-content-center" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" aria-controls="cartOffcanvas">
+                    <i class="bi bi-bag-heart-fill me-2"></i>
+                    <span class="fw-bold" style="font-size: 14px; color: var(--primary-orange);">View Shopping Cart (<?= get_cart_count() ?>)</span>
                 </button>
             </div>
         </div>
@@ -337,31 +349,31 @@ $search_query = isset($_GET['search']) ? trim($_GET['search']) : '';
                 </div>
                 
                 <!-- Column 2: Popular Categories -->
-                <div class="col-lg-2 col-md-6 col-6">
+                <div class="col-lg-2 col-md-6 col-sm-6 col-12">
                     <h6 class="text-white fw-bold mb-3">Our Categories</h6>
                     <ul class="list-unstyled mb-0">
                         <?php
                         try {
                             $footer_cats = $pdo->query("SELECT * FROM categories WHERE status = 'active' ORDER BY id ASC")->fetchAll();
                             foreach ($footer_cats as $fc) {
-                                echo '<li class="mb-2.5"><a href="index#category-' . intval($fc['id']) . '" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px;"></i> ' . sanitize($fc['name']) . '</a></li>';
+                                echo '<li class="mb-2.5"><a href="index#category-' . intval($fc['id']) . '" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px; flex-shrink: 0;"></i> <span>' . sanitize($fc['name']) . '</span></a></li>';
                             }
                         } catch (Exception $e) {
-                            echo '<li class="mb-2.5"><a href="index" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px;"></i> Menu</a></li>';
+                            echo '<li class="mb-2.5"><a href="index" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px; flex-shrink: 0;"></i> <span>Menu</span></a></li>';
                         }
                         ?>
                     </ul>
                 </div>
                 
                 <!-- Column 3: Corporate Policy Info -->
-                <div class="col-lg-3 col-md-6 col-6">
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                     <h6 class="text-white fw-bold mb-3">Help & Policies</h6>
                     <ul class="list-unstyled mb-0">
-                        <li class="mb-2"><a href="policies.php?type=refund" class="text-muted small">Return & Refund Policy</a></li>
-                        <li class="mb-2"><a href="policies.php?type=terms" class="text-muted small">Terms of Service</a></li>
-                        <li class="mb-2"><a href="policies.php?type=privacy" class="text-muted small">Privacy Policy</a></li>
-                        <li class="mb-2"><a href="#" class="text-muted small">Delivery Locations Map</a></li>
-                        <li class="mb-2"><a href="#" class="text-muted small">FAQs & Support</a></li>
+                        <li class="mb-2.5"><a href="policies.php?type=refund" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px; flex-shrink: 0;"></i> <span>Return & Refund Policy</span></a></li>
+                        <li class="mb-2.5"><a href="policies.php?type=terms" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px; flex-shrink: 0;"></i> <span>Terms of Service</span></a></li>
+                        <li class="mb-2.5"><a href="policies.php?type=privacy" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px; flex-shrink: 0;"></i> <span>Privacy Policy</span></a></li>
+                        <li class="mb-2.5"><a href="policies.php?type=delivery" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px; flex-shrink: 0;"></i> <span>Delivery Locations Map</span></a></li>
+                        <li class="mb-2.5"><a href="policies.php?type=faq" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px; flex-shrink: 0;"></i> <span>FAQs & Support</span></a></li>
                     </ul>
                 </div>
 

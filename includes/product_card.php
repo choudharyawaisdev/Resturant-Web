@@ -63,9 +63,20 @@ if (is_user_logged_in()) {
         <!-- Footer: Price + Button -->
         <div class="product-footer">
             <!-- Price -->
+            <?php
+            $display_price = floatval($prod['base_price'] ?? 0);
+            if ($display_price <= 0 && isset($pdo)) {
+                $sz_stmt = $pdo->prepare("SELECT MIN(price) FROM product_sizes WHERE product_id = ?");
+                $sz_stmt->execute([$prod['id']]);
+                $min_sz = $sz_stmt->fetchColumn();
+                if ($min_sz && $min_sz > 0) {
+                    $display_price = floatval($min_sz);
+                }
+            }
+            ?>
             <div class="product-price-block">
                 <span class="price-label">From</span>
-                <span class="product-price">Rs. <?= number_format($prod['base_price'], 0) ?></span>
+                <span class="product-price">Rs. <?= number_format($display_price, 0) ?></span>
             </div>
 
             <!-- Add / Order Button -->

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // profile.php
 require_once __DIR__ . '/includes/functions.php';
 
@@ -316,42 +316,13 @@ $wishlist_items = $wish_stmt->fetchAll();
                         </a>
                     </div>
                 <?php else: ?>
-                    <div class="row g-4">
+                    <div class="row g-2 g-md-3 g-lg-4">
                         <?php foreach ($wishlist_items as $item): ?>
-                            <!-- Map local images with category fallback -->
-                            <?php
-                            $default_images = [
-                                1 => 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=400&q=80',
-                                2 => 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=400&q=80',
-                                3 => 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=400&q=80',
-                                4 => 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?auto=format&fit=crop&w=400&q=80',
-                                5 => 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=400&q=80',
-                                6 => 'https://images.unsplash.com/photo-1497534446932-c925b458314e?auto=format&fit=crop&w=400&q=80'
-                            ];
-                            $img_url = $default_images[$item['category_id']] ?? 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80';
-                            if (!empty($item['image']) && file_exists(__DIR__ . '/assets/images/uploads/' . $item['image'])) {
-                                $img_url = 'assets/images/uploads/' . $item['image'];
-                            }
-                            ?>
                             <div class="col-lg-3 col-md-6 col-6" id="wishlist_row_<?= $item['id'] ?>">
-                                <div class="card product-card position-relative">
-                                    <button class="wishlist-heart-btn active" data-product-id="<?= $item['id'] ?>">
-                                        <i class="bi bi-heart-fill"></i>
-                                    </button>
-                                    <div class="product-img-wrapper">
-                                        <img src="<?= $img_url ?>" class="card-img-top product-img" alt="<?= sanitize($item['name']) ?>">
-                                    </div>
-                                    <div class="product-body">
-                                        <h5 class="product-title"><?= sanitize($item['name']) ?></h5>
-                                        <p class="product-desc"><?= sanitize($item['description']) ?></p>
-                                        <div class="product-footer">
-                                            <span class="product-price">Rs. <?= number_format($item['base_price'], 0) ?></span>
-                                            <button class="btn btn-primary-orange btn-customize px-3 py-1.5" data-product-id="<?= $item['id'] ?>" style="font-size: 12px; font-weight: 600; border-radius: 20px; white-space: nowrap;">
-                                                Customize
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+                                <?php 
+                                $prod = $item;
+                                include __DIR__ . '/includes/product_card.php'; 
+                                ?>
                             </div>
                         <?php endforeach; ?>
                     </div>
@@ -474,31 +445,31 @@ $wishlist_items = $wish_stmt->fetchAll();
                 </div>
                 
                 <!-- Column 2: Popular Categories -->
-                <div class="col-lg-2 col-md-6 col-6">
+                <div class="col-lg-2 col-md-6 col-sm-6 col-12">
                     <h6 class="text-white fw-bold mb-3">Our Categories</h6>
                     <ul class="list-unstyled mb-0">
                         <?php
                         try {
                             $footer_cats = $pdo->query("SELECT * FROM categories WHERE status = 'active' ORDER BY id ASC")->fetchAll();
                             foreach ($footer_cats as $fc) {
-                                echo '<li class="mb-2.5"><a href="index#category-' . intval($fc['id']) . '" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px;"></i> ' . sanitize($fc['name']) . '</a></li>';
+                                echo '<li class="mb-2.5"><a href="index#category-' . intval($fc['id']) . '" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px; flex-shrink: 0;"></i> <span>' . sanitize($fc['name']) . '</span></a></li>';
                             }
                         } catch (Exception $e) {
-                            echo '<li class="mb-2.5"><a href="index" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px;"></i> Menu</a></li>';
+                            echo '<li class="mb-2.5"><a href="index" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px; flex-shrink: 0;"></i> <span>Menu</span></a></li>';
                         }
                         ?>
                     </ul>
                 </div>
                 
                 <!-- Column 3: Corporate Policy Info -->
-                <div class="col-lg-3 col-md-6 col-6">
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                     <h6 class="text-white fw-bold mb-3">Help & Policies</h6>
                     <ul class="list-unstyled mb-0">
-                        <li class="mb-2"><a href="policies?type=refund" class="text-muted small">Return & Refund Policy</a></li>
-                        <li class="mb-2"><a href="policies?type=terms" class="text-muted small">Terms of Service</a></li>
-                        <li class="mb-2"><a href="policies?type=privacy" class="text-muted small">Privacy Policy</a></li>
-                        <li class="mb-2"><a href="#" class="text-muted small">Delivery Locations Map</a></li>
-                        <li class="mb-2"><a href="#" class="text-muted small">FAQs & Support</a></li>
+                        <li class="mb-2.5"><a href="policies.php?type=refund" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px; flex-shrink: 0;"></i> <span>Return & Refund Policy</span></a></li>
+                        <li class="mb-2.5"><a href="policies.php?type=terms" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px; flex-shrink: 0;"></i> <span>Terms of Service</span></a></li>
+                        <li class="mb-2.5"><a href="policies.php?type=privacy" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px; flex-shrink: 0;"></i> <span>Privacy Policy</span></a></li>
+                        <li class="mb-2.5"><a href="policies.php?type=delivery" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px; flex-shrink: 0;"></i> <span>Delivery Locations Map</span></a></li>
+                        <li class="mb-2.5"><a href="policies.php?type=faq" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px; flex-shrink: 0;"></i> <span>FAQs & Support</span></a></li>
                     </ul>
                 </div>
 

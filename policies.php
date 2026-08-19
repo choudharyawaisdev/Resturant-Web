@@ -136,31 +136,31 @@ if ($type === 'refund') {
                 </div>
                 
                 <!-- Column 2: Popular Categories -->
-                <div class="col-lg-2 col-md-6 col-6">
+                <div class="col-lg-2 col-md-6 col-sm-6 col-12">
                     <h6 class="text-white fw-bold mb-3">Our Categories</h6>
                     <ul class="list-unstyled mb-0">
                         <?php
                         try {
                             $footer_cats = $pdo->query("SELECT * FROM categories WHERE status = 'active' ORDER BY id ASC")->fetchAll();
                             foreach ($footer_cats as $fc) {
-                                echo '<li class="mb-2.5"><a href="index#category-' . intval($fc['id']) . '" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px;"></i> ' . sanitize($fc['name']) . '</a></li>';
+                                echo '<li class="mb-2.5"><a href="index#category-' . intval($fc['id']) . '" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px; flex-shrink: 0;"></i> <span>' . sanitize($fc['name']) . '</span></a></li>';
                             }
                         } catch (Exception $e) {
-                            echo '<li class="mb-2.5"><a href="index" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px;"></i> Menu</a></li>';
+                            echo '<li class="mb-2.5"><a href="index" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px; flex-shrink: 0;"></i> <span>Menu</span></a></li>';
                         }
                         ?>
                     </ul>
                 </div>
                 
                 <!-- Column 3: Corporate Policy Info -->
-                <div class="col-lg-3 col-md-6 col-6">
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                     <h6 class="text-white fw-bold mb-3">Help & Policies</h6>
                     <ul class="list-unstyled mb-0">
-                        <li class="mb-2"><a href="policies?type=refund" class="text-muted small">Return & Refund Policy</a></li>
-                        <li class="mb-2"><a href="policies?type=terms" class="text-muted small">Terms of Service</a></li>
-                        <li class="mb-2"><a href="policies?type=privacy" class="text-muted small">Privacy Policy</a></li>
-                        <li class="mb-2"><a href="#" class="text-muted small">Delivery Locations Map</a></li>
-                        <li class="mb-2"><a href="#" class="text-muted small">FAQs & Support</a></li>
+                        <li class="mb-2.5"><a href="policies.php?type=refund" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px; flex-shrink: 0;"></i> <span>Return & Refund Policy</span></a></li>
+                        <li class="mb-2.5"><a href="policies.php?type=terms" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px; flex-shrink: 0;"></i> <span>Terms of Service</span></a></li>
+                        <li class="mb-2.5"><a href="policies.php?type=privacy" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px; flex-shrink: 0;"></i> <span>Privacy Policy</span></a></li>
+                        <li class="mb-2.5"><a href="policies.php?type=delivery" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px; flex-shrink: 0;"></i> <span>Delivery Locations Map</span></a></li>
+                        <li class="mb-2.5"><a href="policies.php?type=faq" class="footer-link small"><i class="bi bi-chevron-right me-2" style="color: var(--primary-orange); font-size: 11px; flex-shrink: 0;"></i> <span>FAQs & Support</span></a></li>
                     </ul>
                 </div>
 

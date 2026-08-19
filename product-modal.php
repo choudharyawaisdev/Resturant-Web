@@ -125,10 +125,10 @@ if (!empty($product['image']) && file_exists(__DIR__ . '/assets/images/uploads/'
                                         <span class="addon-name text-dark" style="font-size: 14px; font-weight: 500;"><?= sanitize($addon['name']) ?></span>
                                         <div class="d-flex align-items-center gap-3 ms-3">
                                             <span class="addon-price text-muted" style="font-size: 13px;">+ Rs. <?= number_format($addon['price'], 2) ?></span>
-                                            <div class="custom-addon-checkbox ms-1 me-1">
+                                            <label class="custom-addon-checkbox ms-1 me-1 mb-0 d-block" for="addon_<?= $addon['id'] ?>" style="cursor: pointer;">
                                                 <input type="checkbox" class="addon-check" name="addons[]" id="addon_<?= $addon['id'] ?>" value="<?= $addon['id'] ?>" data-price="<?= $addon['price'] ?>" data-name="<?= sanitize($addon['name']) ?>" onclick="event.stopPropagation()">
                                                 <span class="checkmark"></span>
-                                            </div>
+                                            </label>
                                         </div>
                                     </div>
                                 <?php endforeach; ?>
@@ -190,13 +190,13 @@ if (!empty($product['image']) && file_exists(__DIR__ . '/assets/images/uploads/'
         </div>
     </div>
 
-    <!-- Floating Price & Add to Cart Footer -->
-    <div class="modal-price-footer rounded-bottom-4 px-4 py-3 bg-white border-top shadow-lg d-flex align-items-center justify-content-between">
+    <!-- Floating Price & Add to Cart Footer (Medium-Small Button) -->
+    <div class="modal-price-footer rounded-bottom-4 px-4 py-3 bg-white border-top shadow-lg d-flex align-items-center justify-content-between gap-3">
         <div>
             <p class="modal-price-label mb-0 text-muted text-uppercase fw-bold" style="letter-spacing: 0.8px; font-size: 10px;">Total Price</p>
-            <span class="modal-price-val fw-extrabold fs-3" id="modalTotalPrice" style="color: var(--primary-orange); font-family: 'Poppins', sans-serif;">Rs. 0.00</span>
+            <span class="modal-price-val fw-bold fs-4" id="modalTotalPrice" style="color: var(--primary-orange); font-family: 'Poppins', sans-serif;">Rs. 0.00</span>
         </div>
-        <button type="submit" class="btn btn-primary-orange px-4 py-3 fw-bold rounded-3 text-white shadow d-inline-flex align-items-center gap-2" style="font-size: 15px; letter-spacing: -0.2px;">
+        <button type="submit" class="btn btn-primary-orange px-3.5 py-2.5 fw-semibold rounded-pill text-white shadow-sm d-inline-flex align-items-center gap-2" style="font-size: 13.5px; letter-spacing: 0.1px; white-space: nowrap;">
             <span>Add to Order Basket</span> <i class="bi bi-arrow-right fs-6"></i>
         </button>
     </div>
@@ -228,12 +228,13 @@ function selectDrinkRow(radioId) {
 }
 
 function toggleAddonRow(e, inputId) {
-    if (e.target.tagName !== 'INPUT' && !e.target.classList.contains('checkmark')) {
-        const input = document.getElementById(inputId);
-        if (input) {
-            input.checked = !input.checked;
-            input.dispatchEvent(new Event('change', { bubbles: true }));
-        }
+    if (e.target.closest('.custom-addon-checkbox') || e.target.tagName === 'INPUT') {
+        return;
+    }
+    const input = document.getElementById(inputId);
+    if (input) {
+        input.checked = !input.checked;
+        input.dispatchEvent(new Event('change', { bubbles: true }));
     }
 }
 

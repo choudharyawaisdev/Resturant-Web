@@ -212,6 +212,45 @@ p {
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
 }
 
+/* Smooth mobile navbar collapse */
+.navbar-collapse.collapsing {
+    transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.mobile-header-cart-btn {
+    position: relative;
+    background-color: #FFF3E8;
+    color: var(--primary-orange);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 107, 0, 0.25);
+    transition: all 0.2s ease;
+}
+
+.mobile-header-cart-btn:hover,
+.mobile-header-cart-btn:active {
+    background-color: #FFE6D0;
+    transform: scale(1.05);
+}
+
+.mobile-header-cart-btn .cart-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background-color: var(--primary-orange);
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 700;
+    width: 19px;
+    height: 19px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #ffffff;
+}
+
 @media (max-width: 991.98px) {
     .category-pill-wrapper {
         position: relative !important;
@@ -229,8 +268,23 @@ p {
         padding: 16px !important;
         border-radius: 16px !important;
         margin-top: 12px !important;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12) !important;
+        box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12) !important;
         border: 1px solid #E2E8F0 !important;
+    }
+
+    .navbar-collapse.show {
+        animation: mobileNavSlideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes mobileNavSlideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-8px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
     .navbar-collapse .mobile-location-box {
@@ -1167,14 +1221,13 @@ button.btn-sm {
 }
 
 .main-footer .bi-chevron-right {
+    flex-shrink: 0;
     transition: transform 0.2s ease;
 }
 
-.main-footer a:hover .bi-chevron-right {
-    transform: translateX(2px);
-}
-
-color: #ffffff !important;
+.main-footer a:hover .bi-chevron-right,
+.main-footer .footer-link:hover .bi-chevron-right {
+    transform: translateX(3px);
 }
 
 .main-footer .bi {
@@ -1824,6 +1877,26 @@ label.small {
 .custom-addon-checkbox:hover .checkmark {
     border-color: var(--primary-orange);
     box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.12);
+}
+
+/* Addon Row Highlight when checked */
+.addon-checkbox-row {
+    background-color: #fff;
+    transition: background-color 0.15s ease;
+}
+
+.addon-checkbox-row:hover {
+    background-color: #FFF8F0;
+}
+
+.addon-checkbox-row:has(input[type="checkbox"]:checked) {
+    background-color: #FFF3E0;
+}
+
+.addon-checkbox-row:has(input[type="checkbox"]:checked) .addon-name,
+.addon-checkbox-row:has(input[type="checkbox"]:checked) .addon-price {
+    color: var(--primary-orange) !important;
+    font-weight: 600 !important;
 }
 
 /* Custom Row Item Styling (Size & Drink List Boxes) */
