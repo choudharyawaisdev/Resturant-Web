@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // login.php
 require_once __DIR__ . '/includes/functions.php';
 
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute([$email]);
             $user = $stmt->fetch();
 
-            if ($user && password_verify($password, $user['password_hash'])) {
+            if ($user && password_verify($password, $user['password'])) {
                 $_SESSION['user_logged_in'] = true;
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['user_name'] = $user['name'];
@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } else {
                 $hash = password_hash($password, PASSWORD_DEFAULT);
                 $stmt = $pdo->prepare("
-                    INSERT INTO users (name, email, phone, address, area_id, password_hash)
+                    INSERT INTO users (name, email, phone, address, area_id, password)
                     VALUES (?, ?, ?, ?, ?, ?)
                 ");
                 try {
@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login & Signup - Café-Chinos</title>
+    <title>Login & Signup - CafÃ©-Chinos</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
@@ -153,7 +153,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <nav class="navbar navbar-custom py-3">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="index.php">
-                <img src="assets/images/logo.png" alt="Café-Chinos" class="navbar-logo" style="height:56px; width:auto; object-fit:contain; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.25));">
+                <img src="assets/images/logo.png" alt="CafÃ©-Chinos" class="navbar-logo" style="height:56px; width:auto; object-fit:contain; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.25));">
             </a>
             <a href="index" class="btn btn-outline-yellow btn-sm"><i class="bi bi-arrow-left"></i> Menu Directory</a>
         </div>
@@ -178,7 +178,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 <div class="mb-4">
                     <label for="password" class="form-label small fw-bold text-muted">PASSWORD</label>
-                    <input type="password" name="password" id="password" class="form-control" placeholder="••••••" required>
+                    <input type="password" name="password" id="password" class="form-control" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢" required>
                 </div>
 
                 <button type="submit" class="btn btn-primary-orange w-100 py-3 fw-bold">
@@ -247,10 +247,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <!-- Column 1: Brand Info -->
                 <div class="col-lg-4 col-md-6">
                     <a href="index.php">
-                        <img src="assets/images/logo.png" alt="Café-Chinos" style="height:70px; width:auto; object-fit:contain; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));">
+                        <img src="assets/images/logo.png" alt="CafÃ©-Chinos" style="height:70px; width:auto; object-fit:contain; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));">
                     </a>
                     <p class="small text-muted mt-2">
-                        Café-Chinos brings the taste of fresh, premium warm food right to your doorstep in Chiniot. From masterfully crafted zingers to authentic brick-oven pizzas, satisfaction is just a click away.
+                        CafÃ©-Chinos brings the taste of fresh, premium warm food right to your doorstep in Chiniot. From masterfully crafted zingers to authentic brick-oven pizzas, satisfaction is just a click away.
                     </p>
                     <div class="d-flex gap-3 mt-3">
                         <a href="#" class="text-muted"><i class="bi bi-facebook fs-5"></i></a>
@@ -306,7 +306,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="main-footer-bottom text-center small text-muted">
                 <div class="row align-items-center">
                     <div class="col-md-6 text-md-start mb-2 mb-md-0">
-                        © <?= date('Y') ?> <?= sanitize(get_setting('restaurant_name', 'Café-Chinos')) ?>. All Rights Reserved.
+                        Â© <?= date('Y') ?> <?= sanitize(get_setting('restaurant_name', 'CafÃ©-Chinos')) ?>. All Rights Reserved.
                     </div>
                     <div class="col-md-6 text-md-end">
                         Developed with passion by <strong style="color: var(--primary-orange);">DevtaSoft</strong>
@@ -359,4 +359,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php endif; ?>
 </body>
 </html>
+
 

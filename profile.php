@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // profile.php
 require_once __DIR__ . '/includes/functions.php';
 
@@ -86,9 +86,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         } elseif (strlen($new_pass) < 6) {
             $error = 'Password must be at least 6 characters.';
         } else {
-            if (password_verify($curr_pass, $user['password_hash'])) {
+            if (password_verify($curr_pass, $user['password'])) {
                 $new_hash = password_hash($new_pass, PASSWORD_DEFAULT);
-                $up = $pdo->prepare("UPDATE users SET password_hash = ? WHERE id = ?");
+                $up = $pdo->prepare("UPDATE users SET password = ? WHERE id = ?");
                 $up->execute([$new_hash, $user_id]);
                 $success = 'Your account password has been changed successfully!';
             } else {
@@ -129,7 +129,7 @@ $wishlist_items = $wish_stmt->fetchAll();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Dashboard - Café-Chinos</title>
+    <title>Customer Dashboard - CafÃ©-Chinos</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
@@ -145,7 +145,7 @@ $wishlist_items = $wish_stmt->fetchAll();
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="index">
-                <img src="assets/images/logo.png" alt="Café-Chinos" class="navbar-logo" style="height:56px; width:auto; object-fit:contain; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.25));">
+                <img src="assets/images/logo.png" alt="CafÃ©-Chinos" class="navbar-logo" style="height:56px; width:auto; object-fit:contain; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.25));">
             </a>
             
             <div class="d-flex align-items-center gap-2">
@@ -461,10 +461,10 @@ $wishlist_items = $wish_stmt->fetchAll();
                 <!-- Column 1: Brand Info -->
                 <div class="col-lg-4 col-md-6">
                     <a href="index">
-                        <img src="assets/images/logo.png" alt="Café-Chinos" style="height:70px; width:auto; object-fit:contain; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));">
+                        <img src="assets/images/logo.png" alt="CafÃ©-Chinos" style="height:70px; width:auto; object-fit:contain; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));">
                     </a>
                     <p class="small text-muted mt-2">
-                        Café-Chinos brings the taste of fresh, premium warm food right to your doorstep in Chiniot. From masterfully crafted zingers to authentic brick-oven pizzas, satisfaction is just a click away.
+                        CafÃ©-Chinos brings the taste of fresh, premium warm food right to your doorstep in Chiniot. From masterfully crafted zingers to authentic brick-oven pizzas, satisfaction is just a click away.
                     </p>
                     <div class="d-flex gap-3 mt-3">
                         <a href="#" class="text-muted"><i class="bi bi-facebook fs-5"></i></a>
@@ -520,7 +520,7 @@ $wishlist_items = $wish_stmt->fetchAll();
             <div class="main-footer-bottom text-center small text-muted">
                 <div class="row align-items-center">
                     <div class="col-md-6 text-md-start mb-2 mb-md-0">
-                        © <?= date('Y') ?> <?= sanitize(get_setting('restaurant_name', 'Café-Chinos')) ?>. All Rights Reserved.
+                        Â© <?= date('Y') ?> <?= sanitize(get_setting('restaurant_name', 'CafÃ©-Chinos')) ?>. All Rights Reserved.
                     </div>
                     <div class="col-md-6 text-md-end">
                         Developed with passion by <strong style="color: var(--primary-orange);">DevtaSoft</strong>
@@ -593,4 +593,5 @@ $wishlist_items = $wish_stmt->fetchAll();
     </script>
 </body>
 </html>
+
 

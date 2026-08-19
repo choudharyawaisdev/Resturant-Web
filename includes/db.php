@@ -1,22 +1,22 @@
-<?php
+﻿<?php
 // includes/db.php
 
-// ─── Environment Detection ────────────────────────────────────────────────────
+// â”€â”€â”€ Environment Detection â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // Detect whether we are running on localhost (XAMPP/dev) or live server
 $is_local = in_array($_SERVER['SERVER_NAME'] ?? '', ['localhost', '127.0.0.1', '::1'])
     || (isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] === '127.0.0.1');
 
 if ($is_local) {
-    // ── LOCAL / XAMPP Settings ────────────────────────────────────────────────
+    // â”€â”€ LOCAL / XAMPP Settings â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     $host = '127.0.0.1';
     $user = 'root';
     $pass = '';
     $dbname = 'restaurant_db';
 } else {
-    // ── LIVE SERVER Settings ──────────────────────────────────────────────────
+    // â”€â”€ LIVE SERVER Settings â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     $host = 'localhost';
     $user = 'thedevtasoft_cafe_chinos';   // cPanel DB username
-    $pass = 'thedevtasoft_cafe_chinos';              // cPanel DB password  ← update if different
+    $pass = 'thedevtasoft_cafe_chinos';              // cPanel DB password  â† update if different
     $dbname = 'thedevtasoft_cafe_chinos';   // cPanel DB name
 }
 
@@ -45,7 +45,7 @@ try {
         $pdo = new PDO($dsn, $user, $pass, $options);
     }
 
-    // ─── Auto-create core tables if they don't exist ─────────────────────────
+    // â”€â”€â”€ Auto-create core tables if they don't exist â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     // 1. Check if base tables exist (e.g. categories)
     $tableExists = false;
@@ -76,7 +76,7 @@ try {
       `phone`         VARCHAR(20)  DEFAULT NULL,
       `address`       TEXT         DEFAULT NULL,
       `area_id`       INT          DEFAULT NULL,
-      `password_hash` VARCHAR(255) NOT NULL,
+      `password` VARCHAR(255) NOT NULL,
       `created_at`    TIMESTAMP    DEFAULT CURRENT_TIMESTAMP
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
 
@@ -114,7 +114,7 @@ try {
     }
     if (!$adminExists) {
         $adminHash = password_hash('adminpassword', PASSWORD_DEFAULT);
-        $stmt = $pdo->prepare("INSERT INTO `admin_users` (`username`, `password_hash`) VALUES (?, ?)");
+        $stmt = $pdo->prepare("INSERT INTO `admin_users` (`username`, `password`) VALUES (?, ?)");
         $stmt->execute(['admin', $adminHash]);
     }
 
