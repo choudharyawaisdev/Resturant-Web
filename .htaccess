@@ -12,3 +12,13 @@ RewriteRule ^ - [L]
 # Remove .php extension from URLs with query string preservation
 RewriteCond %{REQUEST_FILENAME}.php -f
 RewriteRule ^(.+)$ $1.php [L,QSA]
+
+# Custom 404 Error Page Document
+ErrorDocument 404 /Resturant-Web/404.php
+
+# Fallback for unknown routes to 404 page
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php !-f
+RewriteRule ^.*$ 404.php [L,QSA]
+
