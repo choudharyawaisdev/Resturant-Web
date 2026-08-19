@@ -78,10 +78,10 @@ try {
     // 8. Insert Order Items
     $item_stmt = $pdo->prepare("
         INSERT INTO `order_items` (
-            `order_id`, `product_id`, `size_name`, 
+            `order_id`, `product_id`, `product_name`, `size_name`, 
             `addons`, `drink_name`, `quantity`, 
-            `item_price`, `line_total`
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            `unit_price`, `total_price`
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     ");
 
     foreach ($cart_details['items'] as $item) {
@@ -92,6 +92,7 @@ try {
         $item_stmt->execute([
             $order_id,
             $item['product_id'],
+            $item['product_name'] ?? 'Product',
             $item['size_name'],
             $addons_json,
             $drink_name,

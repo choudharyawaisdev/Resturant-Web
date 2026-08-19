@@ -4,7 +4,7 @@ require_once dirname(__DIR__) . '/includes/functions.php';
 
 header('Content-Type: application/json');
 
-$action = isset($_GET['action']) ? sanitize($_GET['action']) : '';
+$action = sanitize($_REQUEST['action'] ?? $_POST['action'] ?? $_GET['action'] ?? '');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     

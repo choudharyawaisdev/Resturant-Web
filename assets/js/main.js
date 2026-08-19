@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 fetch('api/add_to_cart?action=set_location', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: `area_id=${areaId}`
+                    body: `action=set_location&area_id=${encodeURIComponent(areaId)}`
                 })
                 .then(res => res.json())
                 .then(data => {
@@ -58,10 +58,18 @@ document.addEventListener('DOMContentLoaded', function () {
                         Swal.fire({
                             icon: 'error',
                             title: 'Error',
-                            text: 'Something went wrong. Please try again.',
+                            text: data.message || 'Something went wrong. Please try again.',
                             confirmButtonColor: '#FF6B00'
                         });
                     }
+                })
+                .catch(err => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Unable to connect to server. Please try again.',
+                        confirmButtonColor: '#FF6B00'
+                    });
                 });
             });
         }
@@ -233,6 +241,9 @@ document.addEventListener('DOMContentLoaded', function () {
         modalForm.addEventListener('submit', function (e) {
             e.preventDefault();
             const formData = new FormData(modalForm);
+            if (!formData.has('action')) {
+                formData.append('action', 'add');
+            }
             const params = new URLSearchParams(formData).toString();
 
             fetch('api/add_to_cart?action=add', {
@@ -266,6 +277,14 @@ document.addEventListener('DOMContentLoaded', function () {
                         confirmButtonColor: '#FF6B00'
                     });
                 }
+            })
+            .catch(err => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Failed to add item to cart.',
+                    confirmButtonColor: '#FF6B00'
+                });
             });
         });
     }
@@ -302,79 +321,79 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (checkoutBtn) checkoutBtn.classList.remove('disabled');
 
                 let html = '';
-                for (const key in data.items) {
-                    const item = data.items[key];
-                    
-                    // Format Addons description
-                    let addonsStr = '';
+                for (const [key, item] of Object.entries(data.items)) {
+                    let addonsHtml = '';
                     if (item.addons && item.addons.length > 0) {
-                        addonsStr = 'Add-ons: ' + item.addons.map(a => `${a.name} (+Rs. ${a.price})`).join(', ');
+                        addonsHtml = `<div class="small text-muted">+ ${item.addons.map(a => a.name).join(', ')}</div>`;
+                    }
+                    let drinkHtml = '';
+                    if (item.drink_name) {
+                        drinkHtml = `<div class="small text-muted">+ ${item.drink_name}</div>`;
+                    }
+                    let sizeHtml = '';
+                    if (item.size_name) {
+                        sizeHtml = `<span class="badge bg-light text-dark border me-1">${item.size_name}</span>`;
                     }
 
-                    // Format Drink description
-                    let drinkStr = item.drink_name ? `Drink: ${item.drink_name}` : '';
-                    let detailsArr = [];
-                    if (item.size_name) detailsArr.push(`Size: ${item.size_name}`);
-                    if (drinkStr) detailsArr.push(drinkStr);
-                    if (addonsStr) detailsArr.push(addonsStr);
-                    const metaText = detailsArr.join(' | ');
-
-                    const imgSrc = item.image_url;
-
                     html += `
-                        <div class="cart-item-row" data-key="${key}">
-                            <img src="${imgSrc}" class="cart-item-img" alt="${item.product_name}" onerror="this.src='https://placehold.co/100x100/FFF8F0/FF6B00?text=Food'">
-                            <div class="cart-item-details">
-                                <div class="cart-item-title">${item.product_name}</div>
-                                <div class="cart-item-meta">${metaText}</div>
-                                <div class="cart-item-actions">
-                                    <div class="quantity-stepper scale-down">
-                                        <button type="button" class="btn-sidebar-minus" data-key="${key}">-</button>
-                                        <input type="text" value="${item.quantity}" readonly>
-                                        <button type="button" class="btn-sidebar-plus" data-key="${key}">+</button>
-                                    </div>
-                                    <span class="cart-item-price">Rs. ${item.line_total.toFixed(2)}</span>
-                                    <button class="cart-remove-btn" data-key="${key}">
-                                        <i class="bi bi-trash-fill"></i>
-                                    </button>
+                        <div class="cart-item d-flex align-items-center justify-content-between p-3 border-bottom position-relative">
+                            <img src="${item.image_url}" class="rounded-3 me-3" style="width: 50px; height: 50px; object-fit: cover;" alt="${item.product_name}">
+                            <div class="flex-grow-1 me-2">
+                                <h6 class="mb-0 fw-bold fs-6">${item.product_name}</h6>
+                                <div class="mb-1">${sizeHtml}</div>
+                                ${addonsHtml}
+                                ${drinkHtml}
+                                <div class="cart-item-price fw-bold text-orange mt-1">Rs. ${item.line_total.toFixed(2)}</div>
+                            </div>
+                            <div class="d-flex flex-column align-items-end gap-2">
+                                <button class="btn btn-sm text-danger border-0 p-0 btn-remove-item" data-key="${key}" title="Remove Item">
+                                    <i class="bi bi-trash3"></i>
+                                </button>
+                                <div class="input-group input-group-sm cart-qty-group" style="width: 90px;">
+                                    <button class="btn btn-outline-secondary btn-decrease-qty" data-key="${key}" type="button">-</button>
+                                    <input type="text" class="form-control text-center bg-white p-0" value="${item.quantity}" readonly>
+                                    <button class="btn btn-outline-secondary btn-increase-qty" data-key="${key}" type="button">+</button>
                                 </div>
                             </div>
                         </div>
                     `;
                 }
-                sidebarContainer.innerHTML = html;
-                bindSidebarEvents();
-            });
-    }
 
-    function bindSidebarEvents() {
-        // Sidebar quantity minus
-        document.querySelectorAll('.btn-sidebar-minus').forEach(btn => {
-            btn.addEventListener('click', function () {
+                sidebarContainer.innerHTML = html;
+
+                // Bind Cart Action Buttons
+                bindCartEvents();
+            })
+            .catch(err => {
+                console.error('Error fetching cart:', err);
+            });
+    };
+
+    function bindCartEvents() {
+        document.querySelectorAll('.btn-decrease-qty').forEach(btn => {
+            btn.addEventListener('click', function() {
                 const key = this.getAttribute('data-key');
-                const input = this.nextElementSibling;
-                let val = parseInt(input.value) || 1;
-                if (val > 1) {
-                    updateCartQuantity(key, val - 1);
+                const input = this.parentElement.querySelector('input');
+                let qty = parseInt(input.value);
+                if (qty > 1) {
+                    updateCartQuantity(key, qty - 1);
                 } else {
                     removeCartItem(key);
                 }
             });
         });
 
-        // Sidebar quantity plus
-        document.querySelectorAll('.btn-sidebar-plus').forEach(btn => {
-            btn.addEventListener('click', function () {
+        document.querySelectorAll('.btn-increase-qty').forEach(btn => {
+            btn.addEventListener('click', function() {
                 const key = this.getAttribute('data-key');
-                const input = this.previousElementSibling;
-                let val = parseInt(input.value) || 1;
-                updateCartQuantity(key, val + 1);
+                const input = this.parentElement.querySelector('input');
+                let qty = parseInt(input.value);
+                updateCartQuantity(key, qty + 1);
             });
         });
 
-        // Sidebar remove button
-        document.querySelectorAll('.cart-remove-btn').forEach(btn => {
-            btn.addEventListener('click', function () {
+        document.querySelectorAll('.btn-remove-item').forEach(btn => {
+            btn.addEventListener('click', function() {
                 const key = this.getAttribute('data-key');
                 removeCartItem(key);
             });
@@ -385,7 +404,7 @@ document.addEventListener('DOMContentLoaded', function () {
         fetch('api/add_to_cart?action=update', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `cart_key=${key}&quantity=${newQty}`
+            body: `action=update&cart_key=${encodeURIComponent(key)}&quantity=${encodeURIComponent(newQty)}`
         })
         .then(res => res.json())
         .then(data => {
@@ -399,7 +418,7 @@ document.addEventListener('DOMContentLoaded', function () {
         fetch('api/add_to_cart?action=remove', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `cart_key=${key}`
+            body: `action=remove&cart_key=${encodeURIComponent(key)}`
         })
         .then(res => res.json())
         .then(data => {
