@@ -177,7 +177,7 @@ function get_cart_details($pdo) {
     // Delivery Fee calculation
     $delivery_fee = 0.00;
     if (isset($_SESSION['delivery_area_id'])) {
-        $stmt = $pdo->prepare("SELECT delivery_fee FROM areas WHERE id = ?");
+        $stmt = $pdo->prepare("SELECT delivery_charge AS delivery_fee FROM areas WHERE id = ?");
         $stmt->execute([$_SESSION['delivery_area_id']]);
         $delivery_fee = floatval($stmt->fetchColumn());
     }

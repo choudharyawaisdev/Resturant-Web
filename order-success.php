@@ -10,7 +10,7 @@ if ($order_id <= 0) {
 
 // Fetch Order Details
 $stmt = $pdo->prepare("
-    SELECT o.*, a.area_name 
+    SELECT o.*, o.delivery_charge AS delivery_fee, a.area_name 
     FROM orders o 
     JOIN areas a ON o.area_id = a.id 
     WHERE o.id = ?

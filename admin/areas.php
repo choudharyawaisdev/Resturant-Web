@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // admin/areas.php
 require_once __DIR__ . '/includes/header.php';
 
@@ -43,14 +43,14 @@ if (isset($_GET['action']) && $_GET['action'] === 'toggle' && isset($_GET['id'])
 // 3. EDIT TRIGGER (Load data into form)
 if (isset($_GET['action']) && $_GET['action'] === 'edit' && isset($_GET['id'])) {
     $edit_id = intval($_GET['id']);
-    $stmt = $pdo->prepare("SELECT * FROM areas WHERE id = ?");
+    $stmt = $pdo->prepare("SELECT *, delivery_charge AS delivery_fee FROM areas WHERE id = ?");
     $stmt->execute([$edit_id]);
     $area = $stmt->fetch();
     
     if ($area) {
         $edit_mode = true;
         $edit_name = $area['area_name'];
-        $edit_fee = $area['delivery_fee'];
+        $edit_fee = $area['delivery_charge'];
         $edit_status = $area['status'];
     }
 }
@@ -67,13 +67,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         if ($posted_edit_id > 0) {
             // Edit Update
-            $stmt = $pdo->prepare("UPDATE areas SET area_name = ?, delivery_fee = ?, status = ? WHERE id = ?");
+            $stmt = $pdo->prepare("UPDATE areas SET area_name = ?, delivery_charge = ?, status = ? WHERE id = ?");
             $stmt->execute([$area_name, $delivery_fee, $status, $posted_edit_id]);
             $success = "Delivery area updated successfully!";
             $edit_mode = false;
         } else {
             // New Insert
-            $stmt = $pdo->prepare("INSERT INTO areas (city, area_name, delivery_fee, status) VALUES ('Chiniot', ?, ?, ?)");
+            $stmt = $pdo->prepare("INSERT INTO areas (city, area_name, delivery_charge, status) VALUES ('Chiniot', ?, ?, ?)");
             $stmt->execute([$area_name, $delivery_fee, $status]);
             $success = "New delivery area added successfully!";
         }
@@ -191,7 +191,7 @@ $all_areas = $pdo->query("SELECT * FROM areas ORDER BY area_name ASC")->fetchAll
                             <?php foreach ($all_areas as $ar): ?>
                                 <tr>
                                     <td><strong class="text-dark"><?= sanitize($ar['area_name']) ?></strong></td>
-                                    <td class="fw-bold">Rs. <?= number_format($ar['delivery_fee'], 2) ?></td>
+                                    <td class="fw-bold">Rs. <?= number_format(($ar['delivery_charge'] ?? 0), 2) ?></td>
                                     <td>
                                         <a href="areas.php?action=toggle&id=<?= $ar['id'] ?>" class="badge text-decoration-none <?= $ar['status'] === 'active' ? 'bg-success' : 'bg-secondary' ?>">
                                             <?= $ar['status'] ?>
@@ -243,3 +243,5 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>
+
+

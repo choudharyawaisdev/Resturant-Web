@@ -197,9 +197,9 @@ $search_query = isset($_GET['search']) ? trim($_GET['search']) : '';
                     <a href="index.php" class="btn btn-primary-orange">View Menu</a>
                 </div>
             <?php else: ?>
-                <div class="row g-4">
+                <div class="row g-2 g-md-3 g-lg-4">
                     <?php foreach ($products as $prod): ?>
-                        <div class="col-lg-3 col-md-6 col-6">
+                        <div class="col-6 col-md-4 col-lg-3">
                             <?php include __DIR__ . '/includes/product_card.php'; ?>
                         </div>
                     <?php endforeach; ?>
@@ -223,9 +223,9 @@ $search_query = isset($_GET['search']) ? trim($_GET['search']) : '';
                             <span style="position: absolute; bottom: -8px; left: 0; width: 40px; height: 4px; background-color: var(--primary-orange); border-radius: 2px;"></span>
                         </h2>
                     </div>
-                    <div class="row g-4">
+                    <div class="row g-2 g-md-3 g-lg-4">
                         <?php foreach ($products as $prod): ?>
-                            <div class="col-lg-3 col-md-6 col-6">
+                            <div class="col-6 col-md-4 col-lg-3">
                                 <?php include __DIR__ . '/includes/product_card.php'; ?>
                             </div>
                         <?php endforeach; ?>
@@ -304,7 +304,7 @@ $search_query = isset($_GET['search']) ? trim($_GET['search']) : '';
                             <option value="">-- Choose your area --</option>
                             <?php foreach ($areas as $area): ?>
                                 <option value="<?= $area['id'] ?>" <?= (isset($_SESSION['delivery_area_id']) && $_SESSION['delivery_area_id'] == $area['id']) ? 'selected' : '' ?>>
-                                    <?= sanitize($area['area_name']) ?> (Delivery Fee: Rs. <?= number_format($area['delivery_fee'], 0) ?>)
+                                    <?= sanitize($area['area_name']) ?> (Delivery Fee: Rs. <?= number_format($area['delivery_charge'] ?? 0, 0) ?>)
                                 </option>
                             <?php endforeach; ?>
                         </select>

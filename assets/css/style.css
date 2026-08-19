@@ -70,8 +70,7 @@ h4,
     letter-spacing: -0.3px;
 }
 
-h5,
-.product-title {
+h5 {
     font-size: 18px !important;
     font-weight: 600 !important;
     letter-spacing: -0.2px;
@@ -330,13 +329,17 @@ p {
     transform: translateY(-2px);
 }
 
-/* Product Cards */
+/* ══════════════════════════════════════════════════════════
+   PRODUCT CARD — Mobile-First Responsive Design System
+   ══════════════════════════════════════════════════════════ */
+
 .product-card {
-    background-color: var(--white);
-    border-radius: var(--border-radius-lg);
-    border: none;
-    box-shadow: var(--shadow-soft);
-    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid rgba(0,0,0,0.05);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    transition: transform 0.28s cubic-bezier(0.25, 0.8, 0.25, 1),
+                box-shadow 0.28s cubic-bezier(0.25, 0.8, 0.25, 1);
     overflow: hidden;
     height: 100%;
     display: flex;
@@ -344,76 +347,188 @@ p {
 }
 
 .product-card:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--shadow-hover);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 28px rgba(255, 107, 0, 0.12);
 }
 
+/* ── Image wrapper ── */
 .product-img-wrapper {
     position: relative;
     width: 100%;
-    height: 200px;
+    height: 160px;          /* mobile default */
     overflow: hidden;
-    background-color: #f7f7f7;
+    background-color: #f5f5f5;
+    flex-shrink: 0;
 }
 
 .product-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
+    transition: transform 0.45s ease;
+    display: block;
 }
 
 .product-card:hover .product-img {
-    transform: scale(1.08);
+    transform: scale(1.07);
 }
 
+/* ── Badge (category chip) ── */
 .product-badge {
     position: absolute;
-    top: 15px;
-    left: 15px;
-    background-color: var(--secondary-yellow);
+    top: 10px;
+    left: 10px;
+    background: var(--secondary-yellow);
     color: var(--text-dark);
     font-weight: 700;
-    font-size: 11px;
-    padding: 4px 12px;
-    border-radius: 30px;
+    font-size: 10px;
+    letter-spacing: 0.3px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    pointer-events: none;
 }
 
+/* ── Card Body ── */
 .product-body {
-    padding: 20px;
+    padding: 12px;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
 }
 
+/* ── Title ── */
 .product-title {
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 8px;
-}
-
-.product-desc {
     font-size: 13px;
-    color: var(--text-muted);
-    flex-grow: 1;
-    margin-bottom: 15px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 4px;
+    line-height: 1.3;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
+/* ── Description ── */
+.product-desc {
+    font-size: 11px;
+    color: #888;
+    line-height: 1.5;
+    flex-grow: 1;
+    margin-bottom: 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* ── Footer: price + button ── */
 .product-footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 6px;
     margin-top: auto;
+    padding-top: 8px;
+    border-top: 1px solid #f0f0f0;
+}
+
+/* ── Price block ── */
+.product-price-block {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+    min-width: 0;
+}
+
+.price-label {
+    font-size: 9px;
+    color: #aaa;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    white-space: nowrap;
 }
 
 .product-price {
-    font-size: 20px;
-    font-weight: 700;
+    font-size: 14px;
+    font-weight: 800;
     color: var(--primary-orange);
+    white-space: nowrap;
+}
+
+/* ── Order Now Button ── */
+.btn-order-now {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--primary-orange);
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 7px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 3px 10px rgba(255, 107, 0, 0.35);
+    line-height: 1;
+}
+
+.btn-order-now:hover {
+    background: #e55a00;
+    transform: scale(1.04);
+    box-shadow: 0 5px 15px rgba(255, 107, 0, 0.45);
+}
+
+.btn-order-now:active {
+    transform: scale(0.97);
+}
+
+.btn-order-now .bi {
+    font-size: 12px;
+}
+
+/* Hide text on very small screens, show only icon */
+@media (max-width: 380px) {
+    .btn-order-text { display: none; }
+    .btn-order-now { padding: 8px 10px; border-radius: 50%; }
+}
+
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE BREAKPOINTS
+   ══════════════════════════════════════════════════════════ */
+
+/* Small phones: 2-column grid — compact card */
+@media (max-width: 575px) {
+    .product-img-wrapper { height: 140px; }
+    .product-body        { padding: 10px; }
+    .product-title       { font-size: 12px; }
+    .product-desc        { font-size: 10.5px; margin-bottom: 8px; }
+    .product-price       { font-size: 13px; }
+    .btn-order-now       { padding: 6px 10px; font-size: 10px; }
+    .product-badge       { font-size: 9px; padding: 2px 8px; }
+}
+
+/* Tablets (md): 2-column — slightly bigger */
+@media (min-width: 576px) and (max-width: 767px) {
+    .product-img-wrapper { height: 160px; }
+    .product-title       { font-size: 14px; }
+    .product-price       { font-size: 14px; }
+}
+
+/* Desktop (lg+): 4-column — full size */
+@media (min-width: 992px) {
+    .product-img-wrapper { height: 190px; }
+    .product-body        { padding: 14px; }
+    .product-title       { font-size: 15px; }
+    .product-desc        { font-size: 12px; }
+    .product-price       { font-size: 15px; }
+    .btn-order-now       { padding: 8px 14px; font-size: 12px; }
 }
 
 /* Custom Buttons — Universal Orange Theme */
@@ -992,9 +1107,7 @@ button.btn-sm {
     letter-spacing: -0.5px;
 }
 
-.product-title {
-    font-weight: 600;
-}
+/* .product-title responsive sizes handled in card design system above */
 
 /* Footer Styling */
 .main-footer {
@@ -1301,42 +1414,6 @@ color: #ffffff !important;
     transform: translateY(-2px) scale(1.02) !important;
 }
 
-/* Premium Restaurant Cards */
-.product-card {
-    border-radius: 16px !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02) !important;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
-    border: 1px solid rgba(0, 0, 0, 0.02) !important;
-    overflow: hidden;
-    background-color: var(--white);
-}
-
-.product-card:hover {
-    transform: translateY(-6px) !important;
-    box-shadow: 0 12px 30px rgba(255, 107, 0, 0.08) !important;
-}
-
-.product-body {
-    padding: 16px !important;
-}
-
-.product-title {
-    font-size: 17px !important;
-    font-weight: 600 !important;
-    margin-bottom: 6px !important;
-    color: var(--text-dark);
-}
-
-.product-desc {
-    font-size: 12px !important;
-    line-height: 1.55 !important;
-    color: var(--text-muted);
-    margin-bottom: 12px !important;
-}
-
-.product-img-wrapper {
-    height: 180px !important;
-}
 
 /* Custom Customization Modal Window width reductions & polish */
 @media (min-width: 992px) {
@@ -1484,8 +1561,7 @@ label.small {
 }
 
 .checkout-items-list span,
-.cart-item-price,
-.product-price {
+.cart-item-price {
     font-size: 15px !important;
     font-weight: 600 !important;
 }

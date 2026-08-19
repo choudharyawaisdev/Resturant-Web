@@ -57,9 +57,9 @@ try {
     $order_stmt = $pdo->prepare("
         INSERT INTO `orders` (
             `user_id`, `customer_name`, `phone`, `address`, `area_id`, 
-            `subtotal`, `delivery_fee`, `grand_total`, 
-            `status`, `payment_method`, `order_notes`
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'Pending', 'COD', ?)
+            `subtotal`, `delivery_charge`, `grand_total`, 
+            `status`, `payment_method`, `notes`
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'Pending', 'Cash on Delivery', ?)
     ");
     $order_stmt->execute([
         $user_id,

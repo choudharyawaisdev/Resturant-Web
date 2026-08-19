@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // admin/orders.php
 require_once __DIR__ . '/includes/header.php';
 
@@ -179,7 +179,7 @@ if ($view_order_id <= 0) {
                         </div>
                         <div class="d-flex justify-content-between mb-2">
                             <span class="text-muted small">Delivery Charges (<?= sanitize($order['area_name']) ?>):</span>
-                            <span class="text-dark fw-bold">Rs. <?= number_format($order['delivery_fee'], 2) ?></span>
+                            <span class="text-dark fw-bold">Rs. <?= number_format(($order['delivery_charge'] ?? $order['delivery_fee'] ?? 0), 2) ?></span>
                         </div>
                         <hr>
                         <div class="d-flex justify-content-between align-items-center">
@@ -195,7 +195,7 @@ if ($view_order_id <= 0) {
             <div id="thermalReceiptPrint" class="d-none d-print-block thermal-receipt-print">
                 <!-- Header: Centered logo and restaurant info -->
                 <div class="text-center mb-2">
-                    <h4 class="fw-bold mb-0 text-dark" style="font-size: 18px; letter-spacing: 0.5px;">CAFÉ-CHINOS</h4>
+                    <h4 class="fw-bold mb-0 text-dark" style="font-size: 18px; letter-spacing: 0.5px;">CAFÃ‰-CHINOS</h4>
                     <div class="small">Premium Food Delivery</div>
                     <div class="small">359-V Nao Gazah Rd, Chiniot</div>
                     <div class="small">Tel: <?= sanitize(get_setting('contact_number', '0311 7593578')) ?></div>
@@ -274,7 +274,7 @@ if ($view_order_id <= 0) {
                 </div>
                 <div class="row small mb-1 justify-content-end">
                     <div class="col-6 text-end">DELIVERY:</div>
-                    <div class="col-6 text-end fw-bold">Rs. <?= number_format($order['delivery_fee'], 2) ?></div>
+                    <div class="col-6 text-end fw-bold">Rs. <?= number_format(($order['delivery_charge'] ?? $order['delivery_fee'] ?? 0), 2) ?></div>
                 </div>
 
                 <!-- Divider -->
@@ -289,7 +289,7 @@ if ($view_order_id <= 0) {
                 <!-- Footer message -->
                 <div class="text-center small mt-4">
                     <div>Thank you!!!</div>
-                    <div class="fw-bold mt-1">CAFÉ-CHINOS</div>
+                    <div class="fw-bold mt-1">CAFÃ‰-CHINOS</div>
                     <div class="receipt-divider">-----------------------------------------</div>
                     <div style="font-size: 8px; margin-top: 5px;">Software Developed by<br>DevtaSoft Software Company<br>03085277092</div>
                 </div>
@@ -408,3 +408,4 @@ if ($view_order_id <= 0) {
 <?php endif; ?>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>
+
