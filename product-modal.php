@@ -43,17 +43,13 @@ $drink_stmt->execute([$product_id]);
 $drinks = $drink_stmt->fetchAll();
 
 // Setup Image Fallback
-$default_images = [
-    1 => 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=400&q=80', // Burger
-    2 => 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=400&q=80', // Pizza
-    3 => 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=400&q=80', // Zinger
-    4 => 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?auto=format&fit=crop&w=400&q=80', // Wings
-    5 => 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=400&q=80', // Pasta
-    6 => 'https://images.unsplash.com/photo-1497534446932-c925b458314e?auto=format&fit=crop&w=400&q=80'  // Drinks
-];
-$img_url = $default_images[$product['category_id']] ?? 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80';
-if (!empty($product['image']) && file_exists(__DIR__ . '/assets/images/uploads/' . $product['image'])) {
-    $img_url = 'assets/images/uploads/' . $product['image'];
+$img_url = 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80';
+if (!empty($product['image'])) {
+    if (strpos($product['image'], 'http') === 0) {
+        $img_url = $product['image'];
+    } elseif (file_exists(__DIR__ . '/assets/images/uploads/' . $product['image'])) {
+        $img_url = 'assets/images/uploads/' . $product['image'];
+    }
 }
 ?>
 

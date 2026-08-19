@@ -11,11 +11,28 @@ $default_images = [
     6 => 'https://images.unsplash.com/photo-1497534446932-c925b458314e?auto=format&fit=crop&w=400&q=80'
 ];
 
-$img_url = $default_images[$prod['category_id']] ?? 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80';
+$img_url = 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80';
 
-if (!empty($prod['image']) && file_exists(dirname(__DIR__) . '/assets/images/uploads/' . $prod['image'])) {
-    $img_url = 'assets/images/uploads/' . $prod['image'];
+if (!empty($prod['image'])) {
+    if (strpos($prod['image'], 'http') === 0) {
+        $img_url = $prod['image'];
+    } elseif (file_exists(dirname(__DIR__) . '/assets/images/uploads/' . $prod['image'])) {
+        $img_url = 'assets/images/uploads/' . $prod['image'];
+    }
 }
+
+$badges = [
+    1 => 'Hot Deal',
+    2 => 'Pizza',
+    3 => 'Burger',
+    4 => 'Wings',
+    5 => 'Pasta',
+    6 => 'Wrap',
+    7 => 'Roll',
+    8 => 'Fries',
+    9 => 'Drink'
+];
+$badge_text = $prod['category_name'] ?? ($badges[$prod['category_id']] ?? 'Special');
 
 $is_fav = false;
 if (is_user_logged_in()) {
@@ -41,10 +58,7 @@ if (is_user_logged_in()) {
             >
             <!-- Category Badge -->
             <span class="product-badge">
-                <?php
-                    $badges = [1=>'Burger',2=>'Pizza',3=>'Zinger',4=>'Wings',5=>'Pasta',6=>'Drinks'];
-                    echo $badges[$prod['category_id']] ?? 'Special';
-                ?>
+                <?= sanitize($badge_text) ?>
             </span>
         </div>
     </a>

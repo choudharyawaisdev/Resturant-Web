@@ -1,163 +1,623 @@
 -- ============================================================
---  Cafe Chinos -- COMPLETE DATABASE SCHEMA + SEED
---  Run this to fully reset and rebuild restaurant_db
+--  Cafe Chinos -- COMPLETE DATABASE SCHEMA + REAL MENU DATA
 -- ============================================================
 
-DROP DATABASE IF EXISTS restaurant_db;
-CREATE DATABASE restaurant_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE restaurant_db;
+SET FOREIGN_KEY_CHECKS = 0;
 
--- AREAS TABLE
-CREATE TABLE areas (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    area_name VARCHAR(100) NOT NULL,
-    city VARCHAR(100) NOT NULL DEFAULT 'Chiniot',
-    delivery_charge DECIMAL(10,2) NOT NULL DEFAULT 0.00,
-    status ENUM('active','inactive') DEFAULT 'active',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+DROP TABLE IF EXISTS `areas`;
+CREATE TABLE `areas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `area_name` varchar(100) NOT NULL,
+  `city` varchar(100) NOT NULL DEFAULT 'Chiniot',
+  `delivery_charge` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `status` enum('active','inactive') DEFAULT 'active',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- CATEGORIES TABLE
-CREATE TABLE categories (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    image VARCHAR(255) DEFAULT NULL,
-    display_order INT DEFAULT 0,
-    status ENUM('active','inactive') DEFAULT 'active',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+INSERT INTO `areas` (`id`, `area_name`, `city`, `delivery_charge`, `status`, `created_at`) VALUES
+('1', 'Nao Gazah Road', 'Chiniot', '40.00', 'active', '2026-08-19 12:07:19'),
+('2', 'Kutchery Road & Civil Lines', 'Chiniot', '50.00', 'active', '2026-08-19 12:07:19'),
+('3', 'Rail Bazar & Circular Road', 'Chiniot', '60.00', 'active', '2026-08-19 12:07:19'),
+('4', 'Jhang Road Area', 'Chiniot', '70.00', 'active', '2026-08-19 12:07:19'),
+('5', 'Faisalabad Road Sector', 'Chiniot', '80.00', 'active', '2026-08-19 12:07:19'),
+('6', 'Sargodha Road Colony', 'Chiniot', '90.00', 'active', '2026-08-19 12:07:19'),
+('7', 'Bhowana Road Sector', 'Chiniot', '100.00', 'active', '2026-08-19 12:07:19'),
+('8', 'Chenab Bridge Area', 'Chiniot', '120.00', 'active', '2026-08-19 12:07:19'),
+('9', 'Near Islamia Hospital Area', 'Chiniot', '40.00', 'active', '2026-08-19 12:07:19');
 
--- PRODUCTS TABLE
-CREATE TABLE products (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    category_id INT NOT NULL,
-    name VARCHAR(150) NOT NULL,
-    description TEXT DEFAULT NULL,
-    image VARCHAR(255) DEFAULT NULL,
-    base_price DECIMAL(10,2) NOT NULL DEFAULT 0.00,
-    status ENUM('active','inactive') DEFAULT 'active',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+DROP TABLE IF EXISTS `categories`;
+CREATE TABLE `categories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `display_order` int(11) DEFAULT 0,
+  `status` enum('active','inactive') DEFAULT 'active',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- PRODUCT SIZES
-CREATE TABLE product_sizes (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    product_id INT NOT NULL,
-    size_name VARCHAR(50) NOT NULL,
-    price DECIMAL(10,2) NOT NULL DEFAULT 0.00,
-    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+INSERT INTO `categories` (`id`, `name`, `image`, `display_order`, `status`, `created_at`) VALUES
+('1', 'Hot Deals', 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80', '1', 'active', '2026-08-19 12:07:19'),
+('2', 'Pizzas', 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=400&q=80', '2', 'active', '2026-08-19 12:07:19'),
+('3', 'Burgers', 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=400&q=80', '3', 'active', '2026-08-19 12:07:19'),
+('4', 'Wings & Starters', 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?auto=format&fit=crop&w=400&q=80', '4', 'active', '2026-08-19 12:07:19'),
+('5', 'Pasta', 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=400&q=80', '5', 'active', '2026-08-19 12:07:19'),
+('6', 'Sandwiches & Wraps', 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=400&q=80', '6', 'active', '2026-08-19 12:07:19'),
+('7', 'Paratha Rolls', 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=400&q=80', '7', 'active', '2026-08-19 12:07:19'),
+('8', 'Fries & Sides', 'https://images.unsplash.com/photo-1576107232684-1279f3908594?auto=format&fit=crop&w=400&q=80', '8', 'active', '2026-08-19 12:07:19'),
+('9', 'Dips & Cold Drinks', 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=400&q=80', '9', 'active', '2026-08-19 12:07:19');
 
--- ADDONS TABLE
-CREATE TABLE addons (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    price DECIMAL(10,2) NOT NULL DEFAULT 0.00,
-    status ENUM('active','inactive') DEFAULT 'active'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+DROP TABLE IF EXISTS `products`;
+CREATE TABLE `products` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `category_id` int(11) NOT NULL,
+  `name` varchar(150) NOT NULL,
+  `description` text DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `base_price` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `status` enum('active','inactive') DEFAULT 'active',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `category_id` (`category_id`),
+  CONSTRAINT `products_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- PRODUCT ADDONS (pivot)
-CREATE TABLE product_addons (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    product_id INT NOT NULL,
-    addon_id INT NOT NULL,
-    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
-    FOREIGN KEY (addon_id) REFERENCES addons(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+INSERT INTO `products` (`id`, `category_id`, `name`, `description`, `image`, `base_price`, `status`, `created_at`) VALUES
+('1', '1', 'Deal 1', '1 Small Pizza (Tikka/Fajita/Super Chino) + 1 Reg. Drink', 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80', '610.00', 'active', '2026-08-19 12:07:19'),
+('2', '1', 'Deal 2', '1 Regular Medium Pizza (Tikka/Fajita/Super Chino) + 1 Liter Cold Drink', 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=400&q=80', '1250.00', 'active', '2026-08-19 12:07:19'),
+('3', '1', 'Deal 3', '1 Large Pizza (Tikka/Fajita/Super Chino) + 1 Liter Cold Drink', 'https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?auto=format&fit=crop&w=400&q=80', '1690.00', 'active', '2026-08-19 12:07:19'),
+('4', '1', 'Deal 4', '1 Extra Large (XL) Pizza (Tikka/Fajita/Super Chino) + 1.5 Liter Cold Drink', 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=400&q=80', '2290.00', 'active', '2026-08-19 12:07:19'),
+('5', '1', 'Deal 5', '1 Crispy Zinger Burger + 1 Small Pasta + 1 Reg. Cold Drink', 'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=400&q=80', '970.00', 'active', '2026-08-19 12:07:19'),
+('6', '1', 'Deal 6', '1 Large Oven-Baked Pasta + 1 Reg. Cold Drink', 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=400&q=80', '750.00', 'active', '2026-08-19 12:07:19'),
+('7', '1', 'Deal 7', '4 Crispy Zinger Burgers + 1.5 Liter Cold Drink Family Feast', 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=400&q=80', '1640.00', 'active', '2026-08-19 12:07:19'),
+('8', '2', 'Chicken Tikka Pizza', 'Spicy chicken tikka chunks, onions & mozzarella cheese', 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=400&q=80', '550.00', 'active', '2026-08-19 12:07:19'),
+('9', '2', 'Chicken Fajita Pizza', 'Grilled fajita chicken with bell peppers, onions & cheese', 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=400&q=80', '550.00', 'active', '2026-08-19 12:07:19'),
+('10', '2', 'Super Supreme Pizza', 'Loaded chicken, pepperoni, mushrooms, olives & cheese', 'https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?auto=format&fit=crop&w=400&q=80', '550.00', 'active', '2026-08-19 12:07:19'),
+('11', '2', 'Tandoori Pizza', 'Smoky traditional tandoori chicken chunks & herbs', 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=400&q=80', '550.00', 'active', '2026-08-19 12:07:19'),
+('12', '2', 'Chicken Lover Pizza', 'Double portion of chicken tikka & fajita layered with rich cheese', 'https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=400&q=80', '550.00', 'active', '2026-08-19 12:07:19'),
+('13', '2', 'Cheese Lover Pizza', 'Triple layer melted golden mozzarella & cheddar cheese', 'https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?auto=format&fit=crop&w=400&q=80', '550.00', 'active', '2026-08-19 12:07:19'),
+('14', '2', 'Malai Boti Pizza', 'Creamy rich white sauce malai boti chicken chunks baked to perfection', 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=400&q=80', '600.00', 'active', '2026-08-19 12:07:19'),
+('15', '2', 'Behari Kabab Pizza', 'Tender behari kabab slices with creamy dressing, onions & jalapeños', 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=400&q=80', '600.00', 'active', '2026-08-19 12:07:19'),
+('16', '2', 'Super Chinos Special Pizza', 'Signature Chef special recipe loaded with premium cuts and double cheese', 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=400&q=80', '600.00', 'active', '2026-08-19 12:07:19'),
+('17', '2', 'Royal Crust Pizza', 'Crown-shaped ring crust stuffed with spicy chicken and melted cream cheese', 'https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?auto=format&fit=crop&w=400&q=80', '1450.00', 'active', '2026-08-19 12:07:19'),
+('18', '2', 'Cheese Stuffed Crust Pizza', 'Golden baked crust loaded with liquid string cheese inside the edges', 'https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=400&q=80', '1450.00', 'active', '2026-08-19 12:07:19'),
+('19', '2', 'Seekh Kabab Crust Pizza', 'Succulent seekh kababs stuffed right inside the outer pizza crust ring', 'https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?auto=format&fit=crop&w=400&q=80', '1450.00', 'active', '2026-08-19 12:07:19'),
+('20', '2', 'Mexican Pizza (Double Layered)', 'Double-layered stuffed pizza filled generously with seasoned chicken & cheese', 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=400&q=80', '1850.00', 'active', '2026-08-19 12:07:19'),
+('21', '2', 'Calzone Chunks', 'Rich Italian signature folded calzone stuffed with cheesy chicken chunks', 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80', '1250.00', 'active', '2026-08-19 12:07:19'),
+('22', '3', 'Tower Burger', 'Double stacked crispy zinger patty with molten cheese slice & secret sauce', 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=400&q=80', '750.00', 'active', '2026-08-19 12:07:19'),
+('23', '3', 'Zinger Burger', 'Golden crispy fried zinger chicken fillet with iceberg lettuce & creamy mayo', 'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=400&q=80', '500.00', 'active', '2026-08-19 12:07:19'),
+('24', '3', 'Zinger Cheese Burger', 'Classic crunchy zinger burger loaded with an extra cheddar cheese slice', 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=400&q=80', '550.00', 'active', '2026-08-19 12:07:19'),
+('25', '3', 'Heavy Zinger Burger', 'Monster double meat fillet burger with double mayo & cheese layer', 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=400&q=80', '850.00', 'active', '2026-08-19 12:07:19'),
+('26', '3', 'Zinger with Fries', 'Crispy crunchy zinger burger served with golden salted French fries', 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=400&q=80', '600.00', 'active', '2026-08-19 12:07:19'),
+('27', '3', 'Chicken Patty Burger', 'Tender grilled chicken minced patty burger with fresh onion rings & mayo', 'https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=400&q=80', '400.00', 'active', '2026-08-19 12:07:19'),
+('28', '3', 'Bar-B-Q Zinger Burger', 'Smoky BBQ glazed crispy chicken burger with jalapeños & signature sauce', 'https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=400&q=80', '550.00', 'active', '2026-08-19 12:07:19'),
+('29', '4', 'Hot Wings', 'Crisp golden spicy deep-fried chicken wings served with dip sauce', 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?auto=format&fit=crop&w=400&q=80', '400.00', 'active', '2026-08-19 12:07:19'),
+('30', '4', 'Oven Baked Wings', 'Juicy oven-roasted chicken wings tossed in secret herbs & spices', 'https://images.unsplash.com/photo-1527477248705-2307561f284c?auto=format&fit=crop&w=400&q=80', '430.00', 'active', '2026-08-19 12:07:19'),
+('31', '4', 'Bar-B-Q Wings', 'Tender chicken wings coated with smoky sweet BBQ glaze sauce', 'https://images.unsplash.com/photo-1608039829572-78524f79c4c7?auto=format&fit=crop&w=400&q=80', '430.00', 'active', '2026-08-19 12:07:19'),
+('32', '4', 'Crispy Nuggets', 'Golden fried tender chicken nuggets with honey mustard or garlic mayo dip', 'https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=400&q=80', '300.00', 'active', '2026-08-19 12:07:19'),
+('33', '4', 'Hot Shots', 'Bite-sized fiery crispy fried chicken bites with chili garlic dipping sauce', 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=400&q=80', '450.00', 'active', '2026-08-19 12:07:19'),
+('34', '4', 'Special Platter', 'Mega starter platter: 5 Oven Baked Wings + 4 Chicken Spin Rolls + French Fries + 1 Dip Sauce', 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80', '1049.00', 'active', '2026-08-19 12:07:19'),
+('35', '5', 'Chef Special Pasta', 'Rich creamy baked macaroni pasta tossed with chicken chunks, olives & melted cheese', 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=400&q=80', '600.00', 'active', '2026-08-19 12:07:19'),
+('36', '5', 'Creamy Chicken Pasta', 'Fettuccine / penne style pasta smothered in Alfredo white sauce & mushrooms', 'https://images.unsplash.com/photo-1621996346565-e3d5d6281691?auto=format&fit=crop&w=400&q=80', '600.00', 'active', '2026-08-19 12:07:19'),
+('37', '5', 'Lasagne Pasta', 'Classic Italian multi-layered minced chicken lasagna baked with golden crust cheese', 'https://images.unsplash.com/photo-1574894709920-11b28e7367e3?auto=format&fit=crop&w=400&q=80', '800.00', 'active', '2026-08-19 12:07:19'),
+('38', '6', 'Special Sandwich with Fries', 'Grilled multi-layered club sandwich with egg, chicken & cheese + Fries', 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=400&q=80', '870.00', 'active', '2026-08-19 12:07:19'),
+('39', '6', 'Mexican Sandwich with Fries', 'Spicy Mexican seasoned chicken sandwich with jalapeños & crispy fries', 'https://images.unsplash.com/photo-1554433607-66b5efe9d304?auto=format&fit=crop&w=400&q=80', '870.00', 'active', '2026-08-19 12:07:19'),
+('40', '6', 'Jalapeno Sandwich', 'Tangy spicy jalapeno chicken sandwich with melted cheese & garlic sauce', 'https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=400&q=80', '870.00', 'active', '2026-08-19 12:07:19'),
+('41', '6', 'Crispy Sandwich', 'Crunchy fried chicken strips inside toasted panini bread with fresh lettuce', 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=400&q=80', '950.00', 'active', '2026-08-19 12:07:19'),
+('42', '6', 'Twister Wrap', 'Crispy chicken tenders wrapped in warm tortilla with fresh lettuce and mayo', 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=400&q=80', '750.00', 'active', '2026-08-19 12:07:19'),
+('43', '6', 'Grilled Wrap', 'Smoky flame-grilled chicken strips wrapped in tortilla with chipotle sauce', 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=400&q=80', '750.00', 'active', '2026-08-19 12:07:19'),
+('44', '7', '4 Chicken Spin Rolls', '4 pieces golden fried chicken spring/spin rolls with spicy dip sauce', 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=400&q=80', '690.00', 'active', '2026-08-19 12:07:19'),
+('45', '7', '4 Behari Rolls', '4 pieces tender behari chicken kabab rolls wrapped in light pastry', 'https://images.unsplash.com/photo-1541544741938-0af808871cc0?auto=format&fit=crop&w=400&q=80', '690.00', 'active', '2026-08-19 12:07:19'),
+('46', '7', 'Tikka Paratha Roll', 'Charcoal grilled tikka boti rolled inside hot crispy paratha with onions & chutney', 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=400&q=80', '370.00', 'active', '2026-08-19 12:07:19'),
+('47', '7', 'Chapli Kabab Paratha', 'Authentic spiced chapli kabab wrapped inside flaky paratha roll', 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=400&q=80', '370.00', 'active', '2026-08-19 12:07:19'),
+('48', '7', 'Crunchy Paratha Roll', 'Crispy golden fried zinger strips wrapped in paratha with creamy sauce', 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=400&q=80', '370.00', 'active', '2026-08-19 12:07:19'),
+('49', '8', 'Plain Fries', 'Classic salted crispy golden French fries', 'https://images.unsplash.com/photo-1576107232684-1279f3908594?auto=format&fit=crop&w=400&q=80', '280.00', 'active', '2026-08-19 12:07:19'),
+('50', '8', 'Mayo Garlic Fries', 'Crispy fries drizzled with creamy garlic mayo sauce and herbs', 'https://images.unsplash.com/photo-1585109649139-366815a0d713?auto=format&fit=crop&w=400&q=80', '350.00', 'active', '2026-08-19 12:07:19'),
+('51', '8', 'Masala Fries', 'Spicy seasoned fries dusted with traditional chatpata masala', 'https://images.unsplash.com/photo-1576107232684-1279f3908594?auto=format&fit=crop&w=400&q=80', '300.00', 'active', '2026-08-19 12:07:19'),
+('52', '8', 'Loaded Fries', 'Fries loaded with shredded chicken, jalapeños, olives & molten cheese', 'https://images.unsplash.com/photo-1585109649139-366815a0d713?auto=format&fit=crop&w=400&q=80', '490.00', 'active', '2026-08-19 12:07:19'),
+('53', '8', 'Pizza Fries', 'Oven baked fries topped with pizza sauce, chicken tikka chunks & mozzarella', 'https://images.unsplash.com/photo-1576107232684-1279f3908594?auto=format&fit=crop&w=400&q=80', '490.00', 'active', '2026-08-19 12:07:19'),
+('54', '8', 'Cheese Fries', 'Crispy golden fries covered in thick creamy melted cheddar sauce', 'https://images.unsplash.com/photo-1585109649139-366815a0d713?auto=format&fit=crop&w=400&q=80', '490.00', 'active', '2026-08-19 12:07:19'),
+('55', '9', '1.5 Liter Cold Drink', 'Chilled 1.5L bottle (Coke / Sprite / Fanta / Dew)', 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=400&q=80', '220.00', 'active', '2026-08-19 12:07:19'),
+('56', '9', '1.0 Liter Cold Drink', 'Chilled 1.0L bottle (Coke / Sprite / Fanta / Dew)', 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=400&q=80', '190.00', 'active', '2026-08-19 12:07:19'),
+('57', '9', '500 ml Cold Drink', 'Chilled 500ml bottle (Coke / Sprite / Fanta / Dew)', 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=400&q=80', '130.00', 'active', '2026-08-19 12:07:19'),
+('58', '9', 'Tin Pack Drink (330ml)', 'Chilled 330ml aluminum can (Coke / Sprite / Fanta)', 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=400&q=80', '140.00', 'active', '2026-08-19 12:07:19'),
+('59', '9', 'Regular Drink (250ml)', 'Chilled 250ml bottle soft drink', 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=400&q=80', '90.00', 'active', '2026-08-19 12:07:19'),
+('60', '9', 'Ranch Sauce Dip', 'Creamy herb infused signature restaurant dipping sauce', 'https://images.unsplash.com/photo-1472476443507-c7a5948772fc?auto=format&fit=crop&w=400&q=80', '60.00', 'active', '2026-08-19 12:07:19');
 
--- DRINKS TABLE
-CREATE TABLE drinks (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    price DECIMAL(10,2) NOT NULL DEFAULT 0.00,
-    status ENUM('active','inactive') DEFAULT 'active'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+DROP TABLE IF EXISTS `product_sizes`;
+CREATE TABLE `product_sizes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `size_name` varchar(50) NOT NULL,
+  `price` decimal(10,2) NOT NULL DEFAULT 0.00,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`),
+  CONSTRAINT `product_sizes_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- PRODUCT DRINKS (pivot)
-CREATE TABLE product_drinks (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    product_id INT NOT NULL,
-    drink_id INT NOT NULL,
-    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
-    FOREIGN KEY (drink_id) REFERENCES drinks(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+INSERT INTO `product_sizes` (`id`, `product_id`, `size_name`, `price`) VALUES
+('1', '8', 'Small (8\")', '550.00'),
+('2', '8', 'Medium (10\")', '1200.00'),
+('3', '8', 'Large (12\")', '1600.00'),
+('4', '8', 'Extra Large (14\")', '2150.00'),
+('5', '9', 'Small (8\")', '550.00'),
+('6', '9', 'Medium (10\")', '1200.00'),
+('7', '9', 'Large (12\")', '1600.00'),
+('8', '9', 'Extra Large (14\")', '2150.00'),
+('9', '10', 'Small (8\")', '550.00'),
+('10', '10', 'Medium (10\")', '1200.00'),
+('11', '10', 'Large (12\")', '1600.00'),
+('12', '10', 'Extra Large (14\")', '2150.00'),
+('13', '11', 'Small (8\")', '550.00'),
+('14', '11', 'Medium (10\")', '1200.00'),
+('15', '11', 'Large (12\")', '1600.00'),
+('16', '11', 'Extra Large (14\")', '2150.00'),
+('17', '12', 'Small (8\")', '550.00'),
+('18', '12', 'Medium (10\")', '1200.00'),
+('19', '12', 'Large (12\")', '1600.00'),
+('20', '12', 'Extra Large (14\")', '2150.00'),
+('21', '13', 'Small (8\")', '550.00'),
+('22', '13', 'Medium (10\")', '1200.00'),
+('23', '13', 'Large (12\")', '1600.00'),
+('24', '13', 'Extra Large (14\")', '2150.00'),
+('25', '14', 'Small (8\")', '600.00'),
+('26', '14', 'Medium (10\")', '1250.00'),
+('27', '14', 'Large (12\")', '1750.00'),
+('28', '14', 'Extra Large (14\")', '2300.00'),
+('29', '15', 'Small (8\")', '600.00'),
+('30', '15', 'Medium (10\")', '1250.00'),
+('31', '15', 'Large (12\")', '1750.00'),
+('32', '15', 'Extra Large (14\")', '2300.00'),
+('33', '16', 'Small (8\")', '600.00'),
+('34', '16', 'Medium (10\")', '1250.00'),
+('35', '16', 'Large (12\")', '1750.00'),
+('36', '16', 'Extra Large (14\")', '2300.00'),
+('37', '17', 'Medium (10\")', '1450.00'),
+('38', '17', 'Large (12\")', '2000.00'),
+('39', '17', 'Extra Large (14\")', '2490.00'),
+('40', '18', 'Medium (10\")', '1450.00'),
+('41', '18', 'Large (12\")', '2000.00'),
+('42', '18', 'Extra Large (14\")', '2490.00'),
+('43', '19', 'Medium (10\")', '1450.00'),
+('44', '19', 'Large (12\")', '2000.00'),
+('45', '19', 'Extra Large (14\")', '2490.00'),
+('46', '20', 'Medium (10\")', '1850.00'),
+('47', '20', 'Large (12\")', '2350.00'),
+('48', '20', 'Extra Large (14\")', '2950.00'),
+('49', '29', '5 Pcs', '400.00'),
+('50', '29', '10 Pcs', '790.00'),
+('51', '30', '6 Pcs', '430.00'),
+('52', '30', '12 Pcs', '830.00'),
+('53', '31', '6 Pcs', '430.00'),
+('54', '31', '12 Pcs', '830.00'),
+('55', '32', '6 Pcs', '300.00'),
+('56', '32', '12 Pcs', '600.00'),
+('57', '33', '10 Pcs', '450.00'),
+('58', '33', '15 Pcs', '650.00'),
+('59', '35', 'Small (S)', '600.00'),
+('60', '35', 'Large (L)', '800.00'),
+('61', '36', 'Small (S)', '600.00'),
+('62', '36', 'Large (L)', '800.00'),
+('63', '49', 'Regular', '280.00'),
+('64', '49', 'Family', '590.00'),
+('65', '50', 'Regular', '350.00'),
+('66', '50', 'Family', '690.00'),
+('67', '51', 'Regular', '300.00'),
+('68', '51', 'Family', '590.00'),
+('69', '52', 'Regular', '490.00'),
+('70', '52', 'Family', '750.00'),
+('71', '53', 'Small', '490.00'),
+('72', '53', 'Large', '750.00'),
+('73', '54', 'Small', '490.00'),
+('74', '54', 'Large', '750.00');
 
--- USERS TABLE
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    email VARCHAR(150) NOT NULL UNIQUE,
-    phone VARCHAR(20) DEFAULT NULL,
-    password VARCHAR(255) NOT NULL,
-    address TEXT DEFAULT NULL,
-    area_id INT DEFAULT NULL,
-    profile_image VARCHAR(255) DEFAULT NULL,
-    status ENUM('active','inactive') DEFAULT 'active',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (area_id) REFERENCES areas(id) ON DELETE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+DROP TABLE IF EXISTS `addons`;
+CREATE TABLE `addons` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `price` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `status` enum('active','inactive') DEFAULT 'active',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ADMIN USERS TABLE
-CREATE TABLE admin_users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(100) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
-    email VARCHAR(150) DEFAULT NULL,
-    role ENUM('superadmin','admin','staff') DEFAULT 'admin',
-    last_login TIMESTAMP NULL DEFAULT NULL,
-    status ENUM('active','inactive') DEFAULT 'active',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+INSERT INTO `addons` (`id`, `name`, `price`, `status`) VALUES
+('1', 'Extra Cheese Slice / Melt', '100.00', 'active'),
+('2', 'Extra Chicken Chunks', '150.00', 'active'),
+('3', 'Extra Mozzarella Layer', '150.00', 'active'),
+('4', 'Special Ranch Dip Sauce', '60.00', 'active'),
+('5', 'Spicy Garlic Mayo Sauce', '60.00', 'active'),
+('6', 'Jalapenos & Black Olives', '80.00', 'active'),
+('7', 'Sauteed Mushrooms', '100.00', 'active'),
+('8', 'Dip Sauce Extra', '60.00', 'active');
 
--- ORDERS TABLE
-CREATE TABLE orders (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT DEFAULT NULL,
-    area_id INT DEFAULT NULL,
-    customer_name VARCHAR(100) NOT NULL,
-    phone VARCHAR(20) NOT NULL,
-    address TEXT NOT NULL,
-    subtotal DECIMAL(10,2) NOT NULL DEFAULT 0.00,
-    delivery_charge DECIMAL(10,2) NOT NULL DEFAULT 0.00,
-    grand_total DECIMAL(10,2) NOT NULL DEFAULT 0.00,
-    payment_method VARCHAR(50) DEFAULT 'Cash on Delivery',
-    status ENUM('Pending','Preparing','Out for Delivery','Delivered','Cancelled') DEFAULT 'Pending',
-    notes TEXT DEFAULT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL,
-    FOREIGN KEY (area_id) REFERENCES areas(id) ON DELETE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+DROP TABLE IF EXISTS `product_addons`;
+CREATE TABLE `product_addons` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `addon_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`),
+  KEY `addon_id` (`addon_id`),
+  CONSTRAINT `product_addons_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `product_addons_ibfk_2` FOREIGN KEY (`addon_id`) REFERENCES `addons` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=179 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ORDER ITEMS TABLE
-CREATE TABLE order_items (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    order_id INT NOT NULL,
-    product_id INT DEFAULT NULL,
-    product_name VARCHAR(150) NOT NULL,
-    size_name VARCHAR(50) DEFAULT NULL,
-    addons TEXT DEFAULT NULL,
-    drink_name VARCHAR(100) DEFAULT NULL,
-    quantity INT NOT NULL DEFAULT 1,
-    unit_price DECIMAL(10,2) NOT NULL DEFAULT 0.00,
-    total_price DECIMAL(10,2) NOT NULL DEFAULT 0.00,
-    FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+INSERT INTO `product_addons` (`id`, `product_id`, `addon_id`) VALUES
+('1', '1', '1'),
+('2', '1', '4'),
+('3', '2', '1'),
+('4', '2', '4'),
+('5', '3', '1'),
+('6', '3', '4'),
+('7', '4', '1'),
+('8', '4', '4'),
+('9', '5', '1'),
+('10', '5', '4'),
+('11', '6', '1'),
+('12', '6', '4'),
+('13', '7', '1'),
+('14', '7', '4'),
+('15', '8', '1'),
+('16', '8', '2'),
+('17', '8', '3'),
+('18', '8', '4'),
+('19', '8', '5'),
+('20', '8', '6'),
+('21', '8', '7'),
+('22', '8', '8'),
+('23', '9', '1'),
+('24', '9', '2'),
+('25', '9', '3'),
+('26', '9', '4'),
+('27', '9', '5'),
+('28', '9', '6'),
+('29', '9', '7'),
+('30', '9', '8'),
+('31', '10', '1'),
+('32', '10', '2'),
+('33', '10', '3'),
+('34', '10', '4'),
+('35', '10', '5'),
+('36', '10', '6'),
+('37', '10', '7'),
+('38', '10', '8'),
+('39', '11', '1'),
+('40', '11', '2'),
+('41', '11', '3'),
+('42', '11', '4'),
+('43', '11', '5'),
+('44', '11', '6'),
+('45', '11', '7'),
+('46', '11', '8'),
+('47', '12', '1'),
+('48', '12', '2'),
+('49', '12', '3'),
+('50', '12', '4'),
+('51', '12', '5'),
+('52', '12', '6'),
+('53', '12', '7'),
+('54', '12', '8'),
+('55', '13', '1'),
+('56', '13', '2'),
+('57', '13', '3'),
+('58', '13', '4'),
+('59', '13', '5'),
+('60', '13', '6'),
+('61', '13', '7'),
+('62', '13', '8'),
+('63', '14', '1'),
+('64', '14', '2'),
+('65', '14', '3'),
+('66', '14', '4'),
+('67', '14', '5'),
+('68', '14', '6'),
+('69', '14', '7'),
+('70', '14', '8'),
+('71', '15', '1'),
+('72', '15', '2'),
+('73', '15', '3'),
+('74', '15', '4'),
+('75', '15', '5'),
+('76', '15', '6'),
+('77', '15', '7'),
+('78', '15', '8'),
+('79', '16', '1'),
+('80', '16', '2'),
+('81', '16', '3'),
+('82', '16', '4'),
+('83', '16', '5'),
+('84', '16', '6'),
+('85', '16', '7'),
+('86', '16', '8'),
+('87', '17', '1'),
+('88', '17', '2'),
+('89', '17', '3'),
+('90', '17', '4'),
+('91', '17', '5'),
+('92', '17', '6'),
+('93', '17', '7'),
+('94', '17', '8'),
+('95', '18', '1'),
+('96', '18', '2'),
+('97', '18', '3'),
+('98', '18', '4'),
+('99', '18', '5'),
+('100', '18', '6'),
+('101', '18', '7'),
+('102', '18', '8'),
+('103', '19', '1'),
+('104', '19', '2'),
+('105', '19', '3'),
+('106', '19', '4'),
+('107', '19', '5'),
+('108', '19', '6'),
+('109', '19', '7'),
+('110', '19', '8'),
+('111', '20', '1'),
+('112', '20', '2'),
+('113', '20', '3'),
+('114', '20', '4'),
+('115', '20', '5'),
+('116', '20', '6'),
+('117', '20', '7'),
+('118', '20', '8'),
+('119', '21', '1'),
+('120', '21', '2'),
+('121', '21', '3'),
+('122', '21', '4'),
+('123', '21', '5'),
+('124', '21', '6'),
+('125', '21', '7'),
+('126', '21', '8'),
+('127', '22', '1'),
+('128', '22', '4'),
+('129', '23', '1'),
+('130', '23', '4'),
+('131', '24', '1'),
+('132', '24', '4'),
+('133', '25', '1'),
+('134', '25', '4'),
+('135', '26', '1'),
+('136', '26', '4'),
+('137', '27', '1'),
+('138', '27', '4'),
+('139', '28', '1'),
+('140', '28', '4'),
+('141', '29', '4'),
+('142', '29', '5'),
+('143', '30', '4'),
+('144', '30', '5'),
+('145', '31', '4'),
+('146', '31', '5'),
+('147', '32', '4'),
+('148', '32', '5'),
+('149', '33', '4'),
+('150', '33', '5'),
+('151', '34', '4'),
+('152', '34', '5'),
+('153', '35', '1'),
+('154', '36', '1'),
+('155', '37', '1'),
+('156', '38', '1'),
+('157', '38', '4'),
+('158', '39', '1'),
+('159', '39', '4'),
+('160', '40', '1'),
+('161', '40', '4'),
+('162', '41', '1'),
+('163', '41', '4'),
+('164', '42', '1'),
+('165', '42', '4'),
+('166', '43', '1'),
+('167', '43', '4'),
+('168', '44', '1'),
+('169', '45', '1'),
+('170', '46', '1'),
+('171', '47', '1'),
+('172', '48', '1'),
+('173', '49', '4'),
+('174', '50', '4'),
+('175', '51', '4'),
+('176', '52', '4'),
+('177', '53', '4'),
+('178', '54', '4');
 
--- WISHLISTS TABLE
-CREATE TABLE wishlists (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    product_id INT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE KEY unique_wishlist (user_id, product_id),
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+DROP TABLE IF EXISTS `drinks`;
+CREATE TABLE `drinks` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `price` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `status` enum('active','inactive') DEFAULT 'active',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- DEFAULT ADMIN (username: admin / password: password)
-INSERT INTO admin_users (username, password, email, role) VALUES
-('admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin@cafechinos.com', 'superadmin');
+INSERT INTO `drinks` (`id`, `name`, `price`, `status`) VALUES
+('1', 'Free Regular Cold Drink (Included)', '0.00', 'active'),
+('2', 'Free 1.0 Liter Cold Drink (Included)', '0.00', 'active'),
+('3', 'Free 1.5 Liter Cold Drink (Included)', '0.00', 'active'),
+('4', 'Regular Drink (250ml)', '90.00', 'active'),
+('5', 'Tin Pack Drink (330ml)', '140.00', 'active'),
+('6', '500 ml Cold Drink', '130.00', 'active'),
+('7', '1.0 Liter Cold Drink', '190.00', 'active'),
+('8', '1.5 Liter Cold Drink', '220.00', 'active'),
+('9', 'Mineral Water (500ml)', '70.00', 'active');
 
+DROP TABLE IF EXISTS `product_drinks`;
+CREATE TABLE `product_drinks` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `drink_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`),
+  KEY `drink_id` (`drink_id`),
+  CONSTRAINT `product_drinks_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `product_drinks_ibfk_2` FOREIGN KEY (`drink_id`) REFERENCES `drinks` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+INSERT INTO `product_drinks` (`id`, `product_id`, `drink_id`) VALUES
+('1', '1', '1'),
+('2', '2', '2'),
+('3', '3', '2'),
+('4', '4', '3'),
+('5', '5', '1'),
+('6', '6', '1'),
+('7', '7', '3'),
+('8', '8', '4'),
+('9', '8', '7'),
+('10', '9', '4'),
+('11', '9', '7'),
+('12', '10', '4'),
+('13', '10', '7'),
+('14', '11', '4'),
+('15', '11', '7'),
+('16', '12', '4'),
+('17', '12', '7'),
+('18', '13', '4'),
+('19', '13', '7'),
+('20', '14', '4'),
+('21', '14', '7'),
+('22', '15', '4'),
+('23', '15', '7'),
+('24', '16', '4'),
+('25', '16', '7'),
+('26', '17', '4'),
+('27', '17', '7'),
+('28', '18', '4'),
+('29', '18', '7'),
+('30', '19', '4'),
+('31', '19', '7'),
+('32', '20', '4'),
+('33', '20', '7'),
+('34', '21', '4'),
+('35', '21', '7'),
+('36', '22', '4'),
+('37', '22', '5'),
+('38', '23', '4'),
+('39', '23', '5'),
+('40', '24', '4'),
+('41', '24', '5'),
+('42', '25', '4'),
+('43', '25', '5'),
+('44', '26', '4'),
+('45', '26', '5'),
+('46', '27', '4'),
+('47', '27', '5'),
+('48', '28', '4'),
+('49', '28', '5'),
+('50', '29', '4'),
+('51', '30', '4'),
+('52', '31', '4'),
+('53', '32', '4'),
+('54', '33', '4'),
+('55', '34', '4'),
+('56', '35', '4'),
+('57', '36', '4'),
+('58', '37', '4'),
+('59', '38', '4'),
+('60', '39', '4'),
+('61', '40', '4'),
+('62', '41', '4'),
+('63', '42', '4'),
+('64', '43', '4'),
+('65', '44', '4'),
+('66', '45', '4'),
+('67', '46', '4'),
+('68', '47', '4'),
+('69', '48', '4'),
+('70', '49', '4'),
+('71', '50', '4'),
+('72', '51', '4'),
+('73', '52', '4'),
+('74', '53', '4'),
+('75', '54', '4');
+
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `email` varchar(150) NOT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `address` text DEFAULT NULL,
+  `area_id` int(11) DEFAULT NULL,
+  `profile_image` varchar(255) DEFAULT NULL,
+  `status` enum('active','inactive') DEFAULT 'active',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`),
+  KEY `area_id` (`area_id`),
+  CONSTRAINT `users_ibfk_1` FOREIGN KEY (`area_id`) REFERENCES `areas` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `admin_users`;
+CREATE TABLE `admin_users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `email` varchar(150) DEFAULT NULL,
+  `role` enum('superadmin','admin','staff') DEFAULT 'admin',
+  `last_login` timestamp NULL DEFAULT NULL,
+  `status` enum('active','inactive') DEFAULT 'active',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `admin_users` (`id`, `username`, `password`, `email`, `role`, `last_login`, `status`, `created_at`) VALUES
+('1', 'admin', '$2y$10$M2xjAn2yq6Mhu1X5gCiWJOPNXX60XfpLkYPJjvjTmOe2lbg4YiU.q', 'admin@cafechinos.com', 'superadmin', NULL, 'active', '2026-08-19 12:02:26');
+
+DROP TABLE IF EXISTS `orders`;
+CREATE TABLE `orders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `area_id` int(11) DEFAULT NULL,
+  `customer_name` varchar(100) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `address` text NOT NULL,
+  `subtotal` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `delivery_charge` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `grand_total` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `payment_method` varchar(50) DEFAULT 'Cash on Delivery',
+  `status` enum('Pending','Preparing','Out for Delivery','Delivered','Cancelled') DEFAULT 'Pending',
+  `notes` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `area_id` (`area_id`),
+  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`area_id`) REFERENCES `areas` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `order_items`;
+CREATE TABLE `order_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) NOT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `product_name` varchar(150) NOT NULL,
+  `size_name` varchar(50) DEFAULT NULL,
+  `addons` text DEFAULT NULL,
+  `drink_name` varchar(100) DEFAULT NULL,
+  `quantity` int(11) NOT NULL DEFAULT 1,
+  `unit_price` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `total_price` decimal(10,2) NOT NULL DEFAULT 0.00,
+  PRIMARY KEY (`id`),
+  KEY `order_id` (`order_id`),
+  CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `wishlists`;
+CREATE TABLE `wishlists` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_wishlist` (`user_id`,`product_id`),
+  KEY `product_id` (`product_id`),
+  CONSTRAINT `wishlists_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `wishlists_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+SET FOREIGN_KEY_CHECKS = 1;
